@@ -1,4 +1,5 @@
 #include "rtwoodtexture.h"
+#include<cmath>
 
 
 RTLatticeNoise RTWoodTexture::getPerlimNoise() const
@@ -82,14 +83,20 @@ RTColor RTWoodTexture::getColor(RTVector hitPoint) const
     double y = hitPoint.getY() * scale ;
     double z = hitPoint.getZ() * scale;
 
-    RTVector v1( x,y,z);
+
+
+    int sCell = floor(x+0.5/scale);
+    int tCell = floor(y+0.5/scale);
+
+    RTVector v1(x,y,z);
+
 
 
     double grain = perlimNoise.linearNoise(hitPoint) * 5;
 
     grain = grain - (int)grain;
 
-    RTColor color1=colorWood1;
+   RTColor color1=colorWood1;
     RTColor color2=colorWood2;
 
     return color1 * grain + color2 * (1.0f - grain);

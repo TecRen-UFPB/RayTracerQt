@@ -64,6 +64,7 @@ RTColor RTCheckTexture::getColor(RTVector hitPoint) const
 
     bool colorChek = (((int) floor(x/size)+(int)floor(y/size)+(int)floor(z/size))%2==0);
 
+
     if(colorChek)
         return colorCheck1;
     else {

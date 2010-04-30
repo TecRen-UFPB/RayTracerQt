@@ -144,7 +144,7 @@ protected:
 
 };
 
-enum {PLANE=1,SPHERE,TRIANGLES};
+enum {PLANE=1,SPHERE,TRIANGLES,TORUS};
 
 
 #endif // RTOBJECT_H

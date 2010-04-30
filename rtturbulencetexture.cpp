@@ -92,42 +92,25 @@ RTColor RTTurbulenceTexture::getColor(RTVector hitPoint) const
 
 
 
-              float 	amplitude 	= 1.0;
-              float	frequency 	= 1.0;
-              float 	turbulence	= 0.0;
 
-              for (int j = 0 ; j < num_octaves; j++) {
-                  turbulence	+= amplitude * fabs(perlinNoise.linearNoise(hitPoint*frequency));
-                  //turbulence	+= amplitude * sqrt(fabs(perlinNoise.linearNoise(hitPoint*frequency)));  // for the thin lines in Figure 30.6 (c) & (d)
-                  amplitude 	*= 0.5;
-                  frequency 	*= 2.0;
-              }
-
-              turbulence /= scale;  // map to [0, 1]
-
-
-
-              RTColor c1= colorTurbulence;
-              return c1*turbulence;
-
-       /*  double noiseCoef = 0;
+        double noiseCoef = 0;
 
 
 
 
-       for (int level = 1; level < 10; level ++) {
+       for (int level = 1; level < num_octaves; level ++) {
 
            RTVector v(level * 0.05 * x,
                       level * 0.05 * y,
                       level * 0.05 * z);
            noiseCoef += (1.0f / level) * fabsf(perlinNoise.linearNoise(v));
-       }*/
+       }
 
 
-   //  RTColor c1= colorTurbulence1;
+     RTColor c1= colorTurbulence;
     // RTColor c2=colorTurbulence2;
 
-     //return  c1* noiseCoef + c2 * (1.0f - noiseCoef);
+     return  c1* noiseCoef;// + c2 * (1.0f - noiseCoef);
 }
 
 double RTTurbulenceTexture::getRefracIndex() const

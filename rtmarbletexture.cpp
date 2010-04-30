@@ -44,7 +44,7 @@ RTColor RTMarbleTexture::getColor(RTVector hitPoint) const
     double z = hitPoint.getZ() * scale;
     double noiseCoef = 0;
 
-    for (int level = 1; level < 10; level++) {
+    for (int level = 1; level < 30; level++) {
 
         RTVector v1( level * 0.05 * x,level * 0.15 * y,level*0.05 * z);
 
