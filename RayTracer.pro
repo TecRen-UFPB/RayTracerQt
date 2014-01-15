@@ -15,10 +15,22 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     rtbuffer.cpp \
-    rtvector.cpp
+    rtvector.cpp \
+    rtscene.cpp \
+    rtsampler.cpp \
+    rtsample.cpp \
+    rtcamera.cpp \
+    rtpoint.cpp \
+    rtray.cpp
 
 HEADERS  += mainwindow.h \
     rtbuffer.h \
-    rtvector.h
+    rtvector.h \
+    rtscene.h \
+    rtsampler.h \
+    rtsample.h \
+    rtcamera.h \
+    rtpoint.h \
+    rtray.h
 
 FORMS    += mainwindow.ui
