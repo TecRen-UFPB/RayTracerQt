@@ -5,7 +5,7 @@
 #include <QFileDialog>
 #include <QDebug>
 
-#include "rtbuffer.h"
+#include "rtfilm.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,10 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // Inits the buffer
-    RTBuffer::init(512, 512);
+    RTFilm::init(512, 512);
 
     // connect buffer update signal
-    connect(RTBuffer::getInstance(), SIGNAL(onBufferChange()), this, SLOT(slotOnBufferChange()) );
+    connect(RTFilm::getInstance(), SIGNAL(onBufferChange()), this, SLOT(slotOnBufferChange()) );
 
     // connect menu save triggered
     connect(ui->actionSalvar, SIGNAL(triggered()), this, SLOT(slotMenuSaveTriggered()));
@@ -33,16 +33,16 @@ MainWindow::~MainWindow()
     delete ui;
 
     // destroy the buffer
-    RTBuffer::close();
+    RTFilm::close();
 }
 
 void MainWindow::slotOnBufferChange()
 {
-    ui->bufferPreview->setPixmap(QPixmap::fromImage(*RTBuffer::getInstance()->getQImage()));
+    ui->bufferPreview->setPixmap(QPixmap::fromImage(*RTFilm::getInstance()->getQImage()));
 }
 
 void MainWindow::slotMenuSaveTriggered()
 {
     QString fsv = QFileDialog::getSaveFileName(this, tr("Salvar imagem"), QDir::homePath(), "Images (*.png *.xpm *.jpg);; All files (*.*)");
-    RTBuffer::getInstance()->save(fsv);
+    RTFilm::getInstance()->writeImage(fsv);
 }

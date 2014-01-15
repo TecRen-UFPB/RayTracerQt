@@ -4,10 +4,13 @@
 #include <QObject>
 #include <QImage>
 
+#include "rtsample.h"
+#include "rtcolor.h"
+
 /**
  * @brief The RTBuffer class. Singleton
  */
-class RTBuffer : public QObject
+class RTFilm : public QObject
 {
     Q_OBJECT
 
@@ -32,13 +35,13 @@ public:
      * @brief getInstance Returns a reference to the instance of the RTBuffer
      * @return Pointer to the RTBuffer
      */
-    static RTBuffer *getInstance();
+    static RTFilm *getInstance();
 
 private:
     /**
      * @brief buffer Unic instance of the buffer
      */
-    static RTBuffer *buffer;
+    static RTFilm *buffer;
 
 /*
  * Instance scope
@@ -46,35 +49,20 @@ private:
  */
 
 public:
-    virtual ~RTBuffer();
+    virtual ~RTFilm();
 
     /**
-     * @brief setPixel change the color in the position ixj of the image
-     * @param i line
-     * @param j col
-     * @param r red amount
-     * @param g green amount
-     * @param b blue amount
-     * @param a alpha amount
+     * @brief commit Write the color to the image buffer at position specified by sample
+     * @param sample Position
+     * @param color Color to write
      */
-    void setPixel(unsigned int i, unsigned int j, unsigned int r, unsigned int g, unsigned int b, unsigned int a=254);
-
-    /**
-     * @brief addPixel add the 'r', 'g', 'b' to the current color at ixj
-     * @param i line
-     * @param j col
-     * @param r red amount
-     * @param g green amount
-     * @param b blue amount
-     * @param a alpha amount
-     */
-    void addPixel(unsigned int i, unsigned int j, unsigned int r, unsigned int g, unsigned int b, unsigned int a=254);
+    void commit(RTSample &sample, RTColor &color);
 
     /**
      * @brief save Save the current buffer to an archive
      * @param filename The file name to be saved
      */
-    void save(QString &filename);
+    void writeImage(QString &filename);
 
     /**
      * @brief getQImage returns the Qt native object to image processing
@@ -91,7 +79,7 @@ signals:
 public slots:
 
 private:
-    explicit RTBuffer(int width, int height);
+    explicit RTFilm(int width, int height);
 
     QImage *image;
 

@@ -14,23 +14,25 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    rtbuffer.cpp \
     rtvector.cpp \
     rtscene.cpp \
     rtsampler.cpp \
     rtsample.cpp \
     rtcamera.cpp \
     rtpoint.cpp \
-    rtray.cpp
+    rtray.cpp \
+    rtfilm.cpp \
+    rtcolor.cpp
 
 HEADERS  += mainwindow.h \
-    rtbuffer.h \
     rtvector.h \
     rtscene.h \
     rtsampler.h \
     rtsample.h \
     rtcamera.h \
     rtpoint.h \
-    rtray.h
+    rtray.h \
+    rtfilm.h \
+    rtcolor.h
 
 FORMS    += mainwindow.ui

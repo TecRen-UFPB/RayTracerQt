@@ -1,5 +1,7 @@
 #include "rtscene.h"
 
+#include "rtfilm.h"
+
 RTScene::RTScene()
 {
 }
@@ -14,6 +16,6 @@ void RTScene::render(){
 
        // camera.generateRay(sample, &ray);
        // raytracer.trace(ray, &color);
-       // film.commit(sample, color);
+       // RTFilm::getInstance()->commit(sample, color);
     }
 }
