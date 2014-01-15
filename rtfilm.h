@@ -70,6 +70,9 @@ public:
      */
     QImage *getQImage();
 
+    int getWidth();
+    int getHeight();
+
 signals:
     /**
      * @brief onBufferChange Emitted when the buffer is changed.

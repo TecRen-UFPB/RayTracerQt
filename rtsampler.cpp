@@ -1,5 +1,7 @@
 #include "rtsampler.h"
 
+#include "rtfilm.h"
+
 RTSampler::RTSampler()
 {
     this->i=0;
@@ -8,9 +10,9 @@ RTSampler::RTSampler()
 
  bool RTSampler::getSample(RTSample &sample){
 
-     if(i>=512)
+     if( i >= RTFilm::getInstance()->getWidth() )
          return false;
-     j = (j<512)?(j++):0;
+     j = ( j < RTFilm::getInstance()->getHeight() ) ? ( j++ ) : 0;
      sample.setX(i);
      sample.setY(j);
      if(j==0){

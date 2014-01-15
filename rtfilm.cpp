@@ -51,3 +51,13 @@ QImage *RTFilm::getQImage()
 {
     return this->image;
 }
+
+int RTFilm::getHeight()
+{
+    return image->height();
+}
+
+int RTFilm::getWidth()
+{
+    return image->width();
+}

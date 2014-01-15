@@ -14,8 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
 
-
-    // Inits the buffer
+    // Initiates the buffer
     RTFilm::init(512, 512);
 
     // connect buffer update signal
