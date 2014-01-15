@@ -41,7 +41,7 @@ void RTBuffer::setPixel(unsigned int i, unsigned int j, unsigned int r, unsigned
 {
     image->setPixel(i, j, qRgba(r, g, b, a) );
 
-    emit onBufferChange();
+//    emit onBufferChange();
 }
 
 void RTBuffer::addPixel(unsigned int i, unsigned int j, unsigned int r, unsigned int g, unsigned int b, unsigned int a)
@@ -54,7 +54,7 @@ void RTBuffer::addPixel(unsigned int i, unsigned int j, unsigned int r, unsigned
 
     image->setPixel(i, j, qRgba(cr, cg, cb, a));
 
-    emit onBufferChange();
+//    emit onBufferChange();
 
 }
 
