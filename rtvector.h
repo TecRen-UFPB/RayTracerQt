@@ -22,6 +22,11 @@ public:
     RTVector(RTVector &v);
 
     /**
+     * @brief RTVector Default constructor
+     */
+    RTVector();
+
+    /**
      * @brief setX Sets a new value for x-coord
      * @param x New value
      */

@@ -16,6 +16,13 @@ RTVector::RTVector(RTVector &v)
     this->z = v.getZ();
 }
 
+RTVector::RTVector()
+{
+    this->x = 0;
+    this->y = 0;
+    this->z = 0;
+}
+
 void RTVector::setX(double x)
 {
     this->x = x;
