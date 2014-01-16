@@ -19,6 +19,11 @@ public:
     RTColor(RTColor &c);
 
     /**
+     * @brief RTColor Default constructor. Black color.
+     */
+    RTColor();
+
+    /**
      * @brief setR Set the value for red component
      * @param r Amount of red
      */
