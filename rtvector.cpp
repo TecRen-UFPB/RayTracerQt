@@ -10,7 +10,8 @@ RTVector::RTVector(double x, double y, double z)
     this->z = z;
 }
 
-RTVector::RTVector(const RTVector &v )
+
+RTVector::RTVector(const RTVector &v)
 {
     this->x = v.getX();
     this->y = v.getY();
@@ -24,6 +25,35 @@ RTVector::RTVector()
     this->z = 0;
 }
 
+void RTVector::setX(double x)
+{
+    this->x = x;
+}
+
+double RTVector::getX() const
+{
+    return this->x;
+}
+
+void RTVector::setY(double y)
+{
+    this->y = y;
+}
+
+double RTVector::getY() const
+{
+    return this->y;
+}
+
+void RTVector::setZ(double z)
+{
+    this->z = z;
+}
+
+double RTVector::getZ() const
+{
+    return this->z;
+}
 
 void RTVector::normalize()
 {
@@ -88,33 +118,5 @@ RTVector RTVector::operator/(double v)
     RTVector vr(cx, cy, cz);
     return vr;
 }
-double RTVector::getX() const
-{
-    return x;
-}
-
-void RTVector::setX(double value)
-{
-    x = value;
-}
-double RTVector::getY() const
-{
-    return y;
-}
-
-void RTVector::setY(double value)
-{
-    y = value;
-}
-double RTVector::getZ() const
-{
-    return z;
-}
-
-void RTVector::setZ(double value)
-{
-    z = value;
-}
-
 
 

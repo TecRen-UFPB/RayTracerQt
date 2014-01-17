@@ -33,6 +33,7 @@ HEADERS  += mainwindow.h \
     rtray.h \
     rtfilm.h \
     rtcolor.h \
-    rtlocalgeo.h
+    rtlocalgeo.h \
+    rtobject.h
 
 FORMS    += mainwindow.ui
