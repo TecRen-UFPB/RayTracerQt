@@ -1,5 +1,11 @@
 #include "rtray.h"
 
-RTRAy::RTRAy()
+RTRay::RTRay()
 {
+}
+
+RTRay::RTRay(RTPoint pos,RTVector dir){
+
+    this->pos=pos;
+    this->dir=dir;
 }

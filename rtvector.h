@@ -22,48 +22,13 @@ public:
      * @brief RTVector Does a copy the vector v
      * @param v The vector to be copied
      */
-    RTVector(RTVector &v);
+    RTVector(const RTVector &v);
 
     /**
      * @brief RTVector Default constructor
      */
     RTVector();
 
-    /**
-     * @brief setX Sets a new value for x-coord
-     * @param x New value
-     */
-    void setX(double x);
-
-    /**
-     * @brief getX Returns the value of x-coord
-     * @return x-coord value
-     */
-    double getX();
-
-    /**
-     * @brief setY Sets a new value for y-coord
-     * @param y New value
-     */
-    void setY(double y);
-
-    /**
-     * @brief getY Returns the value of y-coord
-     * @return y-coord value
-     */
-    double getY();
-
-    /**
-     * @brief setZ Sets a new value for z-coord
-     * @param z New value
-     */
-    void setZ(double z);
-
-    /**
-     * @brief getZ Returns the value of z-coord
-     * @return z-coord value
-     */
-    double getZ();
 
     /**
      * @brief normalize Normalizes the vector
@@ -76,6 +41,15 @@ public:
 
     RTVector operator*(double v);
     RTVector operator/(double v);
+
+    double getX() const;
+    void setX(double value);
+
+    double getY() const;
+    void setY(double value);
+
+    double getZ() const;
+    void setZ(double value);
 
 private:
     double x, y, z;

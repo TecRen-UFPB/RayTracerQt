@@ -3,17 +3,28 @@
 
 #include "rtpoint.h"
 
-class RTRAy
+class RTRay
 {
 
 private:
     RTPoint pos;
     RTVector dir;
-    float t_max;
-    float t_min;
+    //float t_max;
+    //float t_min;
 
 public:
-    RTRAy();
+    RTRay();
+
+    /**
+     * @brief RTRay
+     * @param pos
+     * @param dir
+     */
+    RTRay(RTPoint pos,RTVector dir);
+    RTPoint getPos() const;
+    void setPos(const RTPoint &value);
+    RTVector getDir() const;
+    void setDir(const RTVector &value);
 };
 
 #endif // RTRAY_H
