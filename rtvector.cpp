@@ -2,6 +2,10 @@
 
 #include <cmath>
 
+RTVector::RTVector(){
+
+}
+
 RTVector::RTVector(double x, double y, double z)
 {
     this->x = x;
@@ -76,9 +80,18 @@ RTVector RTVector::operator -(RTVector &v)
     return vr;
 }
 
+//Cross product
+
 RTVector RTVector::operator*(RTVector &v)
 {
-    return v;
+    double x = this->y*v.getZ()-this->z*v.getY();
+    double y = this->z*v.getX()-this->x*v.getZ();
+    double z = this->x*v.getY()-this->y*v.getX();
+
+    RTVector cross(x,y,z);
+
+    return cross;
+
 }
 
 RTVector RTVector::operator*(double v)

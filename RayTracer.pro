@@ -11,13 +11,13 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = RayTracer
 TEMPLATE = app
 
+QMAKE_CXXFLAGS+= -fopenmp
+QMAKE_LFLAGS +=  -fopenmp
 
 SOURCES += main.cpp\
         mainwindow.cpp \
     rtvector.cpp \
     rtscene.cpp \
-    rtsampler.cpp \
-    rtsample.cpp \
     rtcamera.cpp \
     rtpoint.cpp \
     rtray.cpp \
@@ -27,8 +27,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     rtvector.h \
     rtscene.h \
-    rtsampler.h \
-    rtsample.h \
     rtcamera.h \
     rtpoint.h \
     rtray.h \

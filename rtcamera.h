@@ -5,6 +5,10 @@
 
 class RTCamera
 {
+
+
+
+
 public:
     RTCamera();
 

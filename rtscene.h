@@ -1,7 +1,7 @@
 #ifndef RTSCENE_H
 #define RTSCENE_H
 
-#include "rtsampler.h"
+
 
 class RTScene
 {

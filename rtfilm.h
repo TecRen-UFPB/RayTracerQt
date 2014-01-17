@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QImage>
 
-#include "rtsample.h"
 #include "rtcolor.h"
 
 /**
@@ -56,7 +55,7 @@ public:
      * @param sample Position
      * @param color Color to write
      */
-    void commit(RTSample &sample, RTColor &color);
+    void commit(int x, int y, RTColor &color);
 
     /**
      * @brief save Save the current buffer to an archive

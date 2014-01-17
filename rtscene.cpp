@@ -10,12 +10,23 @@ RTScene::RTScene()
 
 void RTScene::render(){
 
-    RTSampler sampler;
-    RTSample sample;
-    while (!sampler.getSample(sample)){
+    int w=RTFilm::getInstance()->getWidth();
+    int h=RTFilm::getInstance()->getHeight();
 
-       // camera.generateRay(sample, &ray);
-       // raytracer.trace(ray, &color);
-       // RTFilm::getInstance()->commit(sample, color);
+
+
+    #pragma omp parallel for
+    for(int i=0;i<w;i++){
+        #pragma omp parallel for
+        for(int j=0;j<h;j++){
+
+            // camera.generateRay(sample, &ray);
+            // raytracer.trace(ray, &color);
+            // RTFilm::getInstance()->commit(sample, color);
+        }
     }
+
+
+
+
 }

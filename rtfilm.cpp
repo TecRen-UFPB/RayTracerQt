@@ -37,9 +37,9 @@ RTFilm::~RTFilm()
     delete image;
 }
 
-void RTFilm::commit(RTSample &sample, RTColor &color)
+void RTFilm::commit(int x,int y, RTColor &color)
 {
-    image->setPixel(sample.getX(), sample.getY(), qRgb(color.getR(), color.getG(), color.getB()) );
+    image->setPixel(x,y, qRgb(color.getR(), color.getG(), color.getB()) );
 }
 
 void RTFilm::writeImage(QString &filename)

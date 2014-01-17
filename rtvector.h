@@ -7,6 +7,9 @@
 class RTVector
 {
 public:
+
+    RTVector();
+
     /**
      * @brief RTVector Constructor for RTVector
      * @param x x-coord
