@@ -26,7 +26,7 @@ void RTScene::render(){
         #pragma omp parallel for
         for(int j=0;j<h;j++){
 
-            camera.generateRay(i,j);
+            RTRay ray=camera.generateRay(i,j);
             // raytracer.trace(ray, &color);
             // RTFilm::getInstance()->commit(sample, color);
         }
