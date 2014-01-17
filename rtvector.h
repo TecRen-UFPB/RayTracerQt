@@ -19,7 +19,7 @@ public:
      * @brief RTVector Does a copy the vector v
      * @param v The vector to be copied
      */
-    RTVector(RTVector &v);
+    RTVector(const RTVector &v);
 
     /**
      * @brief RTVector Default constructor
@@ -36,7 +36,7 @@ public:
      * @brief getX Returns the value of x-coord
      * @return x-coord value
      */
-    double getX();
+    double getX() const;
 
     /**
      * @brief setY Sets a new value for y-coord
@@ -48,7 +48,7 @@ public:
      * @brief getY Returns the value of y-coord
      * @return y-coord value
      */
-    double getY();
+    double getY() const;
 
     /**
      * @brief setZ Sets a new value for z-coord
@@ -60,7 +60,7 @@ public:
      * @brief getZ Returns the value of z-coord
      * @return z-coord value
      */
-    double getZ();
+    double getZ() const;
 
     /**
      * @brief normalize Normalizes the vector

@@ -9,7 +9,7 @@ RTVector::RTVector(double x, double y, double z)
     this->z = z;
 }
 
-RTVector::RTVector(RTVector &v)
+RTVector::RTVector(const RTVector &v)
 {
     this->x = v.getX();
     this->y = v.getY();
@@ -28,7 +28,7 @@ void RTVector::setX(double x)
     this->x = x;
 }
 
-double RTVector::getX()
+double RTVector::getX() const
 {
     return this->x;
 }
@@ -38,7 +38,7 @@ void RTVector::setY(double y)
     this->y = y;
 }
 
-double RTVector::getY()
+double RTVector::getY() const
 {
     return this->y;
 }
@@ -48,7 +48,7 @@ void RTVector::setZ(double z)
     this->z = z;
 }
 
-double RTVector::getZ()
+double RTVector::getZ() const
 {
     return this->z;
 }
