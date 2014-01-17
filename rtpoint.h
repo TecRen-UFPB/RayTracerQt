@@ -12,14 +12,18 @@ class RTPoint
       double z;
 
   public:
+
     RTPoint();
     RTPoint(double x,double y,double z);
+    RTPoint(const RTPoint &point);
+
     RTPoint operator+ (RTVector v);
     RTPoint operator- (RTVector v);
     RTVector operator -(RTPoint p2);
-    double getX();
-    double getY();
-    double getZ();
+
+    double getX() const;
+    double getY() const;
+    double getZ() const;
 };
 
 #endif // RTPOINT_H
