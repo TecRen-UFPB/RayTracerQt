@@ -10,6 +10,13 @@ RTPoint::RTPoint(double x,double y,double z){
     this->z=z;
 }
 
+RTPoint::RTPoint(const RTPoint &point)
+{
+    this->x = point.getX();
+    this->y = point.getY();
+    this->z = point.getZ();
+}
+
 RTPoint RTPoint::operator+ (RTVector v){
 
     double x= this->x+v.getX();
@@ -40,14 +47,14 @@ RTVector RTPoint::operator- (RTPoint p2){
     return v;
 }
 
-double RTPoint::getX(){
+double RTPoint::getX() const {
     return this->x;
 }
 
-double RTPoint::getY(){
+double RTPoint::getY() const {
     return this->y;
 }
 
-double RTPoint::getZ(){
+double RTPoint::getZ() const{
     return this->z;
 }
