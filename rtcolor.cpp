@@ -13,6 +13,13 @@ RTColor::RTColor(RTColor &c)
     this->_b = c.getB();
 }
 
+RTColor::RTColor()
+{
+    this->_r = 0;
+    this->_g = 0;
+    this->_b = 0;
+}
+
 void RTColor::setR(unsigned int r)
 {
     this->_r = r;
