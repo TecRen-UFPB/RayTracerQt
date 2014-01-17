@@ -4,6 +4,8 @@
 #include "rtray.h"
 #include "rtlocalgeo.h"
 
+#include <vector>
+
 /**
  * @brief The RTObject class Generic class for objects
  */
@@ -22,21 +24,10 @@ public:
      * @param hitPoint The point where the ray touched.
      * @return True if an intersect was found, false otherwise.
      */
-    virtual bool intersect( RTRAy &ray, RTLocalGeo &hitPoint ) = 0;
+    virtual bool intersect( RTRay &ray, std::vector<double> &tValues, RTLocalGeo &hitPoint ) = 0;
 
 private:
-    int teste;
 
 };
 
 #endif // RTOBJECT_H
-
-int RTObject::getTeste() const
-{
-return teste;
-}
-
-void RTObject::setTeste(int value)
-{
-teste = value;
-}

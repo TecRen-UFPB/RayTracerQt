@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     rtray.cpp \
     rtfilm.cpp \
     rtcolor.cpp \
-    rtlocalgeo.cpp
+    rtlocalgeo.cpp \
+    rtsphere.cpp
 
 HEADERS  += mainwindow.h \
     rtvector.h \
@@ -34,6 +35,7 @@ HEADERS  += mainwindow.h \
     rtfilm.h \
     rtcolor.h \
     rtlocalgeo.h \
-    rtobject.h
+    rtobject.h \
+    rtsphere.h
 
 FORMS    += mainwindow.ui
