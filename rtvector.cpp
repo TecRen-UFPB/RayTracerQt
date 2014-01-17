@@ -2,9 +2,6 @@
 
 #include <cmath>
 
-RTVector::RTVector(){
-
-}
 
 RTVector::RTVector(double x, double y, double z)
 {

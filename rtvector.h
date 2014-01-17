@@ -8,7 +8,7 @@ class RTVector
 {
 public:
 
-    RTVector();
+
 
     /**
      * @brief RTVector Constructor for RTVector
