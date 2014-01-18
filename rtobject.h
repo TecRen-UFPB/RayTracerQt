@@ -3,6 +3,7 @@
 
 #include "rtray.h"
 #include "rtbrdf.h"
+#include "rtvector.h"
 
 #include <vector>
 
@@ -26,7 +27,15 @@ public:
      * @param hitPoint The point where the ray touched.
      * @return True if an intersect was found, false otherwise.
      */
-    virtual bool intersect( RTRay &ray, std::vector<double> &tValues) { return false; }
+    virtual bool intersect( RTRay &ray,double &t){
+
+        return false;
+    }
+
+    virtual RTVector normalOfHitPoint(RTVector hit){
+
+        return RTVector(0,0,0);
+    }
 
     RTBRDF getBrdf() const
     {

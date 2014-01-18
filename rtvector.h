@@ -1,6 +1,7 @@
 #ifndef RTVECTOR_H
 #define RTVECTOR_H
 
+
 /**
  * @brief The RTVector class model for vector
  */
@@ -71,9 +72,10 @@ public:
      */
     void normalize();
 
-    RTVector operator+(RTVector &v);
-    RTVector operator-(RTVector &v);
-    RTVector operator*(RTVector &v);
+    RTVector operator+(RTVector v);
+
+    RTVector operator-(RTVector v);
+    RTVector operator*(RTVector v);
 
     RTVector operator*(double v);
     RTVector operator/(double v);

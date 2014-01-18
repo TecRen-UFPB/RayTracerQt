@@ -38,9 +38,9 @@ void RTSphere::setRadius(double value)
     radius = value;
 }
 
-bool RTSphere::intersect(RTRay &ray, std::vector<double> &tValues)
+bool RTSphere::intersect(RTRay &ray, double &t)
 {
-    double a, b, c, delta, x1, x2;
+    double a, b, c, delta, t0, t1;
 
     // calculates the A term
     a = std::pow( ray.getDir().getX() , 2.0 ) +
@@ -69,34 +69,45 @@ bool RTSphere::intersect(RTRay &ray, std::vector<double> &tValues)
     if(delta<0)
         return false;
 
-    x1 = ( -b + std::sqrt(delta) ) / 2*a;
-    tValues.push_back(x1);
+    //numeric precision
+    if(b<0){
+        t0 = (( -b + std::sqrt(delta) ) / 2*a)/a;
+        t1 = c/(( -b + std::sqrt(delta) ) / 2*a);
+    }else{
 
-    if(delta!=0)
-    {
-        x2 = ( -b - std::sqrt(delta) ) / 2*a;
-        tValues.push_back(x2);
+        t0 = (( -b - std::sqrt(delta) ) / 2*a)/a;
+        t1 = c/(( -b - std::sqrt(delta) ) / 2*a);
     }
 
-    // TODO check if this is correct
-    // TODO check the normal required for RTLocalGeo
-    // TODO check what t value is used in the case of delta>0
-    RTPoint point(ray.getPos().getX() + x1*ray.getDir().getX(),
-                  ray.getPos().getY() + x1*ray.getDir().getY(),
-                  ray.getPos().getZ() + x1*ray.getDir().getZ()
-                );
-
-//    hitPoint.setPoint(point);
+    if(t0>t1){
+        float temp=t0;
+        t0=t1;
+        t1=temp;
+    }
 
 
-    //normal of point
+    if (t1 < 0)
+       return false;
 
-    RTVector normal = (point-this->center);
-    normal=normal*2.0f;
-    printf("%lf",normal.getNorma());
+    if (t0 < 0)
+    {
+            t = t1;
+            return true;
+    }
+    else
+    {
+            t = t0;
+            return true;
+    }
 
-//    hitPoint.setNormal(normal);
 
-    return true;
+}
 
+RTVector RTSphere::normalOfHitPoint(RTVector hit)
+{
+
+    RTVector normal =hit-(this->center*-1.0);
+    normal=normal/this->radius;
+    normal.normalize();
+    return normal;
 }

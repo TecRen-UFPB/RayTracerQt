@@ -17,10 +17,10 @@ class RTPoint
     RTPoint(double x,double y,double z);
     RTPoint(const RTPoint &point);
 
-    RTPoint operator+ (RTVector v);
+    RTVector operator+ (RTVector v);
     RTPoint operator- (RTVector v);
     RTVector operator -(RTPoint p2);
-
+    RTVector operator *(double n);
     double getX() const;
     double getY() const;
     double getZ() const;

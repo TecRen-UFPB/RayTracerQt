@@ -18,13 +18,9 @@ class RTCamera
     /**
      * @brief campo de visão
      */
-    double fovx;
+
     double fovy;
 
-    /**
-     * @brief focal_length
-     */
-    double focal_length;
 
 
     /**
@@ -48,7 +44,7 @@ public:
      * @param fovy
      * @param focal_length
      */
-    RTCamera(RTPoint e,RTPoint look_at,RTVector up, double fovx,double fovy,double focal_length);
+    RTCamera(RTPoint e,RTPoint look_at,RTVector up,double fovy);
 
     /**
      * @brief genRay
@@ -61,12 +57,8 @@ public:
 
     RTPoint getE() const;
     void setE(const RTPoint &value);
-    double getFovx() const;
-    void setFovx(double value);
     double getFovy() const;
     void setFovy(double value);
-    double getFocal_length() const;
-    void setFocal_length(double value);
     RTVector getW() const;
     void setW(const RTVector &value);
     RTVector getU() const;
