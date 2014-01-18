@@ -2,6 +2,7 @@
 #define RTOBJECT_H
 
 #include "rtray.h"
+#include "rtbrdf.h"
 
 #include <vector>
 
@@ -15,6 +16,8 @@ public:
      * @brief RTObject Default constructor
      */
     RTObject() {}
+    RTObject(const RTBRDF &brdf) { this->brdf = brdf;  }
+
     virtual ~RTObject(){}
 
     /**
@@ -23,9 +26,21 @@ public:
      * @param hitPoint The point where the ray touched.
      * @return True if an intersect was found, false otherwise.
      */
-    virtual bool intersect( RTRay &ray, std::vector<double> &tValues) = 0;
+    virtual bool intersect( RTRay &ray, std::vector<double> &tValues) { return false; }
+
+    RTBRDF getBrdf() const
+    {
+        return brdf;
+    }
+
+    void setBrdf(const RTBRDF &value)
+    {
+        brdf = value;
+    }
+
 
 private:
+    RTBRDF brdf;
 
 };
 

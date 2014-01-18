@@ -2,18 +2,18 @@
 #include <cstdio>
 #include <cmath>
 
-RTSphere::RTSphere()
+RTSphere::RTSphere() : RTObject()
 {
     this->radius = 1.0;
 }
 
-RTSphere::RTSphere(const RTSphere &sph)
+RTSphere::RTSphere(const RTSphere &sph) : RTObject(sph.getBrdf())
 {
     this->radius = sph.getRadius();
     this->center = sph.center;
 }
 
-RTSphere::RTSphere(RTPoint &center, double radius)
+RTSphere::RTSphere(RTPoint &center, double radius, RTBRDF &brdf) : RTObject(brdf)
 {
     this->center = center;
     this->radius = radius;
@@ -81,10 +81,10 @@ bool RTSphere::intersect(RTRay &ray, std::vector<double> &tValues)
     // TODO check if this is correct
     // TODO check the normal required for RTLocalGeo
     // TODO check what t value is used in the case of delta>0
-//    RTPoint point(ray.getPos().getX() + x1*ray.getDir().getX(),
-//                  ray.getPos().getY() + x1*ray.getDir().getY(),
-//                  ray.getPos().getZ() + x1*ray.getDir().getZ()
-//                );
+    RTPoint point(ray.getPos().getX() + x1*ray.getDir().getX(),
+                  ray.getPos().getY() + x1*ray.getDir().getY(),
+                  ray.getPos().getZ() + x1*ray.getDir().getZ()
+                );
 
 //    hitPoint.setPoint(point);
 
@@ -95,7 +95,7 @@ bool RTSphere::intersect(RTRay &ray, std::vector<double> &tValues)
     normal=normal*2.0f;
     printf("%lf",normal.getNorma());
 
-    hitPoint.setNormal(normal);
+//    hitPoint.setNormal(normal);
 
     return true;
 

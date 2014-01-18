@@ -6,7 +6,7 @@ RTColor::RTColor(unsigned int r, unsigned int g, unsigned int b) :
 
 }
 
-RTColor::RTColor(RTColor &c)
+RTColor::RTColor(const RTColor &c)
 {
     this->_r = c.getR();
     this->_g = c.getG();
@@ -35,17 +35,17 @@ void RTColor::setB(unsigned int b)
     this->_b = b;
 }
 
-unsigned int RTColor::getR()
+unsigned int RTColor::getR() const
 {
     return this->_r;
 }
 
-unsigned int RTColor::getG()
+unsigned int RTColor::getG() const
 {
     return this->_g;
 }
 
-unsigned int RTColor::getB()
+unsigned int RTColor::getB() const
 {
     return this->_b;
 }

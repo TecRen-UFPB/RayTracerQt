@@ -16,7 +16,7 @@ public:
      * @brief RTColor Does a copy of the color
      * @param c Object to be copied.
      */
-    RTColor(RTColor &c);
+    RTColor(const RTColor &c);
 
     /**
      * @brief RTColor Default constructor. Black color.
@@ -45,19 +45,19 @@ public:
      * @brief getR Get the amount of red
      * @return Amount of red
      */
-    unsigned int getR();
+    unsigned int getR() const;
 
     /**
      * @brief getG Get the amount of green
      * @return Amount of green
      */
-    unsigned int getG();
+    unsigned int getG() const;
 
     /**
      * @brief getB Get the amount of blue
      * @return Amount of blue
      */
-    unsigned int getB();
+    unsigned int getB() const;
 
     /**
      * @brief operator + Performs the sum of two colors
