@@ -78,6 +78,8 @@ public:
     RTVector operator*(double v);
     RTVector operator/(double v);
 
+    double getNorma();
+
 
 private:
     double x, y, z;

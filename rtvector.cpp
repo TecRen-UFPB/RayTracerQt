@@ -119,4 +119,9 @@ RTVector RTVector::operator/(double v)
     return vr;
 }
 
+double RTVector::getNorma(){
+
+    double norm = sqrt( pow(x, 2.0) + pow(y, 2.0) + pow(z, 2.0) );
+    return norm;
+}
 

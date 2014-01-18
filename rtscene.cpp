@@ -1,5 +1,4 @@
 #include "rtscene.h"
-
 #include "rtfilm.h"
 
 RTScene::RTScene()

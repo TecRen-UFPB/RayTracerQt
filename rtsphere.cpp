@@ -1,5 +1,5 @@
 #include "rtsphere.h"
-
+#include <cstdio>
 #include <cmath>
 
 RTSphere::RTSphere()
@@ -87,6 +87,15 @@ bool RTSphere::intersect( RTRay &ray, std::vector<double> &tValues, RTLocalGeo &
                 );
 
     hitPoint.setPoint(point);
+
+
+    //normal of point
+
+    RTVector normal = (point-this->center);
+    normal=normal*2.0f;
+    printf("%lf",normal.getNorma());
+
+    hitPoint.setNormal(normal);
 
     return true;
 
