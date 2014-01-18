@@ -39,6 +39,8 @@ public:
      */
     virtual bool intersect( RTRay &ray,double &t ) ;
 
+    virtual RTVector normalOfHitPoint(RTVector hit);
+
 private:
     RTPoint center;
     double radius;

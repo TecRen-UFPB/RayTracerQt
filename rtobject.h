@@ -2,6 +2,7 @@
 #define RTOBJECT_H
 
 #include "rtray.h"
+#include "rtvector.h"
 
 #include <vector>
 
@@ -26,6 +27,11 @@ public:
     virtual bool intersect( RTRay &ray,double &t){
 
         return false;
+    }
+
+    virtual RTVector normalOfHitPoint(RTVector hit){
+
+        return RTVector(0,0,0);
     }
 
 

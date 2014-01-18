@@ -47,6 +47,19 @@ RTVector RTPoint::operator- (RTPoint p2){
     return v;
 }
 
+RTVector RTPoint::operator *(double n)
+{
+    double x= this->x*n;
+    double y= this->y*n;
+    double z= this->z*n;
+
+    RTVector r(x,y,z);
+
+    return r;
+
+
+}
+
 double RTPoint::getX() const {
     return this->x;
 }
