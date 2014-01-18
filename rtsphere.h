@@ -37,7 +37,7 @@ public:
      * @param hitPoint The point where the ray touched.
      * @return True if an intersect was found, false otherwise.
      */
-    virtual bool intersect( RTRay &ray, std::vector<double> &tValues, RTLocalGeo &hitPoint ) ;
+    virtual bool intersect( RTRay &ray, std::vector<double> &tValues ) ;
 
 private:
     RTPoint center;

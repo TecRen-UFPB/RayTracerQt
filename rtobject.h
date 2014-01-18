@@ -2,7 +2,6 @@
 #define RTOBJECT_H
 
 #include "rtray.h"
-#include "rtlocalgeo.h"
 
 #include <vector>
 
@@ -24,7 +23,7 @@ public:
      * @param hitPoint The point where the ray touched.
      * @return True if an intersect was found, false otherwise.
      */
-    virtual bool intersect( RTRay &ray, std::vector<double> &tValues, RTLocalGeo &hitPoint ) = 0;
+    virtual bool intersect( RTRay &ray, std::vector<double> &tValues) = 0;
 
 private:
 

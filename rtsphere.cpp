@@ -38,7 +38,7 @@ void RTSphere::setRadius(double value)
     radius = value;
 }
 
-bool RTSphere::intersect( RTRay &ray, std::vector<double> &tValues, RTLocalGeo &hitPoint )
+bool RTSphere::intersect(RTRay &ray, std::vector<double> &tValues)
 {
     double a, b, c, delta, x1, x2;
 
@@ -81,12 +81,12 @@ bool RTSphere::intersect( RTRay &ray, std::vector<double> &tValues, RTLocalGeo &
     // TODO check if this is correct
     // TODO check the normal required for RTLocalGeo
     // TODO check what t value is used in the case of delta>0
-    RTPoint point(ray.getPos().getX() + x1*ray.getDir().getX(),
-                  ray.getPos().getY() + x1*ray.getDir().getY(),
-                  ray.getPos().getZ() + x1*ray.getDir().getZ()
-                );
+//    RTPoint point(ray.getPos().getX() + x1*ray.getDir().getX(),
+//                  ray.getPos().getY() + x1*ray.getDir().getY(),
+//                  ray.getPos().getZ() + x1*ray.getDir().getZ()
+//                );
 
-    hitPoint.setPoint(point);
+//    hitPoint.setPoint(point);
 
     return true;
 

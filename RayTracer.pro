@@ -23,7 +23,6 @@ SOURCES += main.cpp\
     rtray.cpp \
     rtfilm.cpp \
     rtcolor.cpp \
-    rtlocalgeo.cpp \
     rtsphere.cpp
 
 HEADERS  += mainwindow.h \
@@ -34,7 +33,6 @@ HEADERS  += mainwindow.h \
     rtray.h \
     rtfilm.h \
     rtcolor.h \
-    rtlocalgeo.h \
     rtobject.h \
     rtsphere.h
 
