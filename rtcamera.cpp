@@ -5,19 +5,12 @@ RTCamera::RTCamera()
 {
 }
 
-RTCamera::RTCamera(RTPoint e,RTPoint look_at,RTVector up, double fovx,double fovy, double focal_length){
+RTCamera::RTCamera(RTPoint e,RTPoint look_at,RTVector up,double fovy){
 
-    RTVector viewDirection;
-    viewDirection = look_at-e;
-    viewDirection=viewDirection*-1;
+    RTVector viewDirection = ((look_at-e)*-1.0);
 
     //campo de visão
-    this->fovx=fovx;
     this->fovy=fovy;
-
-
-    this->focal_length=focal_length;
-
 
     //base ortonormal
     this->w=viewDirection;
@@ -31,28 +24,15 @@ RTCamera::RTCamera(RTPoint e,RTPoint look_at,RTVector up, double fovx,double fov
 
 RTRay RTCamera::generateRay(int i,int j){
 
-    int wid=RTFilm::getInstance()->getWidth();
-    int hei=RTFilm::getInstance()->getHeight();
 
 
-    double alfa,betha; //pixel view plane coordinates
-
-    alfa = ((2*i-wid)/wid)*tan(this->fovx);
-    betha = ((2*j-hei)/hei)*tan(this->fovy);
-
-    RTVector _w;
-    w=(this->w*(-1.0));
-    RTVector _u;
-    _u= (this->u*alfa);
-    RTVector _v;
-    _v= (this->v*betha);
-
-    RTVector direction;
-    direction=((_w+_u)+_v);
-
-    RTRay ray(this->e,direction);
-
-    return ray;
+    int width=RTFilm::getInstance()->getWidth();
+    int height=RTFilm::getInstance()->getHeight();
+    double fov = this->fovy*M_PI/180.0;
+    double x_range = tan(fov / 2.0) * width / height;
+    double b = tan(fov / 2.0) * (height/2.0 - i) / (height / 2.0);
+    double a =  x_range * (j - width/2.0) / (width / 2.0);
+    return RTRay(e,((w*-1.0)+(u*a)+(v*b)));
 
 }
 
@@ -67,15 +47,6 @@ void RTCamera::setE(const RTPoint &value)
     e = value;
 }
 
-double RTCamera::getFovx() const
-{
-    return fovx;
-}
-
-void RTCamera::setFovx(double value)
-{
-    fovx = value;
-}
 
 double RTCamera::getFovy() const
 {
@@ -87,15 +58,6 @@ void RTCamera::setFovy(double value)
     fovy = value;
 }
 
-double RTCamera::getFocal_length() const
-{
-    return focal_length;
-}
-
-void RTCamera::setFocal_length(double value)
-{
-    focal_length = value;
-}
 
 RTVector RTCamera::getW() const
 {

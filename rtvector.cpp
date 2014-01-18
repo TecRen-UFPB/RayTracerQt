@@ -63,7 +63,7 @@ void RTVector::normalize()
     this->z /= len;
 }
 
-RTVector RTVector::operator +(RTVector &v)
+RTVector RTVector::operator +(RTVector v)
 {
     double sx, sy, sz;
     sx = this->x + v.getX();
@@ -74,7 +74,8 @@ RTVector RTVector::operator +(RTVector &v)
     return vr;
 }
 
-RTVector RTVector::operator -(RTVector &v)
+
+RTVector RTVector::operator -(RTVector v)
 {
     double sx, sy, sz;
     sx = v.getX() - this->x;
@@ -87,7 +88,7 @@ RTVector RTVector::operator -(RTVector &v)
 
 //Cross product
 
-RTVector RTVector::operator*(RTVector &v)
+RTVector RTVector::operator*(RTVector v)
 {
     double x = this->y*v.getZ()-this->z*v.getY();
     double y = this->z*v.getX()-this->x*v.getZ();

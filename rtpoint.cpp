@@ -17,12 +17,12 @@ RTPoint::RTPoint(const RTPoint &point)
     this->z = point.getZ();
 }
 
-RTPoint RTPoint::operator+ (RTVector v){
+RTVector RTPoint::operator+ (RTVector v){
 
     double x= this->x+v.getX();
     double y= this->y+v.getY();
     double z= this->z+v.getZ();
-    RTPoint p(x,y,z);
+    RTVector p(x,y,z);
     return p;
 
 }
