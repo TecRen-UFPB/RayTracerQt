@@ -22,17 +22,21 @@ RTColor::RTColor()
 
 void RTColor::setR(unsigned int r)
 {
-    this->_r = r;
+    unsigned int rx=(r>255)?255:r;
+
+    this->_r = rx;
 }
 
 void RTColor::setG(unsigned int g)
 {
-    this->_g = g;
+    unsigned int gx=(g>255)?255:g;
+    this->_g = gx;
 }
 
 void RTColor::setB(unsigned int b)
 {
-    this->_b = b;
+    unsigned int bx=(b>255)?255:b;
+    this->_b = bx;
 }
 
 unsigned int RTColor::getR() const

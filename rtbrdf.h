@@ -26,7 +26,7 @@ public:
      * @param ka
      * @param kr
      */
-    RTBRDF(double kd, double ks, double ka, double kr, RTColor color);
+    RTBRDF(double ka,double kd,double ks, int n, RTColor color);
 
 
     RTColor getColor() const;
@@ -44,8 +44,12 @@ public:
     double getKr() const;
     void setKr(const double &value);
 
+    int getN() const;
+    void setN(int value);
+
 private:
     double ka, kd, ks, kr;
+    int n; //specular power
     RTColor color;
 
 };

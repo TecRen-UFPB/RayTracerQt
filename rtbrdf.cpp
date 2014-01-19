@@ -10,15 +10,16 @@ RTBRDF::RTBRDF(const RTBRDF &cpy)
     this->ks = cpy.getKs();
     this->ka = cpy.getKa();
     this->kr = cpy.getKr();
+    this->n= cpy.getN();
     this->color = cpy.getColor();
 }
 
-RTBRDF::RTBRDF(double kd, double ks, double ka, double kr, RTColor color)
+RTBRDF::RTBRDF(double ka, double kd, double ks, int n, RTColor color)
 {
     this->kd = kd;
     this->ks = ks;
     this->ka = ka;
-    this->kr = kr;
+    this->n = n;
     this->color = color;
 }
 
@@ -58,6 +59,16 @@ void RTBRDF::setKr(const double &value)
 {
     kr = value;
 }
+int RTBRDF::getN() const
+{
+    return n;
+}
+
+void RTBRDF::setN(int value)
+{
+    n = value;
+}
+
 
 void RTBRDF::setColor(const RTColor &value)
 {

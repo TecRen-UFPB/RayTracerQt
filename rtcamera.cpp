@@ -7,12 +7,13 @@ RTCamera::RTCamera()
 
 RTCamera::RTCamera(RTPoint e,RTPoint look_at,RTVector up,double fovy){
 
-    RTVector viewDirection = ((look_at-e)*-1.0);
 
     //campo de visão
+    this->e=e;
     this->fovy=fovy;
 
     //base ortonormal
+    RTVector viewDirection = ((look_at-e)*-1.0);
     this->w=viewDirection;
     this->w.normalize();
     this->u=(up*w);

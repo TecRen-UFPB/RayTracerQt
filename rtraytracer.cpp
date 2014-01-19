@@ -67,40 +67,44 @@ RTColor RTRayTracer::shading(RTObject *obj, RTVector &hit, RTLight light)
 
     RTPoint point(hit.getX(), hit.getY(), hit.getZ());
 
-    RTVector dir_light;
-    light.getVectorToLight(point, dir_light);
-    dir_light.normalize();
 
-    double intensity;
+    double ambient,diffuse,specular;
+
     // ambient
     // Ia*Ka
-    intensity = light.getIa() * obj->getBrdf().getKa();
+    ambient = light.getIa() * obj->getBrdf().getKa();
 
     // diffuse
     RTVector normal = obj->normalOfHitPoint(hit);
+    RTVector dir_light;
+    light.getVectorToLight(point, dir_light);
+    dir_light.normalize();
 
     double dotNL= normal.dot(dir_light);
     dotNL = std::max(0.0, dotNL);
 
     // Ip*Kd
-    intensity += light.getIp() * obj->getBrdf().getKd() * dotNL;
+    diffuse= light.getIp() * obj->getBrdf().getKd() * dotNL;
+
+
 
     // specular
+
     RTVector cam_dir = this->scene.getCam().getE() - point;
+    cam_dir.normalize();
     RTVector halfway= dir_light + cam_dir;
-
     halfway.normalize();
-
-    normal = -normal;
     double dotHN = halfway.dot(normal);
     dotHN = std::max(0.0, dotHN);
 
     // Ip*Ks*pow(blinnTerm, coef)
-    intensity += light.getIp() * obj->getBrdf().getKs() * std::pow(dotHN, light.getCoef());
 
-    color.setR( obj->getBrdf().getColor().getR() * intensity );
-    color.setG( obj->getBrdf().getColor().getG() * intensity );
-    color.setB( obj->getBrdf().getColor().getB() * intensity );
+    specular = light.getIp() * obj->getBrdf().getKs() * std::pow(dotHN, obj->getBrdf().getN());
+
+
+    color.setR( obj->getBrdf().getColor().getR() * (ambient+diffuse)+light.getColor().getR()*specular );
+    color.setG( obj->getBrdf().getColor().getG() * (ambient+diffuse)+light.getColor().getG()* specular);
+    color.setB( obj->getBrdf().getColor().getB() * (ambient+diffuse)+light.getColor().getB()*specular );
 
     return color;
 }

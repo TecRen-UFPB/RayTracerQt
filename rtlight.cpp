@@ -4,14 +4,15 @@ RTLight::RTLight()
 {
 }
 
-RTLight::RTLight(const RTLight &cpy) : pos(cpy.getPos()), ia(cpy.getIa()), ip(cpy.getIp()), coef(cpy.getCoef())
+RTLight::RTLight(const RTLight &cpy) : pos(cpy.getPos()), ia(cpy.getIa()), ip(cpy.getIp()),color(cpy.getColor())
 {
 
 }
 
-RTLight::RTLight(RTPoint &pos, double ia, double ip, double coef) : pos(pos), ia(ia), ip(ip), coef(coef)
+RTLight::RTLight(RTPoint &pos, double ia, double ip, RTColor color) : pos(pos), ia(ia), ip(ip)
 {
 
+    this->color=color;
 }
 
 RTPoint RTLight::getPos() const
@@ -36,15 +37,7 @@ void RTLight::getVectorToLight(RTPoint &orig, RTVector &vec)
     vec = pos - orig;
 }
 
-double RTLight::getCoef() const
-{
-    return coef;
-}
 
-void RTLight::setCoef(double value)
-{
-    coef = value;
-}
 double RTLight::getIa() const
 {
     return ia;
@@ -63,6 +56,16 @@ void RTLight::setIp(double value)
 {
     ip = value;
 }
+RTColor RTLight::getColor() const
+{
+    return color;
+}
+
+void RTLight::setColor(const RTColor &value)
+{
+    color = value;
+}
+
 
 
 

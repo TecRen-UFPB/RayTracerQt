@@ -57,7 +57,11 @@ double RTVector::getZ() const
 
 void RTVector::normalize()
 {
+
     double len = sqrt( pow(x, 2.0) + pow(y, 2.0) + pow(z, 2.0) );
+    if(len<0.000001)
+        return;
+
     this->x /= len;
     this->y /= len;
     this->z /= len;
@@ -85,9 +89,9 @@ RTVector RTVector::operator -()
 RTVector RTVector::operator -(RTVector v)
 {
     double sx, sy, sz;
-    sx = v.getX() - this->x;
-    sy = v.getY() - this->y;
-    sz = v.getZ() - this->z;
+    sx = this->x-v.getX();
+    sy = this->y-v.getY();
+    sz = this->z-v.getZ();
 
     RTVector vr(sx, sy, sz);
     return vr;

@@ -23,7 +23,7 @@ public:
      * @brief RTLight Constructor
      * @param pos
      */
-    RTLight(RTPoint &pos, double ia, double ip, double coef);
+    RTLight(RTPoint &pos, double ia, double ip,RTColor color);
 
     RTPoint getPos() const;
     void setPos(const RTPoint &value);
@@ -32,8 +32,6 @@ public:
 
     void getVectorToLight(RTPoint &orig, RTVector &vec );
 
-    double getCoef() const;
-    void setCoef(double value);
 
     double getIa() const;
     void setIa(double value);
@@ -41,10 +39,13 @@ public:
     double getIp() const;
     void setIp(double value);
 
+    RTColor getColor() const;
+    void setColor(const RTColor &value);
+
 private:
     RTPoint pos;
-
-    double ia, ip, coef;
+    RTColor color;
+    double ia, ip;
 
 };
 

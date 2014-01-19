@@ -28,13 +28,14 @@ void RTScene::render(){
     raytracer.setScene(*this);
 
     // TODO parameterize the light source.
-    double ia = 1.0, ip = 1.0, coef = 300;
-    RTPoint light_pos = cam.getE();
-    RTLight light(light_pos, ia, ip, coef);
+    double ia = 1.0, ip = 1.0;
+    RTColor light_color(255,255,255);
+    RTPoint light_pos(0,0,2);
+    RTLight light(light_pos, ia, ip, light_color);
 
-    #pragma omp parallel for
+    //#pragma omp parallel for
     for(int i=0;i<w;i++){
-        #pragma omp parallel for
+      //#pragma omp parallel for
         for(int j=0;j<h;j++){
 
             RTRay ray=this->cam.generateRay(i,j);
