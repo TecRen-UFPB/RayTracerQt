@@ -3,6 +3,8 @@
 
 #include "rtcolor.h"
 
+#include <vector>
+
 class RTBRDF
 {
 public:
@@ -24,22 +26,27 @@ public:
      * @param ka
      * @param kr
      */
-    RTBRDF(RTColor &kd, RTColor &ks, RTColor &ka, RTColor &kr);
+    RTBRDF(double kd, double ks, double ka, double kr, RTColor color);
 
-    RTColor getKd() const;
-    void setKd(const RTColor &value);
 
-    RTColor getKs() const;
-    void setKs(const RTColor &value);
+    RTColor getColor() const;
+    void setColor(const RTColor &value);
 
-    RTColor getKa() const;
-    void setKa(const RTColor &value);
+    double getKa() const;
+    void setKa(const double &value);
 
-    RTColor getKr() const;
-    void setKr(const RTColor &value);
+    double getKd() const;
+    void setKd(const double &value);
+
+    double getKs() const;
+    void setKs(const double &value);
+
+    double getKr() const;
+    void setKr(const double &value);
 
 private:
-    RTColor kd, ks, ka, kr;
+    double ka, kd, ks, kr;
+    RTColor color;
 
 };
 

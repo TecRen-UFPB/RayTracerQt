@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 
+#include "rtfilm.h"
+#include "rtcamera.h"
+#include "rtscene.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -17,6 +21,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    // Raytracer
+    RTScene scene;
+    RTCamera cam;
+    std::vector<RTObject*> objects;
+
+    void initRayTracer();
 
 public slots:
     void slotOnBufferChange();

@@ -1,7 +1,6 @@
 #ifndef RTVECTOR_H
 #define RTVECTOR_H
 
-
 /**
  * @brief The RTVector class model for vector
  */
@@ -74,6 +73,7 @@ public:
 
     RTVector operator+(RTVector v);
 
+    RTVector operator-();
     RTVector operator-(RTVector v);
     RTVector operator*(RTVector v);
 
@@ -82,6 +82,7 @@ public:
 
     double getNorma();
 
+    double dot(RTVector &vec2);
 
 private:
     double x, y, z;

@@ -2,6 +2,7 @@
 
 #include <QRgb>
 #include <QColor>
+#include <QDebug>
 
 // static
 RTFilm *RTFilm::buffer = 0;

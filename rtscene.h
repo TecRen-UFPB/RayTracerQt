@@ -12,7 +12,7 @@ class RTScene
 public:
     RTScene();
 
-    RTScene(RTCamera cam, std::vector<RTObject> &primitives, int maxDepth);
+    RTScene(RTCamera cam, std::vector<RTObject *> &primitives, int maxDepth);
 
     /**
      * @brief render a scene
@@ -22,15 +22,15 @@ public:
     RTCamera getCam() const;
     void setCam(const RTCamera &value);
 
-    std::vector<RTObject> getPrimitives() const;
-    void setPrimitives(const std::vector<RTObject> &value);
+    std::vector<RTObject*> getPrimitives() const;
+    void setPrimitives(const std::vector<RTObject*> &value);
 
     int getMaxDepth() const;
     void setMaxDepth(int value);
 
 private:
     RTCamera cam;
-    std::vector<RTObject> primitives;
+    std::vector<RTObject*> primitives;
     int maxDepth;
 };
 

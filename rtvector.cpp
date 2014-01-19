@@ -74,6 +74,13 @@ RTVector RTVector::operator +(RTVector v)
     return vr;
 }
 
+RTVector RTVector::operator -()
+{
+    RTVector vr(-this->x,
+                -this->y,
+                -this->z);
+    return vr;
+}
 
 RTVector RTVector::operator -(RTVector v)
 {
@@ -126,3 +133,10 @@ double RTVector::getNorma(){
     return norm;
 }
 
+double RTVector::dot(RTVector &vec2)
+{
+    double sum = this->x * vec2.getX() +
+            this->y * vec2.getY() +
+            this->z * vec2.getZ();
+    return sum;
+}

@@ -1,11 +1,13 @@
 #include "rtscene.h"
 #include "rtfilm.h"
+#include "rtraytracer.h"
+#include "rtlight.h"
 
 RTScene::RTScene()
 {
 }
 
-RTScene::RTScene(RTCamera cam, std::vector<RTObject> &primitives, int maxDepth)
+RTScene::RTScene(RTCamera cam, std::vector<RTObject*> &primitives, int maxDepth)
 {
     this->cam=cam;
     this->primitives=primitives;
@@ -22,6 +24,13 @@ void RTScene::render(){
     int w=RTFilm::getInstance()->getWidth();
     int h=RTFilm::getInstance()->getHeight();
 
+    RTRayTracer raytracer;
+    raytracer.setScene(*this);
+
+    // TODO parameterize the light source.
+    double ia = 1.0, ip = 1.0, coef = 300;
+    RTPoint light_pos = cam.getE();
+    RTLight light(light_pos, ia, ip, coef);
 
     #pragma omp parallel for
     for(int i=0;i<w;i++){
@@ -29,8 +38,8 @@ void RTScene::render(){
         for(int j=0;j<h;j++){
 
             RTRay ray=this->cam.generateRay(i,j);
-            // raytracer.trace(ray, &color);
-            // RTFilm::getInstance()->commit(sample, color);
+            RTColor color = raytracer.traceRay(ray, maxDepth, light);
+            RTFilm::getInstance()->commit(i, j, color);
         }
     }
 
@@ -47,12 +56,12 @@ void RTScene::setCam(const RTCamera &value)
 {
     cam = value;
 }
-std::vector<RTObject> RTScene::getPrimitives() const
+std::vector<RTObject *> RTScene::getPrimitives() const
 {
     return primitives;
 }
 
-void RTScene::setPrimitives(const std::vector<RTObject> &value)
+void RTScene::setPrimitives(const std::vector<RTObject *> &value)
 {
     primitives = value;
 }
