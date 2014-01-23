@@ -1,4 +1,5 @@
 #include "rtraytracer.h"
+#include "rtplane.h"
 #include <vector>
 #include <QDebug>
 
@@ -11,7 +12,7 @@ RTRayTracer::RTRayTracer()
 RTColor RTRayTracer::traceRay(RTRay &ray, int depth, RTLight light)
 {
 
-    RTColor color(0,0,0);
+    RTColor color(135,206,250);
 
     if(depth>scene.getMaxDepth()){
 
@@ -74,18 +75,31 @@ RTColor RTRayTracer::shading(RTObject *obj, RTVector &hit, RTLight light)
     // Ia*Ka
     ambient = light.getIa() * obj->getBrdf().getKa();
 
+
+    //shadow test
+    double distLigth = light.distToLight(point);
+    RTRay shadowRay;
+    light.generateLightRay(point,shadowRay);
+
+    if(shadowTest(shadowRay,distLigth,obj)){
+
+        color.setR( obj->getBrdf().getColor().getR() * ambient);
+        color.setG( obj->getBrdf().getColor().getG() * ambient);
+        color.setB( obj->getBrdf().getColor().getB() * ambient);
+        return color;
+    }
+
     // diffuse
-    RTVector normal = obj->normalOfHitPoint(hit);
+
     RTVector dir_light;
     light.getVectorToLight(point, dir_light);
     dir_light.normalize();
-
+    RTVector normal = obj->normalOfHitPoint(hit);
     double dotNL= normal.dot(dir_light);
     dotNL = std::max(0.0, dotNL);
 
     // Ip*Kd
     diffuse= light.getIp() * obj->getBrdf().getKd() * dotNL;
-
 
 
     // specular
@@ -101,11 +115,45 @@ RTColor RTRayTracer::shading(RTObject *obj, RTVector &hit, RTLight light)
 
     specular = light.getIp() * obj->getBrdf().getKs() * std::pow(dotHN, obj->getBrdf().getN());
 
-
     color.setR( obj->getBrdf().getColor().getR() * (ambient+diffuse)+light.getColor().getR()*specular );
     color.setG( obj->getBrdf().getColor().getG() * (ambient+diffuse)+light.getColor().getG()* specular);
     color.setB( obj->getBrdf().getColor().getB() * (ambient+diffuse)+light.getColor().getB()*specular );
 
+
     return color;
+}
+
+bool RTRayTracer::shadowTest(RTRay shadowRay,double distLight,RTObject* hitObject)
+{
+
+    std::vector<RTObject*> objects = this->scene.getPrimitives();
+    double t;
+
+
+
+    for(int io=0;io<objects.size();io++){
+
+        RTObject *ob= objects[io];
+
+
+        if(&(*ob)==&(*hitObject))
+            continue;
+
+        if(!objects[io]->intersect(shadowRay,t))
+            continue;
+        else
+        {
+
+            RTObject* copy = objects[io];
+            if (dynamic_cast<RTPlane*>(copy) != NULL)
+                continue;
+
+            if(t< distLight&&t<INF)
+                return true;
+        }
+
+    }
+
+        return false;
 }
 

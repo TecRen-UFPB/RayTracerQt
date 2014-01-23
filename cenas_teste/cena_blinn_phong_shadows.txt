@@ -1,59 +1,4 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-
-#include <QPixmap>
-#include <QFileDialog>
-#include <QDebug>
-
-#include "rtsphere.h"
-#include "rtplane.h"
-
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
-
-    initRayTracer();
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-
-    // destroy the buffer
-    RTFilm::close();
-}
-
-void MainWindow::slotOnBufferChange()
-{
-    ui->bufferPreview->setPixmap(QPixmap::fromImage(*RTFilm::getInstance()->getQImage()));
-}
-
-void MainWindow::slotMenuSaveTriggered()
-{
-    QString fsv = QFileDialog::getSaveFileName(this, tr("Salvar imagem"), QDir::homePath(), "Images (*.png *.xpm *.jpg);; All files (*.*)");
-    RTFilm::getInstance()->writeImage(fsv);
-}
-
-void MainWindow::initRayTracer()
-{
-    // Initiates the buffer
-    RTFilm::init(680, 512);
-
-    // connect buffer update signal
-    connect(RTFilm::getInstance(), SIGNAL(onBufferChange()), this, SLOT(slotOnBufferChange()) );
-
-    // connect menu save triggered
-    connect(ui->actionSalvar, SIGNAL(triggered()), this, SLOT(slotMenuSaveTriggered()));
-
-    // TODO parameterize the scene objects
-
-    /**
-     * sistemas de coordenadas: z-> para tras, y se comporta como x e x como y
-     */
-
-    RTSphere *sphere = new RTSphere();
+RTSphere *sphere = new RTSphere();
     RTPoint sph_center(200,200,0); //200 200 100
     RTColor blue(106,90,205);
     RTBRDF material(0.14, 0.7, 1, 100, blue);
@@ -160,4 +105,3 @@ void MainWindow::initRayTracer()
     delete pl1;
     delete pl20;
     delete sphere3;
-}

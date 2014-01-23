@@ -106,7 +106,7 @@ bool RTSphere::intersect(RTRay &ray, double &t)
 RTVector RTSphere::normalOfHitPoint(RTVector hit)
 {
 
-    RTVector normal =(hit-(this->center*1.0));
+    RTVector normal =(hit-(this->center*1.0))/this->radius;
     normal.normalize();
     return normal;
 }

@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     rtsphere.cpp \
     rtraytracer.cpp \
     rtbrdf.cpp \
-    rtlight.cpp
+    rtlight.cpp \
+    rtplane.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -41,6 +42,7 @@ HEADERS  += mainwindow.h \
     rtsphere.h \
     rtraytracer.h \
     rtbrdf.h \
-    rtlight.h
+    rtlight.h \
+    rtplane.h
 
 FORMS    += mainwindow.ui

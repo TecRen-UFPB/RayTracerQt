@@ -32,6 +32,7 @@ public:
 
     void getVectorToLight(RTPoint &orig, RTVector &vec );
 
+    double distToLight(RTPoint ori);
 
     double getIa() const;
     void setIa(double value);

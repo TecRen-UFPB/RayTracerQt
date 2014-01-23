@@ -1,4 +1,5 @@
 #include "rtlight.h"
+#include<cmath>
 
 RTLight::RTLight()
 {
@@ -25,16 +26,23 @@ void RTLight::setPos(const RTPoint &value)
     pos = value;
 }
 
-void RTLight::generateLightRay(RTPoint &orig, RTRay &ray)
+void RTLight::generateLightRay(RTPoint &orig,RTRay &ray)
 {
     ray.setPos(orig);
     RTVector dir = pos - orig;
+    dir.normalize();
     ray.setDir(dir);
 }
 
 void RTLight::getVectorToLight(RTPoint &orig, RTVector &vec)
 {
     vec = pos - orig;
+}
+
+double RTLight::distToLight(RTPoint ori)
+{
+   return (double)(sqrt(pow(ori.getX()-pos.getX(),2)+pow(ori.getY()-pos.getY(),2)+pow(ori.getZ()-pos.getZ(),2)));
+
 }
 
 

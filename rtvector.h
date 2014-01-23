@@ -82,7 +82,7 @@ public:
 
     double getNorma();
 
-    double dot(RTVector &vec2);
+    double dot(RTVector vec2);
 
 private:
     double x, y, z;

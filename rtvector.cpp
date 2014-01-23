@@ -137,7 +137,7 @@ double RTVector::getNorma(){
     return norm;
 }
 
-double RTVector::dot(RTVector &vec2)
+double RTVector::dot(RTVector vec2)
 {
     double sum = this->x * vec2.getX() +
             this->y * vec2.getY() +
