@@ -32,6 +32,8 @@ private:
     RTColor shading(RTObject *obj, RTVector &hit, RTLight light);
 
     bool shadowTest(RTRay shadowRay, double distLight, RTObject *hitObject);
+
+    double calcFresnel(RTVector i, RTVector n, double f);
 };
 
 #endif // RTRAYTRACER_H

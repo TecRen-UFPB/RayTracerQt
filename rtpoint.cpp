@@ -60,6 +60,7 @@ RTVector RTPoint::operator *(double n)
 
 }
 
+
 double RTPoint::getX() const {
     return this->x;
 }

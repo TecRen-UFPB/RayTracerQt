@@ -63,13 +63,13 @@ public:
      * @brief operator + Performs the sum of two colors
      * @param color
      */
-    RTColor operator +(RTColor &color);
+    RTColor operator +(RTColor color);
 
     /**
      * @brief operator - Performs the subtraction of two colors
      * @param color
      */
-    RTColor operator -(RTColor &color);
+    RTColor operator -(RTColor color);
 
     /**
      * @brief operator * Performs the multiplication by a scalar
@@ -77,11 +77,14 @@ public:
      */
     RTColor operator *(double value);
 
+    RTColor operator *(RTColor c);
+
     /**
      * @brief operator / Performs the division by a scalar
      * @param value
      */
     RTColor operator /(double value);
+
 
 private:
     unsigned int _r, _g, _b;

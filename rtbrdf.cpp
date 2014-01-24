@@ -9,18 +9,21 @@ RTBRDF::RTBRDF(const RTBRDF &cpy)
     this->kd = cpy.getKd();
     this->ks = cpy.getKs();
     this->ka = cpy.getKa();
-    this->kr = cpy.getKr();
+    this->fresnel = cpy.getFresnel();
     this->n= cpy.getN();
+    this->surfaceType=cpy.getSurfaceType();
     this->color = cpy.getColor();
 }
 
-RTBRDF::RTBRDF(double ka, double kd, double ks, int n, RTColor color)
+RTBRDF::RTBRDF(double ka, double kd, double ks, int n, int surfaceType, RTColor color)
 {
     this->kd = kd;
     this->ks = ks;
     this->ka = ka;
     this->n = n;
     this->color = color;
+    this->fresnel=0.35;
+    this->surfaceType=surfaceType;
 }
 
 double RTBRDF::getKa() const
@@ -50,14 +53,14 @@ void RTBRDF::setKs(const double &value)
 {
     ks = value;
 }
-double RTBRDF::getKr() const
+double RTBRDF::getFresnel() const
 {
-    return kr;
+    return fresnel;
 }
 
-void RTBRDF::setKr(const double &value)
+void RTBRDF::setFresnel(const double &value)
 {
-    kr = value;
+    fresnel = value;
 }
 int RTBRDF::getN() const
 {
@@ -68,6 +71,16 @@ void RTBRDF::setN(int value)
 {
     n = value;
 }
+int RTBRDF::getSurfaceType() const
+{
+    return surfaceType;
+}
+
+void RTBRDF::setSurfaceType(int value)
+{
+    surfaceType = value;
+}
+
 
 
 void RTBRDF::setColor(const RTColor &value)

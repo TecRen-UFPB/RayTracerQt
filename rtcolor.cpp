@@ -1,10 +1,18 @@
 #include "rtcolor.h"
 
-RTColor::RTColor(unsigned int r, unsigned int g, unsigned int b) :
-    _r(r), _g(g), _b(b)
+RTColor::RTColor(unsigned int r, unsigned int g, unsigned int b)
 {
+    unsigned int rr=(r>255)?255:r;
+    unsigned int rg=(g>255)?255:g;
+    unsigned int rb=(b>255)?255:b;
+
+    this->_r=rr;
+    this->_g=rg;
+    this->_b=rb;
 
 }
+
+
 
 RTColor::RTColor(const RTColor &c)
 {
@@ -54,7 +62,7 @@ unsigned int RTColor::getB() const
     return this->_b;
 }
 
-RTColor RTColor::operator+(RTColor &color)
+RTColor RTColor::operator+(RTColor color)
 {
     RTColor newColor( this->_r + color.getR(),
                       this->_g + color.getG(),
@@ -62,7 +70,7 @@ RTColor RTColor::operator+(RTColor &color)
     return newColor;
 }
 
-RTColor RTColor::operator-(RTColor &color)
+RTColor RTColor::operator-(RTColor color)
 {
     RTColor newColor( this->_r - color.getR(),
                       this->_g - color.getG(),
@@ -78,6 +86,14 @@ RTColor RTColor::operator*(double value)
     return newColor;
 }
 
+RTColor RTColor::operator *(RTColor c)
+{
+    RTColor newColor( this->_r * c.getR(),
+                      this->_g * c.getG(),
+                      this->_b * c.getB());
+    return newColor;
+}
+
 RTColor RTColor::operator/(double value)
 {
     RTColor newColor( this->_r / value,
@@ -85,3 +101,5 @@ RTColor RTColor::operator/(double value)
                       this->_b / value);
     return newColor;
 }
+
+

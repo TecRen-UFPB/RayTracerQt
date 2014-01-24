@@ -16,7 +16,9 @@ RTColor RTRayTracer::traceRay(RTRay &ray, int depth, RTLight light)
 
     if(depth>scene.getMaxDepth()){
 
-        return color; //BLACK
+        RTColor zero(0,0,0);
+        return zero; //BLACK
+
     }
 
 
@@ -28,7 +30,7 @@ RTColor RTRayTracer::traceRay(RTRay &ray, int depth, RTLight light)
 
     //percorre objetos da cena
     for(unsigned int io=0;io<objects.size();io++){
-        //testa a interseção
+        //testa a inte  rseção
         if(!objects[io]->intersect(ray,t))
             continue;
         else{ //hit
@@ -46,8 +48,31 @@ RTColor RTRayTracer::traceRay(RTRay &ray, int depth, RTLight light)
         return color;
     }
 
-    //calcula a cor do pixel
-    color = shading(closestObject, closestPoint, light);
+    RTColor reflectColor,refracColor,objColor;
+    double fresnelTerm=0.0;
+
+
+    objColor= shading(closestObject, closestPoint, light);
+
+    if(closestObject->getBrdf().getSurfaceType()==REFLECTIVE||closestObject->getBrdf().getSurfaceType()==REFRACTIVE){
+
+        RTVector eyedir = ((ray.getPos()*1)-closestPoint);
+        eyedir.normalize();
+        RTVector normal = closestObject->normalOfHitPoint(closestPoint);
+        RTVector reflectionDir = (normal*2*normal.dot(eyedir))-eyedir;
+        reflectionDir.normalize();
+        double bias = 1e-4;
+        RTVector aux(closestPoint+normal*bias);
+        RTPoint vertice(aux.getX(),aux.getY(),aux.getZ());
+        fresnelTerm = calcFresnel(eyedir,normal,closestObject->getBrdf().getFresnel());
+        RTRay reflectedRay(vertice,reflectionDir);
+        reflectColor=(traceRay(reflectedRay,depth+1,light));
+
+    }
+
+
+    color=(reflectColor*fresnelTerm+objColor);
+
 
     return color;
 
@@ -115,6 +140,12 @@ RTColor RTRayTracer::shading(RTObject *obj, RTVector &hit, RTLight light)
 
     specular = light.getIp() * obj->getBrdf().getKs() * std::pow(dotHN, obj->getBrdf().getN());
 
+    if(specular>1){
+        int b;
+        int c;
+           b+c;
+    }
+
     color.setR( obj->getBrdf().getColor().getR() * (ambient+diffuse)+light.getColor().getR()*specular );
     color.setG( obj->getBrdf().getColor().getG() * (ambient+diffuse)+light.getColor().getG()* specular);
     color.setB( obj->getBrdf().getColor().getB() * (ambient+diffuse)+light.getColor().getB()*specular );
@@ -154,6 +185,13 @@ bool RTRayTracer::shadowTest(RTRay shadowRay,double distLight,RTObject* hitObjec
 
     }
 
-        return false;
+    return false;
+}
+
+
+double RTRayTracer::calcFresnel(RTVector i, RTVector n,double f)
+{
+       double fresnel= fmax(0.0,fmin(1.0,pow(1.0+(-i.dot(n)),f)));
+       return fresnel;
 }
 

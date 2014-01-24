@@ -48,9 +48,30 @@ public:
     }
 
 
+    int getObjTag() const
+    {
+    return objTag;
+    }
+
+    void setObjTag(int value)
+    {
+    objTag = value;
+    }
+
+
 private:
     RTBRDF brdf;
 
+protected:
+    int objTag;
+
+
+
 };
 
+enum {PLANE=1,SPHERE,TRIANGLES};
+
+
 #endif // RTOBJECT_H
+
+

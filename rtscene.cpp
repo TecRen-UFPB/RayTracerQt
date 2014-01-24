@@ -38,7 +38,7 @@ void RTScene::render(){
       #pragma omp parallel for
         for(int j=0;j<h;j++){
             RTRay ray=this->cam.generateRay(i,j);
-            RTColor color = raytracer.traceRay(ray, maxDepth, light);
+            RTColor color = raytracer.traceRay(ray, 1, light);
             RTFilm::getInstance()->commit(i, j, color);
         }
     }

@@ -56,7 +56,8 @@ void MainWindow::initRayTracer()
     RTSphere *sphere = new RTSphere();
     RTPoint sph_center(200,200,0); //200 200 100
     RTColor blue(106,90,205);
-    RTBRDF material(0.14, 0.7, 1, 100, blue);
+    RTBRDF material(0.14, 0.7, 1, 100, SPECULAR, blue);
+
     sphere->setCenter(sph_center);
     sphere->setBrdf(material);
     sphere->setRadius(70);
@@ -67,7 +68,8 @@ void MainWindow::initRayTracer()
     sphere2->setCenter(p1);
     sphere2->setRadius(70);
     RTColor red(255,50,50);
-    RTBRDF material1(0.14, 0.7, 1, 100, red);
+    RTBRDF material1(0.14, 0.7, 1, 100, SPECULAR, red);
+    material1.setFresnel(0.31);
     sphere2->setBrdf(material1);
     objects.push_back(sphere2);
 
@@ -77,7 +79,8 @@ void MainWindow::initRayTracer()
     RTPoint p2(200,300,100); //0 0 10
     sphere3->setCenter(p2);
     sphere3->setRadius(70);
-    RTBRDF material2(0.14, 0.7, 1, 100, green);
+    RTBRDF material2(0.14, 0.7, 1, 100, REFLECTIVE, green);
+      material2.setFresnel(0.31);
     sphere3->setBrdf(material2);
     objects.push_back(sphere3);
 
@@ -87,7 +90,7 @@ void MainWindow::initRayTracer()
     RTPoint p4(470,400,50); //0 0 10
     sphere4->setCenter(p4);
     sphere4->setRadius(50);
-    RTBRDF material4(0.14, 0.7, 1, 100, echo);
+    RTBRDF material4(0.14, 0.7, 1, 100,SPECULAR, echo);
     sphere4->setBrdf(material4);
     objects.push_back(sphere4);
 
@@ -97,7 +100,7 @@ void MainWindow::initRayTracer()
     RTPoint p5(570,400,0); //0 0 10
     sphere5->setCenter(p5);
     sphere5->setRadius(30);
-    RTBRDF material5(0.14, 0.7, 1, 100, muchaco);
+    RTBRDF material5(0.14, 0.7, 1, 100, SPECULAR, muchaco);
     sphere5->setBrdf(material5);
     objects.push_back(sphere5);
 
@@ -107,7 +110,8 @@ void MainWindow::initRayTracer()
     RTPoint p6(570,300,-100); //0 0 10
     sphere6->setCenter(p6);
     sphere6->setRadius(100);
-    RTBRDF material6(0.14, 0.7, 1, 100, sayajin);
+    RTBRDF material6(0.14, 0.7, 1, 100, REFLECTIVE, sayajin);
+    material6.setFresnel(0.31);
     sphere6->setBrdf(material6);
     objects.push_back(sphere6);
 
@@ -115,7 +119,8 @@ void MainWindow::initRayTracer()
     RTPoint p(0,0,1000000);
     RTVector n1(0,0,1);
     RTPlane *pl1= new RTPlane(p,n1);
-    RTBRDF material3(0.14, 0.7, 0, 100, pink);
+    RTBRDF material3(0.14, 0.7, 0, 100, SPECULAR, pink);
+
     pl1->setBrdf(material3);
     objects.push_back(pl1);
 
@@ -123,7 +128,7 @@ void MainWindow::initRayTracer()
     RTVector n10(0,-1,0);
     RTPlane *pl20= new RTPlane(p10,n10);
     RTColor zas(255,255,0);
-    RTBRDF material30(0.2, 0.8, 0, 100, zas);
+    RTBRDF material30(0.2, 0.8, 0, 100, SPECULAR, zas);
     pl20->setBrdf(material30);
     objects.push_back(pl20);
 
@@ -132,7 +137,7 @@ void MainWindow::initRayTracer()
     RTVector n20(1,0,0);
     RTPlane *pl30= new RTPlane(p20,n20);
     RTColor iupi(0,139,139);
-    RTBRDF material20(0.2, 0.8, 0, 100, iupi);
+    RTBRDF material20(0.2, 0.8, 0, 100, SPECULAR, iupi);
     pl30->setBrdf(material20);
     objects.push_back(pl30);
 
@@ -146,7 +151,7 @@ void MainWindow::initRayTracer()
     RTPoint look_at(0,0,-1);
     RTVector up(0,1,0);
     this->cam = RTCamera(e, look_at, up, 2);
-    this->scene = RTScene(this->cam, objects, 4);
+    this->scene = RTScene(this->cam, objects, 10);
 
     this->scene.render();
 

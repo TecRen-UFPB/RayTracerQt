@@ -3,6 +3,7 @@
 
 RTPlane::RTPlane()
 {
+    this->objTag=PLANE;
 }
 
 RTPlane::RTPlane(RTPoint point, RTVector normal)
@@ -10,6 +11,7 @@ RTPlane::RTPlane(RTPoint point, RTVector normal)
 
     this->point=point;
     this->normal=normal;
+    this->objTag=PLANE;
 }
 
 bool RTPlane::intersect(RTRay &ray, double &t)

@@ -5,18 +5,21 @@
 RTSphere::RTSphere() : RTObject()
 {
     this->radius = 1.0;
+    this->objTag=SPHERE;
 }
 
 RTSphere::RTSphere(const RTSphere &sph) : RTObject(sph.getBrdf())
 {
     this->radius = sph.getRadius();
     this->center = sph.center;
+    this->objTag=SPHERE;
 }
 
 RTSphere::RTSphere(RTPoint &center, double radius, RTBRDF &brdf) : RTObject(brdf)
 {
     this->center = center;
     this->radius = radius;
+    this->objTag=SPHERE;
 }
 
 RTPoint RTSphere::getCenter() const
