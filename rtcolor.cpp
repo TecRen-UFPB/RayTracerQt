@@ -16,9 +16,13 @@ RTColor::RTColor(unsigned int r, unsigned int g, unsigned int b)
 
 RTColor::RTColor(const RTColor &c)
 {
-    this->_r = c.getR();
-    this->_g = c.getG();
-    this->_b = c.getB();
+    unsigned int r = (c.getR()>255?255:c.getR());
+    unsigned int g = (c.getG()>255?255:c.getG());
+    unsigned int b = (c.getB()>255?255:c.getB());
+
+    this->_r=r;
+    this->_g=g;
+    this->_b=b;
 }
 
 RTColor::RTColor()

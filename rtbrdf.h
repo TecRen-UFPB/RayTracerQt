@@ -26,7 +26,7 @@ public:
      * @param ka
      * @param kr
      */
-    RTBRDF(double ka,double kd,double ks, int n,int surfaceType,RTColor color);
+    RTBRDF(double ka, double kd, double ks, double kr, double refracIndex, int n, int surfaceType, RTColor color);
 
 
     RTColor getColor() const;
@@ -41,8 +41,6 @@ public:
     double getKs() const;
     void setKs(const double &value);
 
-    double getFresnel() const;
-    void setFresnel(const double &value);
 
     int getN() const;
     void setN(int value);
@@ -50,8 +48,15 @@ public:
     int getSurfaceType() const;
     void setSurfaceType(int value);
 
+
+    double getKr() const;
+    void setKr(double value);
+
+    double getRefracIndex() const;
+    void setRefracIndex(double value);
+
 private:
-    double ka, kd, ks, fresnel;
+    double ka, kd, ks,kr,refracIndex;
     int n; //specular power
     int surfaceType;
     RTColor color;

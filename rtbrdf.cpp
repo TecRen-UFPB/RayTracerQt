@@ -9,21 +9,25 @@ RTBRDF::RTBRDF(const RTBRDF &cpy)
     this->kd = cpy.getKd();
     this->ks = cpy.getKs();
     this->ka = cpy.getKa();
-    this->fresnel = cpy.getFresnel();
+    this->kr = cpy.getKr();
     this->n= cpy.getN();
     this->surfaceType=cpy.getSurfaceType();
     this->color = cpy.getColor();
+    this->refracIndex=cpy.getRefracIndex();
+
 }
 
-RTBRDF::RTBRDF(double ka, double kd, double ks, int n, int surfaceType, RTColor color)
+RTBRDF::RTBRDF(double ka, double kd, double ks, double kr,double refracIndex, int n, int surfaceType, RTColor color)
 {
     this->kd = kd;
     this->ks = ks;
     this->ka = ka;
+    this->kr=kr;
+    this->refracIndex=refracIndex;
     this->n = n;
     this->color = color;
-    this->fresnel=0.35;
     this->surfaceType=surfaceType;
+
 }
 
 double RTBRDF::getKa() const
@@ -53,15 +57,7 @@ void RTBRDF::setKs(const double &value)
 {
     ks = value;
 }
-double RTBRDF::getFresnel() const
-{
-    return fresnel;
-}
 
-void RTBRDF::setFresnel(const double &value)
-{
-    fresnel = value;
-}
 int RTBRDF::getN() const
 {
     return n;
@@ -80,6 +76,27 @@ void RTBRDF::setSurfaceType(int value)
 {
     surfaceType = value;
 }
+double RTBRDF::getKr() const
+{
+    return kr;
+}
+
+void RTBRDF::setKr(double value)
+{
+    kr = value;
+}
+double RTBRDF::getRefracIndex() const
+{
+    return refracIndex;
+}
+
+void RTBRDF::setRefracIndex(double value)
+{
+    refracIndex = value;
+}
+
+
+
 
 
 

@@ -1,60 +1,4 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-
-#include <QPixmap>
-#include <QFileDialog>
-#include <QDebug>
-
-#include "rtsphere.h"
-#include "rtplane.h"
-
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
-
-    initRayTracer();
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-
-    // destroy the buffer
-    RTFilm::close();
-}
-
-void MainWindow::slotOnBufferChange()
-{
-    ui->bufferPreview->setPixmap(QPixmap::fromImage(*RTFilm::getInstance()->getQImage()));
-}
-
-void MainWindow::slotMenuSaveTriggered()
-{
-    QString fsv = QFileDialog::getSaveFileName(this, tr("Salvar imagem"), QDir::homePath(), "Images (*.png *.xpm *.jpg);; All files (*.*)");
-    RTFilm::getInstance()->writeImage(fsv);
-}
-
-void MainWindow::initRayTracer()
-{
-    // Initiates the buffer
-    RTFilm::init(680, 512);
-
-    // connect buffer update signal
-    connect(RTFilm::getInstance(), SIGNAL(onBufferChange()), this, SLOT(slotOnBufferChange()) );
-
-    // connect menu save triggered
-    connect(ui->actionSalvar, SIGNAL(triggered()), this, SLOT(slotMenuSaveTriggered()));
-
-    // TODO parameterize the scene objects
-
-    /**
-     * sistemas de coordenadas: z-> para tras, y se comporta como x e x como y
-     */
-
-
-    RTSphere *sphere = new RTSphere();
+ RTSphere *sphere = new RTSphere();
     RTPoint sph_center(200,200,0); //200 200 100
     RTColor blue(106,90,205);
     RTBRDF material(0.14, 0.7, 1.0,0.5,1.55, 100, REFLECTIVE,blue);
@@ -77,7 +21,7 @@ void MainWindow::initRayTracer()
     RTPoint p2(200,300,100); //0 0 10
     sphere3->setCenter(p2);
     sphere3->setRadius(70);
-    RTBRDF material2(0.14, 0.7, 1,1,1.55, 100, REFRACTIVE, green);
+    RTBRDF material2(0.14, 0.7, 1,0,1.55, 100, REFRACTIVE, green);
 
     sphere3->setBrdf(material2);
     objects.push_back(sphere3);
@@ -88,7 +32,7 @@ void MainWindow::initRayTracer()
     RTPoint p4(470,400,50); //0 0 10
     sphere4->setCenter(p4);
     sphere4->setRadius(50);
-    RTBRDF material4(0.14, 0.7, 1,0.5,1.75, 100,REFLECTIVE, pink);
+    RTBRDF material4(0.14, 0.7, 1,1,1.75, 100,REFLECTIVE, pink);
     sphere4->setBrdf(material4);
     objects.push_back(sphere4);
 
@@ -141,6 +85,9 @@ void MainWindow::initRayTracer()
 
 
 
+
+
+
     // TODO parameterize the camera
     RTPoint e(300, 300, 300);
     RTPoint look_at(0,0,-1);
@@ -148,16 +95,3 @@ void MainWindow::initRayTracer()
     this->cam = RTCamera(e, look_at, up, 2);
     this->scene = RTScene(this->cam, objects, 10);
 
-    this->scene.render();
-
-    // force the first update
-    slotOnBufferChange();
-    delete sphere;
-    delete sphere2;
-    delete sphere4;
-    delete sphere5;
-    delete sphere6;
-    delete pl1;
-    delete pl20;
-    delete sphere3;
-}

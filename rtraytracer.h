@@ -33,7 +33,12 @@ private:
 
     bool shadowTest(RTRay shadowRay, double distLight, RTObject *hitObject);
 
-    double calcFresnel(RTVector i, RTVector n, double f);
+    RTRay genReflectionRay(RTVector d, RTVector n, RTVector closestPoint);
+
+    RTRay genRefractRay(RTVector d, RTVector normal, RTVector closestPoint, double refractionIndex, bool isInside);
+
+
+    double FresnelTerm(RTVector d, RTVector normal, double indexRefrac, bool isInside);
 };
 
 #endif // RTRAYTRACER_H

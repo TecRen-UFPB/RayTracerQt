@@ -22,6 +22,7 @@ void RTRay::setDir(const RTVector &value)
 }
 RTRay::RTRay()
 {
+
 }
 
 RTRay::RTRay(RTPoint pos,RTVector dir){

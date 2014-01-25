@@ -1,58 +1,3 @@
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-
-#include <QPixmap>
-#include <QFileDialog>
-#include <QDebug>
-
-#include "rtsphere.h"
-#include "rtplane.h"
-
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
-
-    initRayTracer();
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-
-    // destroy the buffer
-    RTFilm::close();
-}
-
-void MainWindow::slotOnBufferChange()
-{
-    ui->bufferPreview->setPixmap(QPixmap::fromImage(*RTFilm::getInstance()->getQImage()));
-}
-
-void MainWindow::slotMenuSaveTriggered()
-{
-    QString fsv = QFileDialog::getSaveFileName(this, tr("Salvar imagem"), QDir::homePath(), "Images (*.png *.xpm *.jpg);; All files (*.*)");
-    RTFilm::getInstance()->writeImage(fsv);
-}
-
-void MainWindow::initRayTracer()
-{
-    // Initiates the buffer
-    RTFilm::init(680, 512);
-
-    // connect buffer update signal
-    connect(RTFilm::getInstance(), SIGNAL(onBufferChange()), this, SLOT(slotOnBufferChange()) );
-
-    // connect menu save triggered
-    connect(ui->actionSalvar, SIGNAL(triggered()), this, SLOT(slotMenuSaveTriggered()));
-
-    // TODO parameterize the scene objects
-
-    /**
-     * sistemas de coordenadas: z-> para tras, y se comporta como x e x como y
-     */
-
 
     RTSphere *sphere = new RTSphere();
     RTPoint sph_center(200,200,0); //200 200 100
@@ -141,6 +86,9 @@ void MainWindow::initRayTracer()
 
 
 
+
+
+
     // TODO parameterize the camera
     RTPoint e(300, 300, 300);
     RTPoint look_at(0,0,-1);
@@ -148,16 +96,3 @@ void MainWindow::initRayTracer()
     this->cam = RTCamera(e, look_at, up, 2);
     this->scene = RTScene(this->cam, objects, 10);
 
-    this->scene.render();
-
-    // force the first update
-    slotOnBufferChange();
-    delete sphere;
-    delete sphere2;
-    delete sphere4;
-    delete sphere5;
-    delete sphere6;
-    delete pl1;
-    delete pl20;
-    delete sphere3;
-}

@@ -39,6 +39,8 @@ void RTLight::getVectorToLight(RTPoint &orig, RTVector &vec)
     vec = pos - orig;
 }
 
+
+
 double RTLight::distToLight(RTPoint ori)
 {
    return (double)(sqrt(pow(ori.getX()-pos.getX(),2)+pow(ori.getY()-pos.getY(),2)+pow(ori.getZ()-pos.getZ(),2)));
