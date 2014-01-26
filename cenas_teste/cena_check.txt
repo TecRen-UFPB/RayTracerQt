@@ -1,0 +1,46 @@
+    RTColor sayajin(255,69,0);
+    RTColor green(0,102,51);
+    
+
+    //RTColor blues(0,0,255);
+    RTCheckTexture *check2=new RTCheckTexture(0.2,0.8,1,0.1,100,REFLECTIVE,CHECK,sayajin,green,50);
+
+    RTSphere *sphere6 = new RTSphere();
+    RTPoint p6(300,300,200); //0 0 10
+    sphere6->setCenter(p6);
+    sphere6->setRadius(50);
+    RTBRDF *material6=new RTBRDF(0.14, 0.7, 1,0.6,1.55, 100, REFRACTIVE,SHINY, sayajin);
+    sphere6->setBrdf(check2);
+    objects.push_back(sphere6);
+
+
+
+    RTPoint p(0,0,1000000);
+    RTVector n1(0,0,1);
+    RTPlane *pl1= new RTPlane(p,n1);
+    RTBRDF *material3=new RTBRDF(0.14, 0.7, 0,0.5,1.55, 100, SPECULAR,SHINY, pink);
+
+    pl1->setBrdf(material3);
+    //objects.push_back(pl1);
+
+    RTColor black(255,255,0);
+    RTColor white(255,0,0);
+    RTCheckTexture *check=new RTCheckTexture(0.2,0.8,0,0,100,REFLECTIVE,CHECK,white,black,200);
+
+    RTPoint p10(0,1,0);
+    RTVector n10(0,-1,0);
+    RTPlane *pl20= new RTPlane(p10,n10);
+    RTColor zas(255,255,0);
+    //RTBRDF *material30=new RTBRDF(0.2, 0.8, 0,0.5,1.55, 100, REFLECTIVE,SHINY, zas);
+    pl20->setBrdf(check);
+    objects.push_back(pl20);
+
+        RTPoint e(300, 300, 300);
+    RTPoint look_at(0,0,-1);
+    RTVector up(0,1,0);
+    this->cam = RTCamera(e, look_at, up, 2);
+    this->scene = RTScene(this->cam, objects, 10);
+
+	 RTColor light_color(255,255,255);
+    RTPoint light_pos(300,200,300);
+   

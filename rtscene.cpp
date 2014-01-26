@@ -30,12 +30,12 @@ void RTScene::render(){
     // TODO parameterize the light source.
     double ia = 1.0, ip = 1.0;
     RTColor light_color(255,255,255);
-    RTPoint light_pos(400,200,100);
+    RTPoint light_pos(300,200,300);
     RTLight light(light_pos, ia, ip, light_color);
 
-   // #pragma omp parallel for
+    #pragma omp parallel for
     for(int i=0;i<w;i++){
-     // #pragma omp parallel for
+      #pragma omp parallel for
         for(int j=0;j<h;j++){
             RTRay ray=this->cam.generateRay(i,j);
             RTColor color = raytracer.traceRay(ray, 1, light);

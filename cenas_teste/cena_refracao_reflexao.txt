@@ -97,3 +97,8 @@
     RTPoint look_at(0,0,-1);
     RTVector up(0,1,0);
     this->cam = RTCamera(e, look_at, up, 2);
+
+
+
+    RTColor light_color(255,255,255);
+    RTPoint light_pos(400,200,100)
