@@ -4,6 +4,7 @@ RTBRDF::RTBRDF()
 {
 }
 
+
 RTBRDF::RTBRDF(const RTBRDF &cpy)
 {
     this->kd = cpy.getKd();
@@ -12,12 +13,14 @@ RTBRDF::RTBRDF(const RTBRDF &cpy)
     this->kr = cpy.getKr();
     this->n= cpy.getN();
     this->surfaceType=cpy.getSurfaceType();
-    this->color = cpy.getColor();
+    RTVector v;
+    this->color = cpy.getColor(v);
     this->refracIndex=cpy.getRefracIndex();
+    this->material=cpy.getMaterial();
 
 }
 
-RTBRDF::RTBRDF(double ka, double kd, double ks, double kr,double refracIndex, int n, int surfaceType, RTColor color)
+RTBRDF::RTBRDF(double ka, double kd, double ks, double kr,double refracIndex, int n, int surfaceType, int material, RTColor color)
 {
     this->kd = kd;
     this->ks = ks;
@@ -27,6 +30,19 @@ RTBRDF::RTBRDF(double ka, double kd, double ks, double kr,double refracIndex, in
     this->n = n;
     this->color = color;
     this->surfaceType=surfaceType;
+    this->material=material;
+
+}
+
+RTBRDF::RTBRDF(double ka, double kd, double ks, double kr, int n, int surfaceType,int material)
+{
+    this->kd = kd;
+    this->ks = ks;
+    this->ka = ka;
+    this->kr=kr;
+    this->n = n;
+    this->surfaceType=surfaceType;
+    this->material=material;
 
 }
 
@@ -94,6 +110,16 @@ void RTBRDF::setRefracIndex(double value)
 {
     refracIndex = value;
 }
+int RTBRDF::getMaterial() const
+{
+    return material;
+}
+
+void RTBRDF::setMaterial(int value)
+{
+    material = value;
+}
+
 
 
 
@@ -105,7 +131,12 @@ void RTBRDF::setColor(const RTColor &value)
     color = value;
 }
 
-RTColor RTBRDF::getColor() const
+RTColor RTBRDF::getColor(RTVector hitPoint) const
+{
+    return color;
+}
+
+RTColor RTBRDF::getColor()
 {
     return color;
 }

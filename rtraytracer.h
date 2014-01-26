@@ -37,7 +37,7 @@ private:
 
     RTRay genRefractRay(RTVector d, RTVector normal, RTVector closestPoint, double refractionIndex, bool isInside);
 
-
+    RTColor getFragmentColor(RTObject* obj, RTVector hit);
     double FresnelTerm(RTVector d, RTVector normal, double indexRefrac, bool isInside);
 };
 

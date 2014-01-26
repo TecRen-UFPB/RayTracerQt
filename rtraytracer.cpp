@@ -1,8 +1,11 @@
 #include "rtraytracer.h"
 #include "rtplane.h"
 #include "rtsphere.h"
+#include "rtchecktexture.h"
 #include <vector>
 #include <QDebug>
+#include <iostream>       // std::cout
+#include <typeinfo>
 
 #define INF                                         1e20
 #define AIR_REFRA                                   1.000293
@@ -51,14 +54,14 @@ RTColor RTRayTracer::traceRay(RTRay &ray, int depth, RTLight light)
     }
 
     RTColor reflectColor,refracColor,objColor;
-    int surfaceType=closestObject->getBrdf().getSurfaceType();
+    int surfaceType=closestObject->getBrdf()->getSurfaceType();
 
     objColor= shading(closestObject, closestPoint, light);
 
-    double reflectivePercentage = closestObject->getBrdf().getKr();
+    double reflectivePercentage = closestObject->getBrdf()->getKr();
     double refractivePercentage = 0;
     bool isInside=false;
-    double refraIndex=closestObject->getBrdf().getRefracIndex();
+    double refraIndex=closestObject->getBrdf()->getRefracIndex();
 
     if(surfaceType==REFLECTIVE||surfaceType==REFRACTIVE){
 
@@ -67,6 +70,7 @@ RTColor RTRayTracer::traceRay(RTRay &ray, int depth, RTLight light)
         RTVector eyedir = -((ray.getPos()*1)-closestPoint);  //d
         eyedir.normalize();
         RTVector normal = closestObject->normalOfHitPoint(closestPoint);//N
+
 
 
 
@@ -95,7 +99,7 @@ RTColor RTRayTracer::traceRay(RTRay &ray, int depth, RTLight light)
 
         if(refractivePercentage>0){
 
-            double refraIndex=closestObject->getBrdf().getRefracIndex();
+            double refraIndex=closestObject->getBrdf()->getRefracIndex();
             RTRay refracRay=genRefractRay(eyedir,normal,closestPoint,refraIndex,isInside);
             refracColor=(traceRay(refracRay,depth+1,light));
         }
@@ -212,9 +216,44 @@ void RTRayTracer::setScene(const RTScene &value)
     scene = value;
 }
 
+RTColor RTRayTracer::getFragmentColor(RTObject* obj,RTVector hit){
+
+    RTColor color;
+    RTBRDF *objBrdf=obj->getBrdf();
+    int material = objBrdf->getMaterial();
+
+    switch (material) {
+    case SHINY:
+         color=obj->getBrdf()->getColor(hit);
+        break;
+    case CHECK:{
+        try {
+            RTCheckTexture *check = dynamic_cast<RTCheckTexture*>(objBrdf);
+            color= check->getColor(hit);
+
+        }  catch (std::bad_cast& bc)
+        {
+           std::cerr << "bad_cast caught: " << bc.what() << '\n';
+        }
+
+        // color= check.getColor(hit);
+        }
+
+        break;
+    }
+
+
+    return color;
+}
+
+
 RTColor RTRayTracer::shading(RTObject *obj, RTVector &hit, RTLight light)
 {
-    RTColor color = obj->getBrdf().getColor();
+
+
+    RTColor color = getFragmentColor(obj,hit);
+
+
 
     RTPoint point(hit.getX(), hit.getY(), hit.getZ());
 
@@ -223,7 +262,7 @@ RTColor RTRayTracer::shading(RTObject *obj, RTVector &hit, RTLight light)
 
     // ambient
     // Ia*Ka
-    ambient = light.getIa() * obj->getBrdf().getKa();
+    ambient = light.getIa() * obj->getBrdf()->getKa();
 
 
     //shadow test
@@ -233,9 +272,9 @@ RTColor RTRayTracer::shading(RTObject *obj, RTVector &hit, RTLight light)
 
     if(shadowTest(shadowRay,distLigth,obj)){
 
-        color.setR( obj->getBrdf().getColor().getR() * ambient);
-        color.setG( obj->getBrdf().getColor().getG() * ambient);
-        color.setB( obj->getBrdf().getColor().getB() * ambient);
+        color.setR( obj->getBrdf()->getColor(hit).getR() * ambient);
+        color.setG( obj->getBrdf()->getColor(hit).getG() * ambient);
+        color.setB( obj->getBrdf()->getColor(hit).getB() * ambient);
         return color;
     }
 
@@ -249,7 +288,7 @@ RTColor RTRayTracer::shading(RTObject *obj, RTVector &hit, RTLight light)
     dotNL = std::max(0.0, dotNL);
 
     // Ip*Kd
-    diffuse= light.getIp() * obj->getBrdf().getKd() * dotNL;
+    diffuse= light.getIp() * obj->getBrdf()->getKd() * dotNL;
 
 
     // specular
@@ -263,12 +302,12 @@ RTColor RTRayTracer::shading(RTObject *obj, RTVector &hit, RTLight light)
 
     // Ip*Ks*pow(blinnTerm, coef)
 
-    specular = light.getIp() * obj->getBrdf().getKs() * std::pow(dotHN, obj->getBrdf().getN());
+    specular = light.getIp() * obj->getBrdf()->getKs() * std::pow(dotHN, obj->getBrdf()->getN());
 
 
-    color.setR( obj->getBrdf().getColor().getR() * (ambient+diffuse)+light.getColor().getR()*specular );
-    color.setG( obj->getBrdf().getColor().getG() * (ambient+diffuse)+light.getColor().getG()* specular);
-    color.setB( obj->getBrdf().getColor().getB() * (ambient+diffuse)+light.getColor().getB()*specular );
+    color.setR( obj->getBrdf()->getColor(hit).getR() * (ambient+diffuse)+light.getColor().getR()*specular );
+    color.setG( obj->getBrdf()->getColor(hit).getG() * (ambient+diffuse)+light.getColor().getG()* specular);
+    color.setB( obj->getBrdf()->getColor(hit).getB() * (ambient+diffuse)+light.getColor().getB()*specular );
 
 
     return color;

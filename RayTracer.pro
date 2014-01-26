@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     rtraytracer.cpp \
     rtbrdf.cpp \
     rtlight.cpp \
-    rtplane.cpp
+    rtplane.cpp \
+    rtchecktexture.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -43,6 +44,7 @@ HEADERS  += mainwindow.h \
     rtraytracer.h \
     rtbrdf.h \
     rtlight.h \
-    rtplane.h
+    rtplane.h \
+    rtchecktexture.h
 
 FORMS    += mainwindow.ui

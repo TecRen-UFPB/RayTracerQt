@@ -7,6 +7,7 @@
 
 #include "rtsphere.h"
 #include "rtplane.h"
+#include "rtchecktexture.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -57,30 +58,30 @@ void MainWindow::initRayTracer()
     RTSphere *sphere = new RTSphere();
     RTPoint sph_center(200,200,0); //200 200 100
     RTColor blue(106,90,205);
-    RTBRDF material(0.14, 0.7, 1.0,0.5,1.55, 100, REFLECTIVE,blue);
+    RTBRDF *material=new RTBRDF(0.14, 0.7, 1.0,0.5,1.55, 100, REFLECTIVE,SHINY,blue);
     sphere->setCenter(sph_center);
     sphere->setBrdf(material);
     sphere->setRadius(70);
-    objects.push_back(sphere);
+    //objects.push_back(sphere);
 
     RTSphere *sphere2 = new RTSphere();
     RTPoint p1(300,400,100);
     sphere2->setCenter(p1);
     sphere2->setRadius(50);
     RTColor red(255,50,50);
-    RTBRDF material1(0.14, 0.7, 1,0.1,1.55, 100, REFLECTIVE, red);
+    RTBRDF *material1=new RTBRDF(0.14, 0.7, 1,0.1,1.55, 100, REFRACTIVE,SHINY, red);
     sphere2->setBrdf(material1);
-    objects.push_back(sphere2);
+    //objects.push_back(sphere2);
 
     RTColor green(0,102,51);
     RTSphere *sphere3 = new RTSphere();
     RTPoint p2(200,300,100); //0 0 10
     sphere3->setCenter(p2);
     sphere3->setRadius(70);
-    RTBRDF material2(0.14, 0.7, 1,1,1.55, 100, REFRACTIVE, green);
+    RTBRDF *material2=new RTBRDF(0.14, 0.7, 1,1,1.55, 100, REFRACTIVE,SHINY, green);
 
     sphere3->setBrdf(material2);
-    objects.push_back(sphere3);
+    //objects.push_back(sphere3);
 
     RTColor echo(205,102,29);
     RTColor pink(199,21,133);
@@ -88,9 +89,9 @@ void MainWindow::initRayTracer()
     RTPoint p4(470,400,50); //0 0 10
     sphere4->setCenter(p4);
     sphere4->setRadius(50);
-    RTBRDF material4(0.14, 0.7, 1,0.5,1.75, 100,REFLECTIVE, pink);
+    RTBRDF *material4=new RTBRDF(0.14, 0.7, 1,0.5,1.75, 100,REFLECTIVE, SHINY, pink);
     sphere4->setBrdf(material4);
-    objects.push_back(sphere4);
+    //objects.push_back(sphere4);
 
     RTColor muchaco(255,193,47);
 
@@ -98,17 +99,19 @@ void MainWindow::initRayTracer()
     RTPoint p5(570,400,0); //0 0 10
     sphere5->setCenter(p5);
     sphere5->setRadius(30);
-    RTBRDF material5(0.14, 0.7, 1,0.1,1.55, 100, REFLECTIVE, muchaco);
+    RTBRDF *material5=new RTBRDF(0.14, 0.7, 1,0.1,1.55, 100, REFLECTIVE, SHINY, muchaco);
     sphere5->setBrdf(material5);
-    objects.push_back(sphere5);
+    //objects.push_back(sphere5);
 
     RTColor sayajin(255,69,0);
+
+
 
     RTSphere *sphere6 = new RTSphere();
     RTPoint p6(570,300,-100); //0 0 10
     sphere6->setCenter(p6);
     sphere6->setRadius(100);
-    RTBRDF material6(0.14, 0.7, 1,0.6,1.5, 100, REFLECTIVE, sayajin);
+    RTBRDF *material6=new RTBRDF(0.14, 0.7, 1,0.6,1.5, 100, REFLECTIVE,SHINY, sayajin);
     sphere6->setBrdf(material6);
     objects.push_back(sphere6);
 
@@ -117,17 +120,21 @@ void MainWindow::initRayTracer()
     RTPoint p(0,0,1000000);
     RTVector n1(0,0,1);
     RTPlane *pl1= new RTPlane(p,n1);
-    RTBRDF material3(0.14, 0.7, 0,0.5,1.55, 100, SPECULAR, pink);
+    RTBRDF *material3=new RTBRDF(0.14, 0.7, 0,0.5,1.55, 100, SPECULAR,SHINY, pink);
 
     pl1->setBrdf(material3);
-    objects.push_back(pl1);
+    //objects.push_back(pl1);
+
+    RTColor black(255,255,0);
+    RTColor white(255,0,0);
+    RTCheckTexture *check=new RTCheckTexture(0.2,0.8,0,0,100,REFLECTIVE,CHECK,white,black,200);
 
     RTPoint p10(0,1,0);
     RTVector n10(0,-1,0);
     RTPlane *pl20= new RTPlane(p10,n10);
     RTColor zas(255,255,0);
-    RTBRDF material30(0.2, 0.8, 0,0.5,1.55, 100, REFLECTIVE, zas);
-    pl20->setBrdf(material30);
+    //RTBRDF *material30=new RTBRDF(0.2, 0.8, 0,0.5,1.55, 100, REFLECTIVE,SHINY, zas);
+    pl20->setBrdf(check);
     objects.push_back(pl20);
 
 
@@ -135,9 +142,9 @@ void MainWindow::initRayTracer()
     RTVector n20(1,0,0);
     RTPlane *pl30= new RTPlane(p20,n20);
     RTColor iupi(0,139,139);
-    RTBRDF material20(0.2, 0.8, 1,0,1.55, 100, SPECULAR, iupi);
+    RTBRDF *material20=new RTBRDF(0.2, 0.8, 1,0,1.55, 100, SPECULAR, SHINY, iupi);
     pl30->setBrdf(material20);
-    objects.push_back(pl30);
+    //objects.push_back(pl30);
 
 
 
@@ -160,4 +167,6 @@ void MainWindow::initRayTracer()
     delete pl1;
     delete pl20;
     delete sphere3;
+
+
 }

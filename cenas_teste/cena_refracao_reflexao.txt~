@@ -1,4 +1,5 @@
- RTSphere *sphere = new RTSphere();
+
+    RTSphere *sphere = new RTSphere();
     RTPoint sph_center(200,200,0); //200 200 100
     RTColor blue(106,90,205);
     RTBRDF material(0.14, 0.7, 1.0,0.5,1.55, 100, REFLECTIVE,blue);
@@ -21,7 +22,7 @@
     RTPoint p2(200,300,100); //0 0 10
     sphere3->setCenter(p2);
     sphere3->setRadius(70);
-    RTBRDF material2(0.14, 0.7, 1,0,1.55, 100, REFRACTIVE, green);
+    RTBRDF material2(0.14, 0.7, 1,1,1.55, 100, REFRACTIVE, green);
 
     sphere3->setBrdf(material2);
     objects.push_back(sphere3);
@@ -32,7 +33,7 @@
     RTPoint p4(470,400,50); //0 0 10
     sphere4->setCenter(p4);
     sphere4->setRadius(50);
-    RTBRDF material4(0.14, 0.7, 1,1,1.75, 100,REFLECTIVE, pink);
+    RTBRDF material4(0.14, 0.7, 1,0.5,1.75, 100,REFLECTIVE, pink);
     sphere4->setBrdf(material4);
     objects.push_back(sphere4);
 

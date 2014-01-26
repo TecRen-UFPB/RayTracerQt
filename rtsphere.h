@@ -23,7 +23,7 @@ public:
      * @param center Center of the sphere
      * @param radius Radius of the sphere
      */
-    RTSphere(RTPoint &center, double radius, RTBRDF &brdf);
+    RTSphere(RTPoint &center, double radius, RTBRDF *brdf);
 
     RTPoint getCenter() const;
     void setCenter(const RTPoint &value);

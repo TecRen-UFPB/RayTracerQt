@@ -2,6 +2,7 @@
 #define RTBRDF_H
 
 #include "rtcolor.h"
+#include "rtvector.h"
 
 #include <vector>
 
@@ -26,10 +27,15 @@ public:
      * @param ka
      * @param kr
      */
-    RTBRDF(double ka, double kd, double ks, double kr, double refracIndex, int n, int surfaceType, RTColor color);
+    RTBRDF(double ka, double kd, double ks, double kr, double refracIndex, int n, int surfaceType, int material, RTColor color);
+    RTBRDF(double ka, double kd, double ks, double kr, int n, int surfaceType, int material);
 
 
-    RTColor getColor() const;
+    virtual ~RTBRDF(){}
+    //sera herdada pelas classes de textura
+    virtual RTColor getColor(RTVector hitPoint) const;
+
+    RTColor getColor();
     void setColor(const RTColor &value);
 
     double getKa() const;
@@ -52,17 +58,22 @@ public:
     double getKr() const;
     void setKr(double value);
 
-    double getRefracIndex() const;
+    virtual double getRefracIndex() const;
     void setRefracIndex(double value);
 
-private:
+    int getMaterial() const;
+    void setMaterial(int value);
+
+protected:
     double ka, kd, ks,kr,refracIndex;
     int n; //specular power
     int surfaceType;
     RTColor color;
+    int material;
 
 };
 
 enum {DIFFUSE=1,SPECULAR,REFLECTIVE,REFRACTIVE};
+enum {SHINY=1,CHECK};
 
 #endif // RTBRDF_H

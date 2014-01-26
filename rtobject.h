@@ -17,9 +17,80 @@ public:
      * @brief RTObject Default constructor
      */
     RTObject() {}
-    RTObject(const RTBRDF &brdf) { this->brdf = brdf;  }
 
-    virtual ~RTObject(){}
+    RTObject(RTBRDF* brdfAux){
+
+
+
+        double kd = brdfAux->getKa();
+        double ks = brdfAux->getKs();
+        double ka = brdfAux->getKa();
+        double kr=  brdfAux->getKr();
+        double refracIndex=brdfAux->getRefracIndex();
+        int n = brdfAux->getN();
+        RTColor color = brdfAux->getColor();
+        int surfaceType=brdfAux->getSurfaceType();
+        int material=brdfAux->getMaterial();
+
+        RTBRDF *cpyBrdf= new RTBRDF(ka,kd,ks,kr,refracIndex,n,surfaceType,material,color);
+        this->brdf=cpyBrdf;
+
+
+    }
+
+     RTObject(const RTObject &cpy) {
+
+
+        this->objTag=cpy.getObjTag();
+
+        RTBRDF *brdfAux=cpy.getBrdf();
+        double kd = brdfAux->getKa();
+        double ks = brdfAux->getKs();
+        double ka = brdfAux->getKa();
+        double kr=  brdfAux->getKr();
+        double refracIndex=brdfAux->getRefracIndex();
+        int n = brdfAux->getN();
+        RTVector v;
+        RTColor color = brdfAux->getColor();
+        int surfaceType=brdfAux->getSurfaceType();
+        int material=brdfAux->getMaterial();
+
+        RTBRDF *cpyBrdf= new RTBRDF(ka,kd,ks,kr,refracIndex,n,surfaceType,material,color);
+        this->brdf=cpyBrdf;
+
+    }
+
+    RTObject &  operator=(const RTObject &other){
+
+        this->objTag=other.getObjTag();
+        RTBRDF *brdfAux=other.getBrdf();
+        double kd = brdfAux->getKa();
+        double ks = brdfAux->getKs();
+        double ka = brdfAux->getKa();
+        double kr=  brdfAux->getKr();
+        double refracIndex=brdfAux->getRefracIndex();
+        int n = brdfAux->getN();
+        RTVector v;
+        RTColor color = brdfAux->getColor();
+        int surfaceType=brdfAux->getSurfaceType();
+        int material=brdfAux->getMaterial();
+
+        delete brdf;
+
+        RTBRDF *cpyBrdf= new RTBRDF(ka,kd,ks,kr,refracIndex,n,surfaceType,material,color);
+        this->brdf=cpyBrdf;
+
+    }
+
+
+
+
+
+
+    virtual ~RTObject(){
+
+        delete brdf;
+    }
 
     /**
      * @brief intersect Check if the ray intersect the object and return the hit point.
@@ -37,15 +108,7 @@ public:
         return RTVector(0,0,0);
     }
 
-    RTBRDF getBrdf() const
-    {
-        return brdf;
-    }
 
-    void setBrdf(const RTBRDF &value)
-    {
-        brdf = value;
-    }
 
 
     int getObjTag() const
@@ -59,8 +122,20 @@ public:
     }
 
 
+
+    RTBRDF *getBrdf() const
+    {
+    return brdf;
+    }
+
+    void setBrdf(RTBRDF *value)
+    {
+    brdf = value;
+    }
+
+
 private:
-    RTBRDF brdf;
+    RTBRDF *brdf;
 
 protected:
     int objTag;
@@ -73,5 +148,12 @@ enum {PLANE=1,SPHERE,TRIANGLES};
 
 
 #endif // RTOBJECT_H
+
+
+
+
+
+
+
 
 
