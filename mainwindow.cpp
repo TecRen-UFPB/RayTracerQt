@@ -8,6 +8,10 @@
 #include "rtsphere.h"
 #include "rtplane.h"
 #include "rtchecktexture.h"
+#include "rtturbulencetexture.h"
+#include "rtcrisscrosstexture.h"
+#include "rtmarbletexture.h"
+#include "rtwoodtexture.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -59,7 +63,8 @@ void MainWindow::initRayTracer()
         RTPoint sph_center(200,200,0); //200 200 100
         RTColor blue(106,90,205);
         RTColor yew(255,255,0);
-        RTBRDF *material=new RTCheckTexture(0.14, 0.7, 1.0,0.5, 100, REFLECTIVE,CHECK,blue,yew,100);
+        RTColor wis(255,255,255);
+        RTBRDF *material=new RTCrissCrossTexture(0.14, 0.7, 1.0,0.1, 100, REFLECTIVE,CRISSCROSS,blue,yew,wis,5.14);
         sphere->setCenter(sph_center);
         sphere->setBrdf(material);
         sphere->setRadius(70);
@@ -71,7 +76,7 @@ void MainWindow::initRayTracer()
         sphere2->setRadius(50);
         RTColor red(255,50,50);
         RTColor w(255,255,255);
-        RTBRDF *material1=new RTCheckTexture(0.14, 0.7, 1,0.1, 100, REFLECTIVE,CHECK, red,w,50);
+        RTBRDF *material1=new RTTurbulenceTexture(0.14, 0.7, 1,0.1, 100, SPECULAR,TURBULENCE, red,w,20);
         sphere2->setBrdf(material1);
         objects.push_back(sphere2);
 
@@ -81,7 +86,7 @@ void MainWindow::initRayTracer()
         RTPoint p2(200,300,100); //0 0 10
         sphere3->setCenter(p2);
         sphere3->setRadius(70);
-        RTBRDF *material2=new RTCheckTexture(0.14, 0.7, 1,1, 100, REFLECTIVE,CHECK, green,b,100);
+        RTBRDF *material2=new RTMarbleTexture(0.14, 0.7, 1,0.1, 100, SPECULAR,MARBLE, green,w,10);
 
         sphere3->setBrdf(material2);
         objects.push_back(sphere3);
@@ -93,7 +98,7 @@ void MainWindow::initRayTracer()
         sphere4->setCenter(p4);
         sphere4->setRadius(50);
         RTColor diabo(238,169,184); //38;169;184
-        RTBRDF *material4=new RTCheckTexture(0.14, 0.7, 1,0.3, 100,REFLECTIVE, CHECK, pink,diabo,50);
+        RTBRDF *material4=new RTCrissCrossTexture(0.14, 0.7, 1.0,0.1, 100, SPECULAR,CRISSCROSS,blue,yew,wis,20);
         sphere4->setBrdf(material4);
         objects.push_back(sphere4);
 
@@ -110,12 +115,12 @@ void MainWindow::initRayTracer()
         RTColor sayajin(255,69,0);
 
 
-
+        RTColor brow(205,133,63);
         RTSphere *sphere6 = new RTSphere();
         RTPoint p6(570,300,-100); //0 0 10
         sphere6->setCenter(p6);
         sphere6->setRadius(100);
-        RTBRDF *material6=new RTBRDF(0.14, 0.7, 1,0.6,1.5, 100, REFLECTIVE,SHINY, sayajin);
+        RTBRDF *material6=new RTWoodTexture(0.14, 0.7, 1,0.6, 100, SPECULAR,WOOD, sayajin,brow,0.1);
         sphere6->setBrdf(material6);
         objects.push_back(sphere6);
 

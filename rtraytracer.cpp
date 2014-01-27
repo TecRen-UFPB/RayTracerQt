@@ -2,6 +2,10 @@
 #include "rtplane.h"
 #include "rtsphere.h"
 #include "rtchecktexture.h"
+#include "rtturbulencetexture.h"
+#include "rtcrisscrosstexture.h"
+#include "rtmarbletexture.h"
+#include "rtwoodtexture.h"
 #include <vector>
 #include <QDebug>
 #include <iostream>       // std::cout
@@ -227,19 +231,34 @@ RTColor RTRayTracer::getFragmentColor(RTObject* obj,RTVector hit){
          color=obj->getBrdf()->getColor(hit);
         break;
     case CHECK:{
-        try {
+
             RTCheckTexture *check = dynamic_cast<RTCheckTexture*>(objBrdf);
             color= check->getColor(hit);
-
-        }  catch (std::bad_cast& bc)
-        {
-           std::cerr << "bad_cast caught: " << bc.what() << '\n';
-        }
-
-        // color= check.getColor(hit);
-        }
-
+            }
         break;
+    case TURBULENCE:{
+            RTTurbulenceTexture *turb=dynamic_cast<RTTurbulenceTexture*>(objBrdf);
+            color=turb->getColor(hit);
+        }
+        break;
+    case CRISSCROSS:{
+        RTCrissCrossTexture *cc= dynamic_cast<RTCrissCrossTexture*>(objBrdf);
+        color=cc->getColor(hit);
+
+        }
+        break;
+     case MARBLE:{
+            RTMarbleTexture *m= dynamic_cast<RTMarbleTexture*>(objBrdf);
+            color=m->getColor(hit);
+        }
+      break;
+      case WOOD:{
+            RTWoodTexture *w = dynamic_cast<RTWoodTexture*>(objBrdf);
+            color=w->getColor(hit);
+        }
+      break;
+
+
     }
 
 

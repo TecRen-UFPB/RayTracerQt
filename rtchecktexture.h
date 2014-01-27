@@ -16,6 +16,7 @@ public:
     RTCheckTexture(double ka, double kd, double ks, double kr, int n, int surfaceType,int material, RTColor colorCheck1, RTColor colorCheck2, double size);
     RTCheckTexture(RTCheckTexture& cpy);
 
+    virtual ~RTCheckTexture(){}
    // RTBRDF interface
     virtual RTColor getColor(RTVector hitPoint) const;
 

@@ -28,7 +28,12 @@ SOURCES += main.cpp\
     rtbrdf.cpp \
     rtlight.cpp \
     rtplane.cpp \
-    rtchecktexture.cpp
+    rtchecktexture.cpp \
+    rtlatticenoise.cpp \
+    rtturbulencetexture.cpp \
+    rtcrisscrosstexture.cpp \
+    rtmarbletexture.cpp \
+    rtwoodtexture.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -45,6 +50,11 @@ HEADERS  += mainwindow.h \
     rtbrdf.h \
     rtlight.h \
     rtplane.h \
-    rtchecktexture.h
+    rtchecktexture.h \
+    rtlatticenoise.h \
+    rtturbulencetexture.h \
+    rtcrisscrosstexture.h \
+    rtmarbletexture.h \
+    rtwoodtexture.h
 
 FORMS    += mainwindow.ui
