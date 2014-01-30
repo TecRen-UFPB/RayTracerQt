@@ -76,7 +76,7 @@ void MainWindow::initRayTracer()
         sphere2->setRadius(50);
         RTColor red(255,50,50);
         RTColor w(255,255,255);
-        RTBRDF *material1=new RTTurbulenceTexture(0.14, 0.7, 1,0.1, 100, SPECULAR,TURBULENCE, red,w,20);
+        RTBRDF *material1=new RTTurbulenceTexture(0.14, 0.7, 1,0.1, 100, SPECULAR,TURBULENCE,red,w,50);
         sphere2->setBrdf(material1);
         objects.push_back(sphere2);
 
@@ -86,7 +86,7 @@ void MainWindow::initRayTracer()
         RTPoint p2(200,300,100); //0 0 10
         sphere3->setCenter(p2);
         sphere3->setRadius(70);
-        RTBRDF *material2=new RTMarbleTexture(0.14, 0.7, 1,0.1, 100, SPECULAR,MARBLE, green,w,10);
+        RTBRDF *material2=new RTMarbleTexture(0.14, 0.7, 1,0.1, 100, SPECULAR,MARBLE, green,w,3);
 
         sphere3->setBrdf(material2);
         objects.push_back(sphere3);
@@ -120,7 +120,7 @@ void MainWindow::initRayTracer()
         RTPoint p6(570,300,-100); //0 0 10
         sphere6->setCenter(p6);
         sphere6->setRadius(100);
-        RTBRDF *material6=new RTWoodTexture(0.14, 0.7, 1,0.6, 100, SPECULAR,WOOD, sayajin,brow,0.1);
+        RTBRDF *material6=new RTWoodTexture(0.14, 0.7, 0,0.6, 100, SPECULAR,WOOD, sayajin,brow,0.01);
         sphere6->setBrdf(material6);
         objects.push_back(sphere6);
 

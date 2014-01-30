@@ -85,7 +85,7 @@ void RTTurbulenceTexture::setScale(double value)
 RTColor RTTurbulenceTexture::getColor(RTVector hitPoint) const
 {
 
-    double x = hitPoint.getX() * scale;
+      double x = hitPoint.getX() * scale;
        double y = hitPoint.getY() * scale;
        double z = hitPoint.getZ() * scale;
 

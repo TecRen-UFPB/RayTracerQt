@@ -31,14 +31,14 @@ public:
 
 private:
     static const unsigned char permutation_table[kTableSize];	//array de permutações
-    double 	value_table[kTableSize]; //array de pseudo-ramdon numbers
+    double 	value_table[(2*kTableSize)]; //array de pseudo-ramdon numbers
 
 
     /**
      * @brief initValueTable initialises the integer lattice of PRN's
      * @param seed_value seed for generate PRN's values
      */
-    void initValueTable(int seed_value);
+    void initValueTable();
 
 
     /**
@@ -50,6 +50,9 @@ private:
      */
     double lerp(double t, double a, double b) const;
 
+
+
+    double four_knot_spline(const double x, const double knots[]) const;
 
 
 
