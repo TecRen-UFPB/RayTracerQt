@@ -11,22 +11,18 @@ class RTTurbulenceTexture: public RTBRDF
 
 private:
     RTLatticeNoise perlinNoise;
-    RTColor colorTurbulence1;
-    RTColor colorTurbulence2;
+    RTColor colorTurbulence;
+    int num_octaves;
     double scale;
 
 
 public:
     RTTurbulenceTexture();
 
-    RTTurbulenceTexture(double ka, double kd, double ks, double kr, int n, int surfaceType,int material, RTColor colorTurbulence1, RTColor colorTurbulence2, double scale);
+    RTTurbulenceTexture(double ka, double kd, double ks, double kr, int n, int surfaceType,int material, RTColor colorTurbulence, int num_octaves, double scale);
     RTTurbulenceTexture(RTTurbulenceTexture& cpy);
 
     virtual ~RTTurbulenceTexture();
-    RTColor getColorTurbulence1() const;
-    void setColorTurbulence1(const RTColor &value);
-    RTColor getColorTurbulence2() const;
-    void setColorTurbulence2(const RTColor &value);
     double getScale() const;
     void setScale(double value);
 
@@ -37,6 +33,10 @@ public:
 
     RTLatticeNoise getPerlinNoise() const;
     void setPerlinNoise(const RTLatticeNoise &value);
+    int getNum_octaves() const;
+    void setNum_octaves(int value);
+    RTColor getColorTurbulence() const;
+    void setColorTurbulence(const RTColor &value);
 };
 
 #endif // RTTURBULENCETEXTURE_H

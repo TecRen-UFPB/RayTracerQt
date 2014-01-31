@@ -68,17 +68,17 @@ void MainWindow::initRayTracer()
         sphere->setCenter(sph_center);
         sphere->setBrdf(material);
         sphere->setRadius(70);
-        objects.push_back(sphere);
+        //objects.push_back(sphere);
 
         RTSphere *sphere2 = new RTSphere();
         RTPoint p1(300,400,100);
         sphere2->setCenter(p1);
         sphere2->setRadius(50);
         RTColor red(255,50,50);
-        RTColor w(255,255,255);
-        RTBRDF *material1=new RTTurbulenceTexture(0.14, 0.7, 1,0.1, 100, SPECULAR,TURBULENCE,red,w,50);
+        RTColor w(0,0,0);
+        RTBRDF *material1=new RTTurbulenceTexture(0.14, 0.7, 1,0.1, 100, SPECULAR,TURBULENCE,red,500,1);
         sphere2->setBrdf(material1);
-        objects.push_back(sphere2);
+        //objects.push_back(sphere2);
 
         RTColor green(0,102,51);
         RTColor b(100,100,100);
@@ -86,10 +86,10 @@ void MainWindow::initRayTracer()
         RTPoint p2(200,300,100); //0 0 10
         sphere3->setCenter(p2);
         sphere3->setRadius(70);
-        RTBRDF *material2=new RTMarbleTexture(0.14, 0.7, 1,0.1, 100, SPECULAR,MARBLE, green,w,3);
+        RTBRDF *material2=new RTMarbleTexture(0.14, 0.7, 1,0.1, 100, SPECULAR,MARBLE, green,w,300);
 
         sphere3->setBrdf(material2);
-        objects.push_back(sphere3);
+        //objects.push_back(sphere3);
 
         RTColor echo(205,102,29);
         RTColor pink(199,21,133);
@@ -100,7 +100,7 @@ void MainWindow::initRayTracer()
         RTColor diabo(238,169,184); //38;169;184
         RTBRDF *material4=new RTCrissCrossTexture(0.14, 0.7, 1.0,0.1, 100, SPECULAR,CRISSCROSS,blue,yew,wis,20);
         sphere4->setBrdf(material4);
-        objects.push_back(sphere4);
+        //objects.push_back(sphere4);
 
         RTColor muchaco(255,193,47);
 
@@ -110,18 +110,23 @@ void MainWindow::initRayTracer()
         sphere5->setRadius(30);
         RTBRDF *material5=new RTBRDF(0.14, 0.7, 1,0.1,1.55, 100, REFLECTIVE, SHINY, muchaco);
         sphere5->setBrdf(material5);
-        objects.push_back(sphere5);
+        //objects.push_back(sphere5);
 
         RTColor sayajin(255,69,0);
 
 
-        RTColor brow(205,133,63);
+        RTColor brow(300,300,-200);
         RTSphere *sphere6 = new RTSphere();
-        RTPoint p6(570,300,-100); //0 0 10
+        RTPoint p6(300,300,200); //0 0 10 570 300 -100
         sphere6->setCenter(p6);
-        sphere6->setRadius(100);
-        RTBRDF *material6=new RTWoodTexture(0.14, 0.7, 0,0.6, 100, SPECULAR,WOOD, sayajin,brow,0.01);
-        sphere6->setBrdf(material6);
+        sphere6->setRadius(50);
+        //RTBRDF *wood=new RTWoodTexture(0.14, 0.7, 0,0.6, 100, SPECULAR,WOOD, sayajin,sayajin,100);
+        RTCheckTexture *check2=new RTCheckTexture(0.2,0.8,1,0.1,100,SPECULAR,CHECK,sayajin,green,5);
+        RTBRDF *turb=new RTTurbulenceTexture(0.14, 0.7, 1,0.1, 100, SPECULAR,TURBULENCE,red,8,1);
+        RTBRDF *criss= new RTCrissCrossTexture(0.14, 0.7, 1.0,0.1, 100, SPECULAR,CRISSCROSS,blue,yew,wis,10);
+        RTBRDF *marble=new RTMarbleTexture(0.14, 0.7, 1,0.1, 100, SPECULAR,MARBLE, blue,wis,10);
+
+        sphere6->setBrdf(marble);
         objects.push_back(sphere6);
 
 
@@ -132,7 +137,7 @@ void MainWindow::initRayTracer()
         RTBRDF *material3=new RTBRDF(0.14, 0.7, 0,0.5,1.55, 100, SPECULAR,SHINY, green);
 
         pl1->setBrdf(material3);
-        objects.push_back(pl1);
+        //objects.push_back(pl1);
 
         RTColor black(0,0,0);
         RTColor white(255,255,0);
@@ -142,7 +147,7 @@ void MainWindow::initRayTracer()
         RTVector n10(0,-1,0);
         RTPlane *pl20= new RTPlane(p10,n10);
         RTColor zas(255,255,0);
-        RTBRDF *material30=new RTBRDF(0.2, 0.8, 0,0.5,1.55, 100, REFLECTIVE,SHINY, zas);
+        //RTBRDF *material30=new RTBRDF(0.2, 0.8, 0,0.5,1.55, 100, REFLECTIVE,SHINY, zas);
         pl20->setBrdf(check);
         objects.push_back(pl20);
 
@@ -159,7 +164,7 @@ void MainWindow::initRayTracer()
 
 
         // TODO parameterize the camera
-        RTPoint e(300, 300, 300);
+        RTPoint e(300, 300, 280);
         RTPoint look_at(0,0,-1);
         RTVector up(0,1,0);
         this->cam = RTCamera(e, look_at, up, 2);

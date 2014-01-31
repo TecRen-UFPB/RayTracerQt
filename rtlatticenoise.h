@@ -54,6 +54,11 @@ private:
 
     double four_knot_spline(const double x, const double knots[]) const;
 
+      double fade(double) const;
+      double lerp(double, double, double);
+      double grad(int, double, double, double) const;
+
+
 
 
 };
