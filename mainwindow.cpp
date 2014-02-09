@@ -4,6 +4,8 @@
 #include <QPixmap>
 #include <QFileDialog>
 #include <QDebug>
+#include<QTime>
+#include<iostream>
 
 #include "rtsphere.h"
 #include "rtplane.h"
@@ -12,7 +14,7 @@
 #include "rtcrisscrosstexture.h"
 #include "rtmarbletexture.h"
 #include "rtwoodtexture.h"
-#include "rttorus.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -59,6 +61,9 @@ void MainWindow::initRayTracer()
      * sistemas de coordenadas: z-> para tras, y se comporta como x e x como y
      */
 
+    QTime myTimer;
+    myTimer.start();
+
 
     RTSphere *sphere = new RTSphere();
     RTPoint sph_center(200,200,0); //200 200 100
@@ -98,7 +103,8 @@ void MainWindow::initRayTracer()
     RTPoint p4(470,400,50); //0 0 10
     sphere4->setCenter(p4);
     sphere4->setRadius(50);
-    RTBRDF *material4=new RTBRDF(0.14, 0.7, 1,0.5,1.75, 100,REFLECTIVE, SHINY, pink);
+    RTColor y(255,255,0);
+    RTBRDF *material4=new RTCrissCrossTexture(0.14, 0.7, 1.0,1.0, 100, SPECULAR,CRISSCROSS, pink,blue,y,50);
     sphere4->setBrdf(material4);
     objects.push_back(sphere4);
 
@@ -161,9 +167,15 @@ void MainWindow::initRayTracer()
     RTPoint look_at(0,0,-1);
     RTVector up(0,1,0);
     this->cam = RTCamera(e, look_at, up, 2);
-    this->scene = RTScene(this->cam, objects, 10);
+    RTColor white(250,250,250);
+    this->scene = RTScene(this->cam, objects, 10,300,-300,white);
 
         this->scene.render();
+
+    int time_elapsed=myTimer.elapsed()/1000;
+
+
+    std::cout<<"Tempo de Rendering da Cena: "<<time_elapsed<<" segundos"<<std::endl;
 
     // force the first update
     slotOnBufferChange();

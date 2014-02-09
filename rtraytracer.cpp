@@ -60,6 +60,15 @@ RTColor RTRayTracer::traceRay(RTRay &ray, int depth, RTLight light)
     RTColor reflectColor,refracColor,objColor;
     int surfaceType=closestObject->getBrdf()->getSurfaceType();
 
+    double fogFactor=0;
+
+    //verifica se existe fog na cena
+    if(scene.getHasFog()){ //calcula o fator fog
+        fogFactor=(scene.getFog().getZ_end()-closestPoint.getZ())/(scene.getFog().getZ_end()-scene.getFog().getZ_start());
+        fogFactor=(fogFactor>1.0)?1.0:((fogFactor<0)?0:fogFactor); //clamp
+        //fogFactor=pow(M_E,-scene.getFog().getDensity()*closestPoint.getZ());
+    }
+
     objColor= shading(closestObject, closestPoint, light);
 
     double reflectivePercentage = closestObject->getBrdf()->getKr();
@@ -74,9 +83,6 @@ RTColor RTRayTracer::traceRay(RTRay &ray, int depth, RTLight light)
         RTVector eyedir = -((ray.getPos()*1)-closestPoint);  //d
         eyedir.normalize();
         RTVector normal = closestObject->normalOfHitPoint(closestPoint);//N
-
-
-
 
 
         if(surfaceType==REFRACTIVE){ //aplica fresnel
@@ -111,13 +117,19 @@ RTColor RTRayTracer::traceRay(RTRay &ray, int depth, RTLight light)
     }
 
 
-    if(surfaceType==REFRACTIVE&&!isInside)
+    if(surfaceType==REFRACTIVE&&!isInside){
+
         color=reflectColor*reflectivePercentage+refracColor*(refractivePercentage);
+    }
     else{
         int kloc=(surfaceType==REFRACTIVE)?0:1;
         color=reflectColor*reflectivePercentage+refracColor*refraIndex+objColor*kloc;
         color=color/(reflectivePercentage+refractivePercentage+kloc);
+
     }
+
+    if(scene.getHasFog())
+        color=(color*fogFactor)+(scene.getFog().getFogColor()*((1-fogFactor)));
 
     return color;
 

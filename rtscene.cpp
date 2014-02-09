@@ -12,9 +12,17 @@ RTScene::RTScene(RTCamera cam, std::vector<RTObject*> &primitives, int maxDepth)
     this->cam=cam;
     this->primitives=primitives;
     this->maxDepth=maxDepth;
-
+    hasFog=false;
 }
 
+RTScene::RTScene(RTCamera cam, std::vector<RTObject*> &primitives, int maxDepth,double z_start,double z_end,RTColor fogColor)
+    :fog(z_start,z_end,fogColor)
+{
+    this->cam=cam;
+    this->primitives=primitives;
+    this->maxDepth=maxDepth;
+    hasFog=true;
+}
 
 
 
@@ -30,7 +38,7 @@ void RTScene::render(){
     // TODO parameterize the light source.
     double ia = 1.0, ip = 1.0;
     RTColor light_color(255,255,255);
-    RTPoint light_pos(400,200,100); //300,200,300
+    RTPoint light_pos(200,200,300); //300,200,300
     RTLight light(light_pos, ia, ip, light_color);
 
     #pragma omp parallel for
@@ -74,6 +82,26 @@ void RTScene::setMaxDepth(int value)
 {
     maxDepth = value;
 }
+bool RTScene::getHasFog() const
+{
+    return hasFog;
+}
+
+void RTScene::setHasFog(bool value)
+{
+    hasFog = value;
+}
+RTFog RTScene::getFog() const
+{
+    return fog;
+}
+
+void RTScene::setFog(const RTFog &value)
+{
+    fog = value;
+}
+
+
 
 
 
