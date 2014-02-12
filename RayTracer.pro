@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     rtcrisscrosstexture.cpp \
     rtmarbletexture.cpp \
     rtwoodtexture.cpp \
-    rtfog.cpp
+    rtfog.cpp \
+    rttriangle.cpp
 
 
 
@@ -58,6 +59,7 @@ HEADERS  += mainwindow.h \
     rtcrisscrosstexture.h \
     rtmarbletexture.h \
     rtwoodtexture.h \
-    rtfog.h
+    rtfog.h \
+    rttriangle.h
 
 FORMS    += mainwindow.ui
