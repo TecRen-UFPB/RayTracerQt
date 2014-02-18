@@ -132,12 +132,13 @@ void MainWindow::initRayTracer()
     objects.push_back(sphere6);
 
     RTTriangle *triangle1 = new RTTriangle();
-    RTPoint tr1_p1(400,050,-10);
-    RTPoint tr1_p2(100,200,-10);
-    RTPoint tr1_p3(100,100,-10);
+    RTPoint tr1_p1(1000,050,50);
+    RTPoint tr1_p2(100,200,50);
+    RTPoint tr1_p3(100,100,50);
     triangle1->setP1(tr1_p1);
     triangle1->setP2(tr1_p2);
     triangle1->setP3(tr1_p3);
+
     RTBRDF *material_tri=new RTCheckTexture(0.2,0.8,0,0,100,DIFFUSE,CHECK,blue,red,20);
     triangle1->setBrdf(material_tri);
     objects.push_back(triangle1);
