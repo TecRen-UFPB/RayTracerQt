@@ -19,7 +19,7 @@ public:
     /**
      * @brief render a scene
      */
-    void render();
+    void render(int samples);
 
     RTCamera getCam() const;
     void setCam(const RTCamera &value);

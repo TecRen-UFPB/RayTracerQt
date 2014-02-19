@@ -27,7 +27,7 @@ RTScene::RTScene(RTCamera cam, std::vector<RTObject*> &primitives, int maxDepth,
 
 
 
-void RTScene::render(){
+void RTScene::render(int samples){
 
     int w=RTFilm::getInstance()->getWidth();
     int h=RTFilm::getInstance()->getHeight();
@@ -45,43 +45,32 @@ void RTScene::render(){
     for(int i=0;i<w;i++){
       #pragma omp parallel for
         for(int j=0;j<h;j++){
-            RTRay rayM=this->cam.generateRay(i,j, 0, 0), // center
-                    ray0 = this->cam.generateRay(i,j, -0.25, -0.25), // corner0
-                    ray1 = this->cam.generateRay(i,j, -0.25,  0.25), // corner1
-                    ray2 = this->cam.generateRay(i,j,  0.25, -0.25), // corner2
-                    ray3 = this->cam.generateRay(i,j,  0.25,  0.25); // corner3
 
-            // sum of all colors
+            int count = 1;
             double sr=0.0, sg=0.0, sb=0.0;
-            RTColor color = raytracer.traceRay(rayM, 1, light);
-            sr += color.getR();
-            sg += color.getG();
-            sb += color.getB();
 
-            color = raytracer.traceRay(ray0, 1, light);
-            sr += color.getR();
-            sg += color.getG();
-            sb += color.getB();
+            RTRay ray;
+            RTColor color;
 
-            color = raytracer.traceRay(ray1, 1, light);
-            sr += color.getR();
-            sg += color.getG();
-            sb += color.getB();
+            srand (time(NULL));
+            double offseti = 0, offsetj = 0;
 
-            color = raytracer.traceRay(ray2, 1, light);
-            sr += color.getR();
-            sg += color.getG();
-            sb += color.getB();
+            do {
+                ray =  cam.generateRay(i, j, offseti, offsetj);
+                color = raytracer.traceRay(ray, 1, light);
 
-            color = raytracer.traceRay(ray3, 1, light);
-            sr += color.getR();
-            sg += color.getG();
-            sb += color.getB();
+                sr += color.getR();
+                sg += color.getG();
+                sb += color.getB();
+
+                offseti = rand()/float(RAND_MAX+1);
+                offsetj = rand()/float(RAND_MAX+1);
+            } while(count++ < samples);
 
             // mean
-            sr = sr/5;
-            sg = sg/5;
-            sb = sb/5;
+            sr = sr/count;
+            sg = sg/count;
+            sb = sb/count;
 
             color = RTColor(sr, sg, sb);
 
