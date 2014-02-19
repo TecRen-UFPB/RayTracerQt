@@ -23,7 +23,7 @@ RTCamera::RTCamera(RTPoint e,RTPoint look_at,RTVector up,double fovy){
 }
 
 
-RTRay RTCamera::generateRay(int i,int j){
+RTRay RTCamera::generateRay(int i, int j, double offseti, double offsetj){
 
 
 
@@ -34,8 +34,8 @@ RTRay RTCamera::generateRay(int i,int j){
 
     double aux = 2.0 * tan(fovy / 2.0) / width;
 
-    double a = j + 0.5 - height / 2.0;
-    double b = i + 0.5 - width / 2.0;
+    double a = ( j+offsetj + 0.5 - height / 2.0 );
+    double b = ( i+offseti + 0.5 - width  / 2.0 );
 
     RTVector dir=this->w+(((this->v*aux)*a)+((this->u*aux)*b));
     dir.normalize();

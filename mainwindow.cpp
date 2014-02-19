@@ -185,7 +185,7 @@ void MainWindow::initRayTracer()
 
         this->scene.render();
 
-    int time_elapsed=myTimer.elapsed()/1000;
+    double time_elapsed=myTimer.elapsed()/1000.0;
 
 
     std::cout<<"Tempo de Rendering da Cena: "<<time_elapsed<<" segundos"<<std::endl;

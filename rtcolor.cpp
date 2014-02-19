@@ -100,9 +100,10 @@ RTColor RTColor::operator *(RTColor c)
 
 RTColor RTColor::operator/(double value)
 {
-    RTColor newColor( this->_r / value,
-                      this->_g / value,
-                      this->_b / value);
+    double r = ((double)this->_r) / value;
+    double g = ((double)this->_g) / value;
+    double b = ((double)this->_b) / value;
+    RTColor newColor( r, g, b);
     return newColor;
 }
 

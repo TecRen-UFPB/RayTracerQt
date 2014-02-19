@@ -45,8 +45,46 @@ void RTScene::render(){
     for(int i=0;i<w;i++){
       #pragma omp parallel for
         for(int j=0;j<h;j++){
-            RTRay ray=this->cam.generateRay(i,j);
-            RTColor color = raytracer.traceRay(ray, 1, light);
+            RTRay rayM=this->cam.generateRay(i,j, 0, 0), // center
+                    ray0 = this->cam.generateRay(i,j, -0.25, -0.25), // corner0
+                    ray1 = this->cam.generateRay(i,j, -0.25,  0.25), // corner1
+                    ray2 = this->cam.generateRay(i,j,  0.25, -0.25), // corner2
+                    ray3 = this->cam.generateRay(i,j,  0.25,  0.25); // corner3
+
+            // sum of all colors
+            double sr=0.0, sg=0.0, sb=0.0;
+            RTColor color = raytracer.traceRay(rayM, 1, light);
+            sr += color.getR();
+            sg += color.getG();
+            sb += color.getB();
+
+            color = raytracer.traceRay(ray0, 1, light);
+            sr += color.getR();
+            sg += color.getG();
+            sb += color.getB();
+
+            color = raytracer.traceRay(ray1, 1, light);
+            sr += color.getR();
+            sg += color.getG();
+            sb += color.getB();
+
+            color = raytracer.traceRay(ray2, 1, light);
+            sr += color.getR();
+            sg += color.getG();
+            sb += color.getB();
+
+            color = raytracer.traceRay(ray3, 1, light);
+            sr += color.getR();
+            sg += color.getG();
+            sb += color.getB();
+
+            // mean
+            sr = sr/5;
+            sg = sg/5;
+            sb = sb/5;
+
+            color = RTColor(sr, sg, sb);
+
             RTFilm::getInstance()->commit(i, j, color);
         }
     }

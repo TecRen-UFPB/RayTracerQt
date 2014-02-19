@@ -52,7 +52,7 @@ public:
      * @param j
      * @return
      */
-    RTRay generateRay(int i,int j);
+    RTRay generateRay(int i,int j, double offseti=0, double offsetj=0);
 
 
     RTPoint getE() const;
