@@ -27,7 +27,7 @@ RTScene::RTScene(RTCamera cam, std::vector<RTObject*> &primitives, int maxDepth,
 
 
 
-void RTScene::render(){
+void RTScene::render(int samples){
 
     int w=RTFilm::getInstance()->getWidth();
     int h=RTFilm::getInstance()->getHeight();
@@ -51,7 +51,7 @@ void RTScene::render(){
                    // ray2 = this->cam.generateRay(i,j,  0.25, -0.25), // corner2
                    // ray3 = this->cam.generateRay(i,j,  0.25,  0.25); // corner3
 
-            // sum of all colors
+            int count = 1;
             double sr=0.0, sg=0.0, sb=0.0;
             RTColor color = raytracer.traceRay(rayM, 1, light);
             sr += color.getR();
@@ -82,6 +82,28 @@ void RTScene::render(){
             sr = sr/1;
             sg = sg/1;
             sb = sb/1;
+
+            RTRay ray;
+
+            srand (time(NULL));
+            double offseti = 0, offsetj = 0;
+
+            do {
+                ray =  cam.generateRay(i, j, offseti, offsetj);
+                color = raytracer.traceRay(ray, 1, light);
+
+                sr += color.getR();
+                sg += color.getG();
+                sb += color.getB();
+
+                offseti = rand()/float(RAND_MAX+1);
+                offsetj = rand()/float(RAND_MAX+1);
+            } while(count++ < samples);
+
+            // mean
+            sr = sr/count;
+            sg = sg/count;
+            sb = sb/count;
 
             color = RTColor(sr, sg, sb);
 

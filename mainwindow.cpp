@@ -133,11 +133,9 @@ void MainWindow::initRayTracer()
     //objects.push_back(sphere6);
 
     RTTriangle *triangle1 = new RTTriangle();
-    RTPoint tr1_p1(1000,050,50);
-    RTPoint tr1_p2(100,200,50);
-    RTPoint tr1_p3(100,100,50);
-
-
+    RTPoint tr1_p1( 50,  50, 50);
+    RTPoint tr1_p2(100,  50, 50);
+    RTPoint tr1_p3(100, 100, 50);
     triangle1->setP1(tr1_p1);
     triangle1->setP2(tr1_p2);
     triangle1->setP3(tr1_p3);
@@ -227,7 +225,7 @@ void MainWindow::initRayTracer()
     RTColor white(250,250,250);
     this->scene = RTScene(this->cam, objects, 5);
 
-        this->scene.render();
+        this->scene.render(2);
 
     double time_elapsed=myTimer.elapsed()/1000.0;
 
