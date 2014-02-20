@@ -38,18 +38,18 @@ void RTScene::render(){
     // TODO parameterize the light source.
     double ia = 1.0, ip = 1.0;
     RTColor light_color(255,255,255);
-    RTPoint light_pos(200,200,300); //300,200,300
+    RTPoint light_pos(0,0,2); //300,200,300 ou 200 200 300
     RTLight light(light_pos, ia, ip, light_color);
 
     #pragma omp parallel for
     for(int i=0;i<w;i++){
       #pragma omp parallel for
         for(int j=0;j<h;j++){
-            RTRay rayM=this->cam.generateRay(i,j, 0, 0), // center
-                    ray0 = this->cam.generateRay(i,j, -0.25, -0.25), // corner0
-                    ray1 = this->cam.generateRay(i,j, -0.25,  0.25), // corner1
-                    ray2 = this->cam.generateRay(i,j,  0.25, -0.25), // corner2
-                    ray3 = this->cam.generateRay(i,j,  0.25,  0.25); // corner3
+            RTRay rayM=this->cam.generateRay(i,j, 0, 0); // center
+                   // ray0 = this->cam.generateRay(i,j, -0.25, -0.25), // corner0
+                   //ray1 = this->cam.generateRay(i,j, -0.25,  0.25), // corner1
+                   // ray2 = this->cam.generateRay(i,j,  0.25, -0.25), // corner2
+                   // ray3 = this->cam.generateRay(i,j,  0.25,  0.25); // corner3
 
             // sum of all colors
             double sr=0.0, sg=0.0, sb=0.0;
@@ -58,7 +58,7 @@ void RTScene::render(){
             sg += color.getG();
             sb += color.getB();
 
-            color = raytracer.traceRay(ray0, 1, light);
+            /*color = raytracer.traceRay(ray0, 1, light);
             sr += color.getR();
             sg += color.getG();
             sb += color.getB();
@@ -76,12 +76,12 @@ void RTScene::render(){
             color = raytracer.traceRay(ray3, 1, light);
             sr += color.getR();
             sg += color.getG();
-            sb += color.getB();
+            sb += color.getB();*/
 
             // mean
-            sr = sr/5;
-            sg = sg/5;
-            sb = sb/5;
+            sr = sr/1;
+            sg = sg/1;
+            sb = sb/1;
 
             color = RTColor(sr, sg, sb);
 

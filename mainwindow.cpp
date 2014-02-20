@@ -15,6 +15,7 @@
 #include "rtmarbletexture.h"
 #include "rtwoodtexture.h"
 #include "rttriangle.h"
+#include "objLoader.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -85,7 +86,7 @@ void MainWindow::initRayTracer()
     RTBRDF *material1=new RTTurbulenceTexture(0.14, 0.7, 1.0,0.1,100, SPECULAR,TURBULENCE, red,10,10);
 
     sphere2->setBrdf(material1);
-    objects.push_back(sphere2);
+   // objects.push_back(sphere2);
 
 
     RTColor green(0,102,51);
@@ -96,7 +97,7 @@ void MainWindow::initRayTracer()
     RTBRDF *marble = new RTMarbleTexture(0.2,0.8,0,0,100,SPECULAR,MARBLE,with,blue,4);
 
     sphere3->setBrdf(marble);
-    objects.push_back(sphere3);
+    //objects.push_back(sphere3);
 
     RTColor echo(205,102,29);
     RTColor pink(199,21,133);
@@ -107,7 +108,7 @@ void MainWindow::initRayTracer()
     RTColor y(255,255,0);
     RTBRDF *material4=new RTCrissCrossTexture(0.14, 0.7, 1.0,1.0, 100, SPECULAR,CRISSCROSS, pink,blue,y,50);
     sphere4->setBrdf(material4);
-    objects.push_back(sphere4);
+    //objects.push_back(sphere4);
 
     RTColor muchaco(255,193,47);
 
@@ -117,7 +118,7 @@ void MainWindow::initRayTracer()
     sphere5->setRadius(30);
     RTBRDF *material5=new RTBRDF(0.14, 0.7, 1,0.1,1.55, 100, REFLECTIVE, SHINY, muchaco);
     sphere5->setBrdf(material5);
-    objects.push_back(sphere5);
+    //objects.push_back(sphere5);
 
     RTColor sayajin(255,69,0);
 
@@ -129,19 +130,21 @@ void MainWindow::initRayTracer()
     sphere6->setRadius(100);
     RTBRDF *material6=new RTBRDF(0.14, 0.7, 1,1,1.5, 100, REFLECTIVE,SHINY, green);
     sphere6->setBrdf(material6);
-    objects.push_back(sphere6);
+    //objects.push_back(sphere6);
 
     RTTriangle *triangle1 = new RTTriangle();
     RTPoint tr1_p1(1000,050,50);
     RTPoint tr1_p2(100,200,50);
     RTPoint tr1_p3(100,100,50);
+
+
     triangle1->setP1(tr1_p1);
     triangle1->setP2(tr1_p2);
     triangle1->setP3(tr1_p3);
 
     RTBRDF *material_tri=new RTCheckTexture(0.2,0.8,0,0,100,DIFFUSE,CHECK,blue,red,20);
     triangle1->setBrdf(material_tri);
-    objects.push_back(triangle1);
+//    objects.push_back(triangle1);
 
 
     RTColor sky(135,206,250);
@@ -151,7 +154,7 @@ void MainWindow::initRayTracer()
     RTBRDF *material3=new RTBRDF(0.14, 0.7, 0,0.5,1.55, 100, SPECULAR,SHINY, sky);
 
     pl1->setBrdf(material3);
-    objects.push_back(pl1);
+    //objects.push_back(pl1);
 
 
     RTColor yelow(255,255,0);
@@ -162,7 +165,7 @@ void MainWindow::initRayTracer()
     RTColor zas(255,255,0);
     //RTBRDF *material30=new RTBRDF(0.2, 0.8, 0,0.5,1.55, 100, REFLECTIVE,SHINY, zas);
     pl20->setBrdf(check);
-    objects.push_back(pl20);
+    //objects.push_back(pl20);
 
 
     RTPoint p20(1000,0,0);
@@ -174,14 +177,55 @@ void MainWindow::initRayTracer()
     //objects.push_back(pl30);
 
 
+    //add importador
+
+    objLoader *objData;
+    objData = new objLoader();
+    objData->load("/home/marcilio/workspace/raytracing_ufpb/RayTracerQt/box.obj");
+
+
+    for(int i=0; i<objData->faceCount; i++)
+    {
+        obj_face *o = objData->faceList[i];
+
+        RTPoint p1(objData->vertexList[o->vertex_index[0]]->e[0], // primeira linha
+                   objData->vertexList[o->vertex_index[0]]->e[1],
+                   objData->vertexList[o->vertex_index[0]]->e[2]);
+
+        RTPoint p2(objData->vertexList[o->vertex_index[1]]->e[0],
+                objData->vertexList[o->vertex_index[1]]->e[1],
+                objData->vertexList[o->vertex_index[1]]->e[2]);
+
+        RTPoint p3(	objData->vertexList[o->vertex_index[2]]->e[0],
+                objData->vertexList[o->vertex_index[2]]->e[1],
+                objData->vertexList[o->vertex_index[2]]->e[2]);
+
+
+
+        RTTriangle *triangle= new RTTriangle(p1,p2,p3);
+        RTVector n1(objData->normalList[o->normal_index[0]]->e[0],
+                objData->normalList[o->normal_index[0]]->e[1],
+                objData->normalList[o->normal_index[0]]->e[2]);
+        RTVector n2(objData->normalList[o->normal_index[1]]->e[0],
+                objData->normalList[o->normal_index[1]]->e[1],
+                objData->normalList[o->normal_index[1]]->e[2]);
+        RTVector n3(objData->normalList[o->normal_index[2]]->e[0],
+                objData->normalList[o->normal_index[2]]->e[1],
+                objData->normalList[o->normal_index[2]]->e[2]);
+        triangle->setNormal1(n1);
+        triangle->setNormal2(n2);
+        triangle->setNormal3(n3);
+        triangle->setBrdf(material);
+        objects.push_back(triangle);
+    }
 
     // TODO parameterize the camera
-    RTPoint e(300, 300, 300);
+    RTPoint e(0, 0, 0); //300
     RTPoint look_at(0,0,-1);
     RTVector up(0,1,0);
     this->cam = RTCamera(e, look_at, up, 2);
     RTColor white(250,250,250);
-    this->scene = RTScene(this->cam, objects, 10,300,-300,white);
+    this->scene = RTScene(this->cam, objects, 5);
 
         this->scene.render();
 
@@ -200,7 +244,7 @@ void MainWindow::initRayTracer()
     delete pl1;
     delete pl20;
     delete sphere3;
-
+    delete objData;
 
 
 }
