@@ -85,10 +85,10 @@ void MainWindow::initRayTracer()
     RTBRDF *material1=new RTTurbulenceTexture(0.14, 0.7, 1.0,0.1,100, SPECULAR,TURBULENCE, red,10,10);
 
     sphere2->setBrdf(material1);
-    objects.push_back(sphere2);
+//    objects.push_back(sphere2);
 
 
-    RTColor green(0,102,51);
+    RTColor green(55,255,0);
     RTSphere *sphere3 = new RTSphere();
     RTPoint p2(200,300,100); //0 0 10
     sphere3->setCenter(p2);
@@ -96,7 +96,7 @@ void MainWindow::initRayTracer()
     RTBRDF *marble = new RTMarbleTexture(0.2,0.8,0,0,100,SPECULAR,MARBLE,with,blue,4);
 
     sphere3->setBrdf(marble);
-    objects.push_back(sphere3);
+//    objects.push_back(sphere3);
 
     RTColor echo(205,102,29);
     RTColor pink(199,21,133);
@@ -107,7 +107,7 @@ void MainWindow::initRayTracer()
     RTColor y(255,255,0);
     RTBRDF *material4=new RTCrissCrossTexture(0.14, 0.7, 1.0,1.0, 100, SPECULAR,CRISSCROSS, pink,blue,y,50);
     sphere4->setBrdf(material4);
-    objects.push_back(sphere4);
+//    objects.push_back(sphere4);
 
     RTColor muchaco(255,193,47);
 
@@ -117,7 +117,7 @@ void MainWindow::initRayTracer()
     sphere5->setRadius(30);
     RTBRDF *material5=new RTBRDF(0.14, 0.7, 1,0.1,1.55, 100, REFLECTIVE, SHINY, muchaco);
     sphere5->setBrdf(material5);
-    objects.push_back(sphere5);
+//    objects.push_back(sphere5);
 
     RTColor sayajin(255,69,0);
 
@@ -129,20 +129,31 @@ void MainWindow::initRayTracer()
     sphere6->setRadius(100);
     RTBRDF *material6=new RTBRDF(0.14, 0.7, 1,1,1.5, 100, REFLECTIVE,SHINY, green);
     sphere6->setBrdf(material6);
-    objects.push_back(sphere6);
+//    objects.push_back(sphere6);
 
     RTTriangle *triangle1 = new RTTriangle();
     RTPoint tr1_p1( 50,  50, 50);
-    RTPoint tr1_p2(100,  50, 50);
-    RTPoint tr1_p3(100, 100, 50);
+    RTPoint tr1_p2(550,  50, -100);
+    RTPoint tr1_p3(550, 500, -10);
     triangle1->setP1(tr1_p1);
     triangle1->setP2(tr1_p2);
     triangle1->setP3(tr1_p3);
 
-    RTBRDF *material_tri=new RTCheckTexture(0.2,0.8,0,0,100,DIFFUSE,CHECK,blue,red,20);
+    RTBRDF *material_tri=new RTCheckTexture(0.2,1,0.3,0,100,DIFFUSE,CHECK,blue,red,20);
     triangle1->setBrdf(material_tri);
     objects.push_back(triangle1);
 
+    RTTriangle *triangle2 = new RTTriangle();
+    RTPoint tr2_p1(450,  50, 60);
+    RTPoint tr2_p2(550,  50, 60);
+    RTPoint tr2_p3(550, 500, 60);
+    triangle2->setP1(tr2_p1);
+    triangle2->setP2(tr2_p2);
+    triangle2->setP3(tr2_p3);
+
+    RTBRDF *material_tri2 = new RTBRDF(0.14, 1, 1, 0, 0, 100, DIFFUSE,SHINY, green);
+    triangle2->setBrdf(material_tri2);
+    objects.push_back(triangle2);
 
     RTColor sky(135,206,250);
     RTPoint p(0,0,1000000);
@@ -151,7 +162,7 @@ void MainWindow::initRayTracer()
     RTBRDF *material3=new RTBRDF(0.14, 0.7, 0,0.5,1.55, 100, SPECULAR,SHINY, sky);
 
     pl1->setBrdf(material3);
-    objects.push_back(pl1);
+//    objects.push_back(pl1);
 
 
     RTColor yelow(255,255,0);
@@ -162,7 +173,7 @@ void MainWindow::initRayTracer()
     RTColor zas(255,255,0);
     //RTBRDF *material30=new RTBRDF(0.2, 0.8, 0,0.5,1.55, 100, REFLECTIVE,SHINY, zas);
     pl20->setBrdf(check);
-    objects.push_back(pl20);
+//    objects.push_back(pl20);
 
 
     RTPoint p20(1000,0,0);
@@ -187,6 +198,7 @@ void MainWindow::initRayTracer()
 
     double time_elapsed=myTimer.elapsed()/1000.0;
 
+    std::cout<<"Total de objetos: "<<objects.size()<<std::endl;
 
     std::cout<<"Tempo de Rendering da Cena: "<<time_elapsed<<" segundos"<<std::endl;
 
@@ -200,6 +212,8 @@ void MainWindow::initRayTracer()
     delete pl1;
     delete pl20;
     delete sphere3;
+    delete triangle1;
+    delete triangle2;
 
 
 
