@@ -35,11 +35,7 @@ SOURCES += main.cpp\
     rtmarbletexture.cpp \
     rtwoodtexture.cpp \
     rtfog.cpp \
-    rttriangle.cpp \
-    list.cpp \
-    obj_parser.cpp \
-    objLoader.cpp \
-    string_extra.cpp
+    rttriangle.cpp
 
 
 
@@ -64,10 +60,6 @@ HEADERS  += mainwindow.h \
     rtmarbletexture.h \
     rtwoodtexture.h \
     rtfog.h \
-    rttriangle.h \
-    list.h \
-    obj_parser.h \
-    objLoader.h \
-    string_extra.h
+    rttriangle.h
 
 FORMS    += mainwindow.ui
