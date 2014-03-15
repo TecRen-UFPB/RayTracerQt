@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui script
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     rtmarbletexture.cpp \
     rtwoodtexture.cpp \
     rtfog.cpp \
-    rttriangle.cpp
+    rttriangle.cpp \
+    rtsceneloader.cpp
 
 
 
@@ -60,6 +61,7 @@ HEADERS  += mainwindow.h \
     rtmarbletexture.h \
     rtwoodtexture.h \
     rtfog.h \
-    rttriangle.h
+    rttriangle.h \
+    rtsceneloader.h
 
 FORMS    += mainwindow.ui
