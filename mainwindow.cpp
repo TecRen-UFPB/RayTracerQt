@@ -68,13 +68,9 @@ void MainWindow::initRayTracer()
     RTSceneLoader loader("/media/Arquivos/g5/ufpb/Tecnicas.Avancadas.Em.Rendering/TrabalhoFinal/RayTracer/cenas_teste/cena_teste.rt");
     loader.load(objects);
 
-    // TODO parameterize the camera
-    RTPoint e(300, 300, 300);
-    RTPoint look_at(0,0,-1);
-    RTVector up(0,1,0);
-    this->cam = RTCamera(e, look_at, up, 2);
-    RTColor white(250,250,250);
-    this->scene = RTScene(this->cam, objects, 10,300,-300,white);
+    this->cam = loader.getCamera();
+
+    this->scene = loader.getScene();
 
         this->scene.render(2);
 

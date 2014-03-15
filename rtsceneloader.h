@@ -12,6 +12,14 @@
 #include "rtobject.h"
 #include "rttriangle.h"
 #include "rtsphere.h"
+#include "rtchecktexture.h"
+#include "rtcrisscrosstexture.h"
+#include "rtmarbletexture.h"
+#include "rtturbulencetexture.h"
+#include "rtwoodtexture.h"
+
+#include "rtcamera.h"
+#include "rtscene.h"
 
 class RTSceneLoader : public QObject
 {
@@ -21,6 +29,10 @@ public:
 
     void load(std::vector<RTObject*> &objects);
 
+    RTCamera getCamera();
+
+    RTScene getScene();
+
 signals:
 
 public slots:
@@ -28,9 +40,23 @@ public slots:
 private:
     QString filename;
 
+    RTCamera camera;
+
+    RTScene scene;
+
     void doTriangle(QJsonObject obj, std::vector<RTObject*> &objects);
     void doSphere(QJsonObject obj, std::vector<RTObject*> &objects);
     RTBRDF *doBRDF(QJsonObject brdfObj);
+
+    RTBRDF * doBRDFCheck(QJsonObject brdfObj);
+    RTBRDF * doBRDFCrissCross(QJsonObject brdfObj);
+    RTBRDF * doBRDFMarble(QJsonObject brdfObj);
+    RTBRDF * doBRDFTurbulence(QJsonObject brdfObj);
+    RTBRDF * doBRDFWood(QJsonObject brdfObj);
+
+    RTPoint arrayToPoint(QJsonArray arr);
+    RTVector arrayToVector(QJsonArray arr);
+    RTColor objToColor(QJsonObject obj);
 
 };
 

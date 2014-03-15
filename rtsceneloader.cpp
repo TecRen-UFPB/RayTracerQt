@@ -25,6 +25,27 @@ void RTSceneLoader::load(std::vector<RTObject *> &objects)
         return;
     }
 
+    // Camera loader
+    QJsonObject camObj = obj.value("camera").toObject();
+
+    RTPoint e = this->arrayToPoint(camObj.value("e").toArray());
+    RTPoint look_at = this->arrayToPoint(camObj.value("look_at").toArray());
+    RTVector up = this->arrayToVector(camObj.value("up").toArray());
+    double fovy = camObj.value("fovy").toDouble();
+
+    this->camera = RTCamera(e, look_at, up, fovy);
+
+    // scene config loader
+    this->scene = RTScene(this->camera,
+                          objects,
+                          obj.value("maxDepth").toInt(),
+                          obj.value("z_start").toDouble(),
+                          obj.value("z_end").toDouble(),
+                          this->objToColor(obj.value("fogColor").toObject()));
+    bool hasFog = obj.value("hasFog").toBool();
+    this->scene.setHasFog(hasFog);
+
+    // objects loader
     QJsonArray arr = obj.value("objects").toArray();
 
     QString type;
@@ -38,6 +59,16 @@ void RTSceneLoader::load(std::vector<RTObject *> &objects)
             doSphere(arr.at(i).toObject(), objects);
     }
 
+}
+
+RTCamera RTSceneLoader::getCamera()
+{
+    return this->camera;
+}
+
+RTScene RTSceneLoader::getScene()
+{
+    return this->scene;
 }
 
 void RTSceneLoader::doTriangle(QJsonObject obj, std::vector<RTObject*> &objects)
@@ -129,44 +160,6 @@ RTBRDF *RTSceneLoader::doBRDF(QJsonObject brdfObj)
     if(type=="blinn-phong")
     {
         brdf = new RTBRDF();
-        brdf->setKa(brdfObj.value("ka").toDouble());
-        brdf->setKd(brdfObj.value("kd").toDouble());
-        brdf->setKs(brdfObj.value("ks").toDouble());
-        brdf->setKr(brdfObj.value("kr").toDouble());
-
-        brdf->setRefracIndex(brdfObj.value("refractIndex").toDouble());
-
-        brdf->setN(brdfObj.value("n").toDouble());
-
-        QString surfaceType = brdfObj.value("surface_type").toString();
-        qDebug()<<surfaceType;
-        if(surfaceType=="DIFFUSE")
-        {
-            brdf->setSurfaceType(DIFFUSE);
-        } else if(surfaceType=="SPECULAR") {
-            brdf->setSurfaceType(SPECULAR);
-        } else if(surfaceType=="REFLECTIVE") {
-            brdf->setSurfaceType(REFLECTIVE);
-        } else if(surfaceType=="REFRACTIVE") {
-            brdf->setSurfaceType(REFRACTIVE);
-        }
-
-        QString material = brdfObj.value("material").toString();
-        qDebug()<<material;
-        if(material=="SHINY")
-        {
-            brdf->setMaterial(SHINY);
-        } else if(material=="CHECK") {
-            brdf->setSurfaceType(CHECK);
-        } else if(material=="TURBULENCE") {
-            brdf->setSurfaceType(TURBULENCE);
-        } else if(material=="CRISSCROSS") {
-            brdf->setMaterial(CRISSCROSS);
-        } else if(material=="MARBLE") {
-            brdf->setMaterial(MARBLE);
-        } else if(material=="WOOD") {
-            brdf->setMaterial(WOOD);
-        }
 
         QJsonObject colorObj = brdfObj.value("color").toObject();
         RTColor color(colorObj.value("r").toInt(),
@@ -175,7 +168,206 @@ RTBRDF *RTSceneLoader::doBRDF(QJsonObject brdfObj)
 
         brdf->setColor(color);
 
+    } else if(type=="check") {
+        brdf = doBRDFCheck(brdfObj);
+    } else if(type=="crisscross") {
+        brdf = doBRDFCrissCross(brdfObj);
+    } else if(type=="marble") {
+        brdf = doBRDFMarble(brdfObj);
+    } else if(type=="turbulence") {
+        brdf = doBRDFTurbulence(brdfObj);
+    } else if(type=="wood") {
+        brdf = doBRDFWood(brdfObj);
+    }
+
+    brdf->setKa(brdfObj.value("ka").toDouble());
+    brdf->setKd(brdfObj.value("kd").toDouble());
+    brdf->setKs(brdfObj.value("ks").toDouble());
+    brdf->setKr(brdfObj.value("kr").toDouble());
+
+    brdf->setRefracIndex(brdfObj.value("refractIndex").toDouble());
+
+    brdf->setN(brdfObj.value("n").toDouble());
+
+    QString surfaceType = brdfObj.value("surface_type").toString();
+    qDebug()<<surfaceType;
+    if(surfaceType=="DIFFUSE")
+    {
+        brdf->setSurfaceType(DIFFUSE);
+    } else if(surfaceType=="SPECULAR") {
+        brdf->setSurfaceType(SPECULAR);
+    } else if(surfaceType=="REFLECTIVE") {
+        brdf->setSurfaceType(REFLECTIVE);
+    } else if(surfaceType=="REFRACTIVE") {
+        brdf->setSurfaceType(REFRACTIVE);
+    }
+
+    QString material = brdfObj.value("material").toString();
+    qDebug()<<material;
+    if(material=="SHINY")
+    {
+        brdf->setMaterial(SHINY);
+    } else if(material=="CHECK") {
+        brdf->setSurfaceType(CHECK);
+    } else if(material=="TURBULENCE") {
+        brdf->setSurfaceType(TURBULENCE);
+    } else if(material=="CRISSCROSS") {
+        brdf->setMaterial(CRISSCROSS);
+    } else if(material=="MARBLE") {
+        brdf->setMaterial(MARBLE);
+    } else if(material=="WOOD") {
+        brdf->setMaterial(WOOD);
     }
 
     return brdf;
+}
+
+RTBRDF * RTSceneLoader::doBRDFCheck(QJsonObject brdfObj)
+{
+    RTCheckTexture *brdf = new RTCheckTexture();
+
+    QJsonObject color1Obj = brdfObj.value("color1").toObject();
+    RTColor color1(color1Obj.value("r").toInt(),
+                  color1Obj.value("g").toInt(),
+                  color1Obj.value("b").toInt());
+
+    brdf->setColorCheck1(color1);
+
+    QJsonObject color2Obj = brdfObj.value("color2").toObject();
+    RTColor color2(color2Obj.value("r").toInt(),
+                  color2Obj.value("g").toInt(),
+                  color2Obj.value("b").toInt());
+
+    brdf->setColorCheck2(color2);
+
+    double size = brdfObj.value("size").toDouble();
+    brdf->setSize(size);
+
+    return brdf;
+}
+
+RTBRDF * RTSceneLoader::doBRDFCrissCross(QJsonObject brdfObj)
+{
+    RTCrissCrossTexture * brdf = new RTCrissCrossTexture();
+
+
+    QJsonObject color1Obj = brdfObj.value("color1").toObject();
+    RTColor color1(color1Obj.value("r").toInt(),
+                  color1Obj.value("g").toInt(),
+                  color1Obj.value("b").toInt());
+
+    brdf->setColorCC1(color1);
+
+    QJsonObject color2Obj = brdfObj.value("color2").toObject();
+    RTColor color2(color2Obj.value("r").toInt(),
+                  color2Obj.value("g").toInt(),
+                  color2Obj.value("b").toInt());
+
+    brdf->setColorCC2(color2);
+
+    QJsonObject color3Obj = brdfObj.value("color3").toObject();
+    RTColor color3(color3Obj.value("r").toInt(),
+                  color3Obj.value("g").toInt(),
+                  color3Obj.value("b").toInt());
+
+    brdf->setColorCC3(color3);
+
+    double scale = brdfObj.value("scale").toDouble();
+    brdf->setScale(scale);
+
+    return brdf;
+
+}
+
+RTBRDF * RTSceneLoader::doBRDFMarble(QJsonObject brdfObj)
+{
+    RTMarbleTexture *brdf = new RTMarbleTexture();
+
+    QJsonObject color1Obj = brdfObj.value("color1").toObject();
+    RTColor color1(color1Obj.value("r").toInt(),
+                  color1Obj.value("g").toInt(),
+                  color1Obj.value("b").toInt());
+
+    brdf->setColorMarbe1(color1);
+
+    QJsonObject color2Obj = brdfObj.value("color2").toObject();
+    RTColor color2(color2Obj.value("r").toInt(),
+                  color2Obj.value("g").toInt(),
+                  color2Obj.value("b").toInt());
+
+    brdf->setColorMarbe2(color2);
+
+    double scale = brdfObj.value("scale").toDouble();
+    brdf->setScale(scale);
+
+    return brdf;
+}
+
+RTBRDF * RTSceneLoader::doBRDFTurbulence(QJsonObject brdfObj)
+{
+    RTTurbulenceTexture * brdf = new RTTurbulenceTexture();
+
+    QJsonObject colorObj = brdfObj.value("color").toObject();
+    RTColor color(colorObj.value("r").toInt(),
+                  colorObj.value("g").toInt(),
+                  colorObj.value("b").toInt());
+
+    brdf->setColorTurbulence(color);
+
+    int num_octaves = brdfObj.value("num_octaves").toInt();
+    brdf->setNum_octaves(num_octaves);
+
+    double scale = brdfObj.value("scale").toDouble();
+    brdf->setScale(scale);
+
+    return brdf;
+
+}
+
+RTBRDF *RTSceneLoader::doBRDFWood(QJsonObject brdfObj)
+{
+    RTWoodTexture *brdf = new RTWoodTexture();
+
+    QJsonObject color1Obj = brdfObj.value("color1").toObject();
+    RTColor color1(color1Obj.value("r").toInt(),
+                  color1Obj.value("g").toInt(),
+                  color1Obj.value("b").toInt());
+
+    brdf->setColorWood1(color1);
+
+    QJsonObject color2Obj = brdfObj.value("color2").toObject();
+    RTColor color2(color2Obj.value("r").toInt(),
+                  color2Obj.value("g").toInt(),
+                  color2Obj.value("b").toInt());
+
+    brdf->setColorWood2(color2);
+
+    double scale = brdfObj.value("scale").toDouble();
+    brdf->setScale(scale);
+
+    return brdf;
+}
+
+RTPoint RTSceneLoader::arrayToPoint(QJsonArray arr)
+{
+    RTPoint p = RTPoint(arr.at(0).toDouble(),
+                        arr.at(1).toDouble(),
+                        arr.at(2).toDouble());
+    return  p;
+}
+
+RTVector RTSceneLoader::arrayToVector(QJsonArray arr)
+{
+    RTVector p = RTVector(arr.at(0).toDouble(),
+                        arr.at(1).toDouble(),
+                        arr.at(2).toDouble());
+    return  p;
+}
+
+RTColor RTSceneLoader::objToColor(QJsonObject obj)
+{
+    RTColor color(obj.value("r").toInt(),
+                  obj.value("g").toInt(),
+                  obj.value("b").toInt());
+    return color;
 }

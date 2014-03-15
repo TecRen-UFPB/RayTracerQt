@@ -1,10 +1,30 @@
 {
+	"camera" : {
+		"e" : [300, 300, 300],
+		"look_at" : [0,0,-1],
+		"up" : [0,1,0],
+		"fovy" : 2
+
+	},
+
+	"maxDepth" : 10,
+
+	"z_start" : 300,
+
+	"z_end" : -300,
+
+	"fogColor" : { "r":250, "g":250, "b":250 },
+
+	"hasFog" : true,
+
+	"samples" : 2,
+
 	"objects": [
 		{
 			"type" : "triangle",
-			"vertices" : [ [50,  50, 50],
-						   [100,  50, 50],
-						   [100, 100, 50] ],
+			"vertices" : [ [250,  50, 50],
+						   [400,  50, 50],
+						   [400, 100, 50] ],
 
 			"normals" : [],
 
@@ -32,16 +52,89 @@
 			"radius" : 30,
 
 			"brdf" :  {
-				"type" : "blinn-phong",
+				"type" : "check",
+				"ka" : 0.2, 
+				"kd" : 1, 
+				"ks" : 0.3,
+				"kr" : 0,
+				"refractIndex" : 0, 
+				"n" : 100, 
+				"surface_type" : "DIFFUSE", 
+				"material" : "CHECK", 
+				"color1" : { "r" : 0, "g" : 0, "b" : 255 },
+				"color2" : { "r" : 255, "g" : 0, "b" : 0 },
+				"size" : 20			
+			}
+		},
+
+		{
+			"type" : "sphere",
+
+			"center" : [470,400,50],
+
+			"radius" : 50,
+
+			"brdf" :  {
+				"type" : "crisscross",
 				"ka" : 0.14, 
 				"kd" : 0.7, 
-				"ks" : 1,
-				"kr" : 0.1,
-				"refractIndex" : 1.55, 
+				"ks" : 1.0,
+				"kr" : 1.0,
+				"refractIndex" : 0, 
 				"n" : 100, 
-				"surface_type" : "REFLECTIVE", 
-				"material" : "SHINY", 
-				"color" : { "r" : 255, "g" : 193, "b" : 47 }
+				"surface_type" : "SPECULAR", 
+				"material" : "CRISSCROSS", 
+				"color1" : { "r" : 0, "g" : 0, "b" : 255 },
+				"color2" : { "r" : 255, "g" : 0, "b" : 0 },
+				"color3" : { "r" : 255, "g" : 255, "b" :0 },
+				"scale" : 50			
+			}
+		},
+
+		{
+			"type" : "sphere",
+
+			"center" : [200,300,100],
+
+			"radius" : 70,
+
+			"brdf" :  {
+				"type" : "marble",
+				"ka" : 0.14, 
+				"kd" : 0.7, 
+				"ks" : 1.0,
+				"kr" : 1.0,
+				"refractIndex" : 0, 
+				"n" : 100, 
+				"surface_type" : "SPECULAR", 
+				"material" : "MARBLE", 
+				"color1" : { "r" : 0, "g" : 0, "b" : 255 },
+				"color2" : { "r" : 255, "g" : 0, "b" : 0 },
+				"color3" : { "r" : 255, "g" : 255, "b" :0 },
+				"scale" : 50			
+			}
+		},
+
+		{
+			"type" : "sphere",
+
+			"center" : [300,400,100],
+
+			"radius" : 50,
+
+			"brdf" :  {
+				"type" : "turbulence",
+				"ka" : 0.14, 
+				"kd" : 0.7, 
+				"ks" : 0.1,
+				"kr" : 1.0,
+				"refractIndex" : 0, 
+				"n" : 100, 
+				"surface_type" : "SPECULAR", 
+				"material" : "TURBULENCE", 
+				"color" : { "r" : 0, "g" : 0, "b" : 255 },
+				"num_octaves" : 1,
+				"scale" : 0.2			
 			}
 		}
 
