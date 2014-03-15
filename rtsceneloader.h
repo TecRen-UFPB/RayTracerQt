@@ -11,6 +11,7 @@
 
 #include "rtobject.h"
 #include "rttriangle.h"
+#include "rtsphere.h"
 
 class RTSceneLoader : public QObject
 {
@@ -28,6 +29,7 @@ private:
     QString filename;
 
     void doTriangle(QJsonObject obj, std::vector<RTObject*> &objects);
+    void doSphere(QJsonObject obj, std::vector<RTObject*> &objects);
     RTBRDF *doBRDF(QJsonObject brdfObj);
 
 };

@@ -22,6 +22,28 @@
 			}
 
 			
+		},
+
+		{
+			"type" : "sphere",
+
+			"center" : [570,400,0],
+
+			"radius" : 30,
+
+			"brdf" :  {
+				"type" : "blinn-phong",
+				"ka" : 0.14, 
+				"kd" : 0.7, 
+				"ks" : 1,
+				"kr" : 0.1,
+				"refractIndex" : 1.55, 
+				"n" : 100, 
+				"surface_type" : "REFLECTIVE", 
+				"material" : "SHINY", 
+				"color" : { "r" : 255, "g" : 193, "b" : 47 }
+			}
 		}
+
 	]
 }

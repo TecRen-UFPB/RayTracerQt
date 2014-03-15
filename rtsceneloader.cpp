@@ -34,6 +34,8 @@ void RTSceneLoader::load(std::vector<RTObject *> &objects)
         qDebug()<<type;
         if(type=="triangle")
             doTriangle(arr.at(i).toObject(), objects);
+        else if(type=="sphere")
+            doSphere(arr.at(i).toObject(), objects);
     }
 
 }
@@ -95,6 +97,30 @@ void RTSceneLoader::doTriangle(QJsonObject obj, std::vector<RTObject*> &objects)
 
 }
 
+void RTSceneLoader::doSphere(QJsonObject obj, std::vector<RTObject *> &objects)
+{
+    RTSphere *sphere = new RTSphere();
+
+    QJsonArray centerArr = obj.value("center").toArray();
+
+    RTPoint center  = RTPoint(centerArr.at(0).toDouble(),
+                 centerArr.at(1).toDouble(),
+                 centerArr.at(2).toDouble());
+
+    sphere->setCenter(center);
+
+    double radius = obj.value("radius").toDouble();
+
+    sphere->setRadius(radius);
+
+    RTBRDF *brdf = doBRDF(obj.value("brdf").toObject());
+
+    sphere->setBrdf(brdf);
+
+    objects.push_back(sphere);
+
+}
+
 RTBRDF *RTSceneLoader::doBRDF(QJsonObject brdfObj)
 {
     RTBRDF *brdf = NULL;
@@ -117,6 +143,12 @@ RTBRDF *RTSceneLoader::doBRDF(QJsonObject brdfObj)
         if(surfaceType=="DIFFUSE")
         {
             brdf->setSurfaceType(DIFFUSE);
+        } else if(surfaceType=="SPECULAR") {
+            brdf->setSurfaceType(SPECULAR);
+        } else if(surfaceType=="REFLECTIVE") {
+            brdf->setSurfaceType(REFLECTIVE);
+        } else if(surfaceType=="REFRACTIVE") {
+            brdf->setSurfaceType(REFRACTIVE);
         }
 
         QString material = brdfObj.value("material").toString();
@@ -124,6 +156,16 @@ RTBRDF *RTSceneLoader::doBRDF(QJsonObject brdfObj)
         if(material=="SHINY")
         {
             brdf->setMaterial(SHINY);
+        } else if(material=="CHECK") {
+            brdf->setSurfaceType(CHECK);
+        } else if(material=="TURBULENCE") {
+            brdf->setSurfaceType(TURBULENCE);
+        } else if(material=="CRISSCROSS") {
+            brdf->setMaterial(CRISSCROSS);
+        } else if(material=="MARBLE") {
+            brdf->setMaterial(MARBLE);
+        } else if(material=="WOOD") {
+            brdf->setMaterial(WOOD);
         }
 
         QJsonObject colorObj = brdfObj.value("color").toObject();
