@@ -2,12 +2,15 @@
 #define RTSCENELOADER_H
 
 #include <QObject>
-#include <QtScript/QScriptEngine>
-#include <QtScript/QScriptValue>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
 
 #include <vector>
 
 #include "rtobject.h"
+#include "rttriangle.h"
 
 class RTSceneLoader : public QObject
 {
@@ -20,12 +23,12 @@ public:
 signals:
 
 public slots:
-    void addObject();
 
 private:
     QString filename;
 
-    QScriptEngine engine;
+    void doTriangle(QJsonObject obj, std::vector<RTObject*> &objects);
+    RTBRDF *doBRDF(QJsonObject brdfObj);
 
 };
 
