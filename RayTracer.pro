@@ -37,7 +37,11 @@ SOURCES += main.cpp\
     rtfog.cpp \
     rttriangle.cpp \
     rtsceneloader.cpp \
-    startdialog.cpp
+    startdialog.cpp \
+    obj_parser.cpp \
+    objLoader.cpp \
+    list.cpp \
+    string_extra.cpp
 
 
 
@@ -64,7 +68,11 @@ HEADERS  += mainwindow.h \
     rtfog.h \
     rttriangle.h \
     rtsceneloader.h \
-    startdialog.h
+    startdialog.h \
+    obj_parser.h \
+    objLoader.h \
+    list.h \
+    string_extra.h
 
 FORMS    += mainwindow.ui \
     startdialog.ui

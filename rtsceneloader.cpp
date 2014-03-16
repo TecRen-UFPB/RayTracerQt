@@ -37,6 +37,8 @@ void RTSceneLoader::load(std::vector<RTObject *> &objects)
             doTriangle(arr.at(i).toObject(), objects);
         else if(type=="sphere")
             doSphere(arr.at(i).toObject(), objects);
+        else if(type=="obj")
+            doDotObj(arr.at(i).toObject(), objects);
     }
 
     // Camera loader
@@ -171,7 +173,53 @@ void RTSceneLoader::doPlane(QJsonObject obj, std::vector<RTObject *> &objects)
 
 void RTSceneLoader::doDotObj(QJsonObject obj, std::vector<RTObject *> &objects)
 {
+    objLoader *objData;
+    objData = new objLoader();
 
+    RTBRDF * brdf = this->doBRDF(obj.value("brdf").toObject());
+
+    QString filename = obj.value("filename").toString();
+
+    char filename_c[filename.size()+1];
+
+    strcpy(filename_c, filename.toStdString().c_str());
+
+    objData->load(filename_c);
+
+    for(int i=0; i<objData->faceCount; i++)
+    {
+        obj_face *o = objData->faceList[i];
+
+        RTPoint p1(objData->vertexList[o->vertex_index[0]]->e[0], // primeira linha
+                objData->vertexList[o->vertex_index[0]]->e[1],
+                objData->vertexList[o->vertex_index[0]]->e[2]);
+
+        RTPoint p2(objData->vertexList[o->vertex_index[1]]->e[0],
+             objData->vertexList[o->vertex_index[1]]->e[1],
+             objData->vertexList[o->vertex_index[1]]->e[2]);
+
+        RTPoint p3(	objData->vertexList[o->vertex_index[2]]->e[0],
+             objData->vertexList[o->vertex_index[2]]->e[1],
+             objData->vertexList[o->vertex_index[2]]->e[2]);
+
+
+
+        RTTriangle *triangle= new RTTriangle(p1,p2,p3);
+        RTVector n1(objData->normalList[o->normal_index[0]]->e[0],
+             objData->normalList[o->normal_index[0]]->e[1],
+             objData->normalList[o->normal_index[0]]->e[2]);
+        RTVector n2(objData->normalList[o->normal_index[1]]->e[0],
+             objData->normalList[o->normal_index[1]]->e[1],
+             objData->normalList[o->normal_index[1]]->e[2]);
+        RTVector n3(objData->normalList[o->normal_index[2]]->e[0],
+             objData->normalList[o->normal_index[2]]->e[1],
+             objData->normalList[o->normal_index[2]]->e[2]);
+        triangle->setNormal1(n1);
+        triangle->setNormal2(n2);
+        triangle->setNormal3(n3);
+        triangle->setBrdf(brdf);
+        objects.push_back(triangle);
+    }
 }
 
 RTBRDF *RTSceneLoader::doBRDF(QJsonObject brdfObj)

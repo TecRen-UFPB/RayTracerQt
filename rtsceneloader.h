@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "rtobject.h"
+#include "rtpoint.h"
 #include "rttriangle.h"
 #include "rtsphere.h"
 #include "rtchecktexture.h"
@@ -20,6 +21,8 @@
 
 #include "rtcamera.h"
 #include "rtscene.h"
+
+#include "objLoader.h"
 
 class RTSceneLoader : public QObject
 {

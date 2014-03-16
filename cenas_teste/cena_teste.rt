@@ -1,6 +1,6 @@
 {
 	"camera" : {
-		"e" : [300, 300, 300],
+		"e" : [0, 0, 3],
 		"look_at" : [0,0,-1],
 		"up" : [0,1,0],
 		"fovy" : 2
@@ -141,7 +141,7 @@
 		{
 			"type" : "obj",
 
-			"filename" : "/media/Arquivos/g5/ufpb/Tecnicas.Avancadas.Em.Rendering/TrabalhoFinal/RayTracer/cube.obj",
+			"filename" : "/media/Arquivos/g5/ufpb/Tecnicas.Avancadas.Em.Rendering/TrabalhoFinal/RayTracer/cenas_teste/objs/cube.obj",
 
 			"brdf" : {
 				"type": "blinn-phong",
