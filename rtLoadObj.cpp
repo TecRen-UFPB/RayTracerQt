@@ -198,23 +198,3 @@ OBJ *loadObj(const char *nameOBJ, const char *nameMTL){
 
     return object;
 }
-
-void translateObj(OBJ *obj, float x, float y, float z){
-
-//    cout << obj->vertexs[obj->faces[0].v1-1].x << endl;
-
-    for(int i=0 ; i<obj->totalV ; i++){
-
-        obj->vertexs[(obj->faces[i].v1-1)].x += x;
-        obj->vertexs[(obj->faces[i].v2-1)].x += x;
-        obj->vertexs[(obj->faces[i].v3-1)].x += x;
-
-        obj->vertexs[(obj->faces[i].v1-1)].y += y;
-        obj->vertexs[(obj->faces[i].v2-1)].y += y;
-        obj->vertexs[(obj->faces[i].v3-1)].y += y;
-
-        obj->vertexs[(obj->faces[i].v1-1)].z += z;
-        obj->vertexs[(obj->faces[i].v2-1)].z += z;
-        obj->vertexs[(obj->faces[i].v3-1)].z += z;
-    }
-}
