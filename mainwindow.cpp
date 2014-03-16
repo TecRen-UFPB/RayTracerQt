@@ -71,7 +71,7 @@ void MainWindow::initRayTracer()
     RTColor red(255,0,0);
 
     OBJ *objeto;
-    objeto = loadObj("/home/everaldo/workspace/RayTracerQt/Deer.obj", "/home/everaldo/workspace/RayTracerQt/Deer.mtl");
+    objeto = loadObj("/home/everaldo/workspace/RayTracerQt/cube.obj", "/home/everaldo/workspace/RayTracerQt/cube.mtl");
 
     int a =0, b=1;
     for(int i=0; i<objeto->totalF; i++){
@@ -132,7 +132,7 @@ void MainWindow::initRayTracer()
     objects.push_back(pl1);
 
     // TODO parameterize the camera
-    RTPoint e(2, 0, 6);
+    RTPoint e(0, 0, 6);
     RTPoint look_at(0,0,-1);
     RTVector up(0,-1,0);
     this->cam = RTCamera(e, look_at, up, 2);
