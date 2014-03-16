@@ -164,6 +164,16 @@ void RTSceneLoader::doSphere(QJsonObject obj, std::vector<RTObject *> &objects)
 
 }
 
+void RTSceneLoader::doPlane(QJsonObject obj, std::vector<RTObject *> &objects)
+{
+
+}
+
+void RTSceneLoader::doDotObj(QJsonObject obj, std::vector<RTObject *> &objects)
+{
+
+}
+
 RTBRDF *RTSceneLoader::doBRDF(QJsonObject brdfObj)
 {
     RTBRDF *brdf = NULL;

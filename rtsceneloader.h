@@ -50,6 +50,8 @@ private:
 
     void doTriangle(QJsonObject obj, std::vector<RTObject*> &objects);
     void doSphere(QJsonObject obj, std::vector<RTObject*> &objects);
+    void doPlane(QJsonObject obj, std::vector<RTObject*> &objects);
+    void doDotObj(QJsonObject obj, std::vector<RTObject*> &objects);
     RTBRDF *doBRDF(QJsonObject brdfObj);
 
     RTBRDF * doBRDFCheck(QJsonObject brdfObj);

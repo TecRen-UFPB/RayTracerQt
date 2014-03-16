@@ -136,6 +136,26 @@
 				"num_octaves" : 1,
 				"scale" : 0.2			
 			}
+		},
+
+		{
+			"type" : "obj",
+
+			"filename" : "/media/Arquivos/g5/ufpb/Tecnicas.Avancadas.Em.Rendering/TrabalhoFinal/RayTracer/cube.obj",
+
+			"brdf" : {
+				"type": "blinn-phong",
+				"ka":0.14, 
+				"kd": 1, 
+				"ks": 1, 
+				"kr": 0, 
+				"refractIndex": 0, 
+				"n": 100, 
+				"surface_type": "DIFFUSE",
+				"material": "SHINY", 
+				"color": {"r": 0, "g":255, "b":0}
+			}
+			
 		}
 
 	]
