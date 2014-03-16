@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     rtwoodtexture.cpp \
     rtfog.cpp \
     rttriangle.cpp \
-    rtsceneloader.cpp
+    rtsceneloader.cpp \
+    startdialog.cpp
 
 
 
@@ -62,6 +63,8 @@ HEADERS  += mainwindow.h \
     rtwoodtexture.h \
     rtfog.h \
     rttriangle.h \
-    rtsceneloader.h
+    rtsceneloader.h \
+    startdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    startdialog.ui

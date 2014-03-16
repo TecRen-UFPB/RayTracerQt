@@ -7,6 +7,8 @@
 #include "rtcamera.h"
 #include "rtscene.h"
 
+#include "startdialog.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -29,10 +31,14 @@ private:
 
     void initRayTracer();
 
+    void loadScene(QString filename);
+
 public slots:
     void slotOnBufferChange();
     void slotMenuSaveTriggered();
 
+private slots:
+    void on_actionAbrir_cena_triggered();
 };
 
 #endif // MAINWINDOW_H

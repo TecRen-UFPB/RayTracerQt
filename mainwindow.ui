@@ -90,6 +90,7 @@
     <property name="title">
      <string>Imagem</string>
     </property>
+    <addaction name="actionAbrir_cena"/>
     <addaction name="actionSalvar"/>
    </widget>
    <addaction name="menuImagem"/>
@@ -106,6 +107,11 @@
   <action name="actionSalvar">
    <property name="text">
     <string>Salvar</string>
+   </property>
+  </action>
+  <action name="actionAbrir_cena">
+   <property name="text">
+    <string>Abrir cena</string>
    </property>
   </action>
  </widget>

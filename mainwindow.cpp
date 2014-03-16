@@ -47,8 +47,11 @@ void MainWindow::slotMenuSaveTriggered()
 
 void MainWindow::initRayTracer()
 {
+    StartDialog sd;
+    sd.exec();
+
     // Initiates the buffer
-    RTFilm::init(680, 512);
+    RTFilm::init(sd.getWidth(), sd.getHeight());
 
     // connect buffer update signal
     connect(RTFilm::getInstance(), SIGNAL(onBufferChange()), this, SLOT(slotOnBufferChange()) );
@@ -56,23 +59,26 @@ void MainWindow::initRayTracer()
     // connect menu save triggered
     connect(ui->actionSalvar, SIGNAL(triggered()), this, SLOT(slotMenuSaveTriggered()));
 
-    // TODO parameterize the scene objects
+    loadScene(sd.getSceneFile());
 
-    /**
-     * sistemas de coordenadas: z-> para tras, y se comporta como x e x como y
-     */
+    // force the first update
+    slotOnBufferChange();
 
+}
+
+void MainWindow::loadScene(QString filename)
+{
     QTime myTimer;
     myTimer.start();
 
-    RTSceneLoader loader("/media/Arquivos/g5/ufpb/Tecnicas.Avancadas.Em.Rendering/TrabalhoFinal/RayTracer/cenas_teste/cena_teste.rt");
+    RTSceneLoader loader(filename); //"/media/Arquivos/g5/ufpb/Tecnicas.Avancadas.Em.Rendering/TrabalhoFinal/RayTracer/cenas_teste/cena_teste.rt");
     loader.load(objects);
 
     this->cam = loader.getCamera();
 
     this->scene = loader.getScene();
 
-        this->scene.render(2);
+    this->scene.render(loader.getSamples());
 
     double time_elapsed=myTimer.elapsed()/1000.0;
 
@@ -80,9 +86,15 @@ void MainWindow::initRayTracer()
 
     std::cout<<"Tempo de Rendering da Cena: "<<time_elapsed<<" segundos"<<std::endl;
 
-    // force the first update
+    // force update
     slotOnBufferChange();
+}
 
+void MainWindow::on_actionAbrir_cena_triggered()
+{
+    QString selfilter = tr("RT Files (*.rt)");
+    QString fileName = QFileDialog::getOpenFileName(this,"Abrir cena", "",selfilter);
 
+    loadScene(fileName);
 
 }

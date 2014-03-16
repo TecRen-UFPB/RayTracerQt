@@ -33,6 +33,8 @@ public:
 
     RTScene getScene();
 
+    int getSamples();
+
 signals:
 
 public slots:
@@ -43,6 +45,8 @@ private:
     RTCamera camera;
 
     RTScene scene;
+
+    int samples;
 
     void doTriangle(QJsonObject obj, std::vector<RTObject*> &objects);
     void doSphere(QJsonObject obj, std::vector<RTObject*> &objects);

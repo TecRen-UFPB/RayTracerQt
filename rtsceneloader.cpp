@@ -25,26 +25,6 @@ void RTSceneLoader::load(std::vector<RTObject *> &objects)
         return;
     }
 
-    // Camera loader
-    QJsonObject camObj = obj.value("camera").toObject();
-
-    RTPoint e = this->arrayToPoint(camObj.value("e").toArray());
-    RTPoint look_at = this->arrayToPoint(camObj.value("look_at").toArray());
-    RTVector up = this->arrayToVector(camObj.value("up").toArray());
-    double fovy = camObj.value("fovy").toDouble();
-
-    this->camera = RTCamera(e, look_at, up, fovy);
-
-    // scene config loader
-    this->scene = RTScene(this->camera,
-                          objects,
-                          obj.value("maxDepth").toInt(),
-                          obj.value("z_start").toDouble(),
-                          obj.value("z_end").toDouble(),
-                          this->objToColor(obj.value("fogColor").toObject()));
-    bool hasFog = obj.value("hasFog").toBool();
-    this->scene.setHasFog(hasFog);
-
     // objects loader
     QJsonArray arr = obj.value("objects").toArray();
 
@@ -59,6 +39,33 @@ void RTSceneLoader::load(std::vector<RTObject *> &objects)
             doSphere(arr.at(i).toObject(), objects);
     }
 
+    // Camera loader
+    QJsonObject camObj = obj.value("camera").toObject();
+
+    RTPoint e = this->arrayToPoint(camObj.value("e").toArray());
+    RTPoint look_at = this->arrayToPoint(camObj.value("look_at").toArray());
+    RTVector up = this->arrayToVector(camObj.value("up").toArray());
+    double fovy = camObj.value("fovy").toDouble();
+
+    this->camera = RTCamera(e, look_at, up, fovy);
+
+    // scene config loader
+    int maxDepth = obj.value("maxDepth").toInt();
+    double z_start = obj.value("z_start").toDouble();
+    double z_end = obj.value("z_end").toDouble();
+    RTColor fogColor = this->objToColor(obj.value("fogColor").toObject());
+
+    this->scene = RTScene(this->camera,
+                          objects,
+                          maxDepth,
+                          z_start,
+                          z_end,
+                          fogColor);
+    bool hasFog = obj.value("hasFog").toBool();
+    this->scene.setHasFog(hasFog);
+
+    this->samples = obj.value("samples").toInt();
+
 }
 
 RTCamera RTSceneLoader::getCamera()
@@ -69,6 +76,11 @@ RTCamera RTSceneLoader::getCamera()
 RTScene RTSceneLoader::getScene()
 {
     return this->scene;
+}
+
+int RTSceneLoader::getSamples()
+{
+    return this->samples;
 }
 
 void RTSceneLoader::doTriangle(QJsonObject obj, std::vector<RTObject*> &objects)
@@ -190,7 +202,7 @@ RTBRDF *RTSceneLoader::doBRDF(QJsonObject brdfObj)
     brdf->setN(brdfObj.value("n").toDouble());
 
     QString surfaceType = brdfObj.value("surface_type").toString();
-    qDebug()<<surfaceType;
+//    qDebug()<<surfaceType;
     if(surfaceType=="DIFFUSE")
     {
         brdf->setSurfaceType(DIFFUSE);
@@ -203,7 +215,7 @@ RTBRDF *RTSceneLoader::doBRDF(QJsonObject brdfObj)
     }
 
     QString material = brdfObj.value("material").toString();
-    qDebug()<<material;
+//    qDebug()<<material;
     if(material=="SHINY")
     {
         brdf->setMaterial(SHINY);
