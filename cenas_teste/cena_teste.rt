@@ -110,7 +110,6 @@
 				"material" : "MARBLE", 
 				"color1" : { "r" : 0, "g" : 0, "b" : 255 },
 				"color2" : { "r" : 255, "g" : 0, "b" : 0 },
-				"color3" : { "r" : 255, "g" : 255, "b" :0 },
 				"scale" : 50			
 			}
 		},
@@ -156,6 +155,30 @@
 				"color": {"r": 0, "g":255, "b":0}
 			}
 			
+		},
+
+		{
+			"type" : "plane",
+
+			"point" : [0, 0, -10],
+
+			"normal" : [0,0,1],
+
+			"brdf" :  {
+				"type" : "check",
+				"ka" : 0.2, 
+				"kd" : 1, 
+				"ks" : 0.3,
+				"kr" : 0,
+				"refractIndex" : 0, 
+				"n" : 100, 
+				"surface_type" : "DIFFUSE", 
+				"material" : "CHECK", 
+				"color1" : { "r" : 0, "g" : 0, "b" : 255 },
+				"color2" : { "r" : 255, "g" : 0, "b" : 0 },
+				"size" : 20			
+			}
+
 		}
 
 	]

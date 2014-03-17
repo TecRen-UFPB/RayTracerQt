@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtConcurrent/QtConcurrent>
+#include <QLabel>
 
 #include "rtfilm.h"
 #include "rtcamera.h"
@@ -31,11 +33,20 @@ private:
 
     void initRayTracer();
 
-    void loadScene(QString filename);
+    void clearAll();
+
+    bool running;
+
+    QFuture<void> future;
+
+    QLabel statusLabel;
 
 public slots:
     void slotOnBufferChange();
     void slotMenuSaveTriggered();
+
+    void loadScene(QString filename);
+    void _loadScene(QString filename);
 
 private slots:
     void on_actionAbrir_cena_triggered();

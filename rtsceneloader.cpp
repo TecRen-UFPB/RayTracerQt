@@ -37,6 +37,8 @@ void RTSceneLoader::load(std::vector<RTObject *> &objects)
             doTriangle(arr.at(i).toObject(), objects);
         else if(type=="sphere")
             doSphere(arr.at(i).toObject(), objects);
+        else if(type=="plane")
+            doPlane(arr.at(i).toObject(), objects);
         else if(type=="obj")
             doDotObj(arr.at(i).toObject(), objects);
     }
@@ -168,11 +170,22 @@ void RTSceneLoader::doSphere(QJsonObject obj, std::vector<RTObject *> &objects)
 
 void RTSceneLoader::doPlane(QJsonObject obj, std::vector<RTObject *> &objects)
 {
+    RTPoint p = this->arrayToPoint(obj.value("point").toArray());
+    RTVector normal = this->arrayToVector(obj.value("normal").toArray());
+    RTBRDF * brdf = this->doBRDF(obj.value("brdf").toObject());
 
+    RTPlane *plane = new RTPlane(p, normal);
+    plane->setBrdf(brdf);
+
+    objects.push_back(plane);
 }
 
 void RTSceneLoader::doDotObj(QJsonObject obj, std::vector<RTObject *> &objects)
 {
+    RTVector scale = this->arrayToVector(obj.value("scale").toArray());
+    RTVector translation = this->arrayToVector(obj.value("translation").toArray());
+    RTVector rotation = this->arrayToVector(obj.value("rotation").toArray());
+
     objLoader *objData;
     objData = new objLoader();
 
@@ -190,21 +203,18 @@ void RTSceneLoader::doDotObj(QJsonObject obj, std::vector<RTObject *> &objects)
     {
         obj_face *o = objData->faceList[i];
 
-        RTPoint p1(objData->vertexList[o->vertex_index[0]]->e[0], // primeira linha
-                objData->vertexList[o->vertex_index[0]]->e[1],
-                objData->vertexList[o->vertex_index[0]]->e[2]);
+        RTPoint p1(objData->vertexList[o->vertex_index[0]]->e[0] * scale.getX() + translation.getX(), // primeira linha
+                objData->vertexList[o->vertex_index[0]]->e[1] * scale.getY() + translation.getY() ,
+                objData->vertexList[o->vertex_index[0]]->e[2] * scale.getZ() + translation.getZ() );
 
-        RTPoint p2(objData->vertexList[o->vertex_index[1]]->e[0],
-             objData->vertexList[o->vertex_index[1]]->e[1],
-             objData->vertexList[o->vertex_index[1]]->e[2]);
+        RTPoint p2(objData->vertexList[o->vertex_index[1]]->e[0]  * scale.getX() + translation.getX(),
+             objData->vertexList[o->vertex_index[1]]->e[1] * scale.getY() + translation.getY(),
+             objData->vertexList[o->vertex_index[1]]->e[2] * scale.getZ() + translation.getZ());
 
-        RTPoint p3(	objData->vertexList[o->vertex_index[2]]->e[0],
-             objData->vertexList[o->vertex_index[2]]->e[1],
-             objData->vertexList[o->vertex_index[2]]->e[2]);
+        RTPoint p3(	objData->vertexList[o->vertex_index[2]]->e[0] * scale.getX() + translation.getX(),
+             objData->vertexList[o->vertex_index[2]]->e[1] * scale.getY() + translation.getY(),
+             objData->vertexList[o->vertex_index[2]]->e[2] * scale.getZ() + translation.getZ());
 
-
-
-        RTTriangle *triangle= new RTTriangle(p1,p2,p3);
         RTVector n1(objData->normalList[o->normal_index[0]]->e[0],
              objData->normalList[o->normal_index[0]]->e[1],
              objData->normalList[o->normal_index[0]]->e[2]);
@@ -214,6 +224,8 @@ void RTSceneLoader::doDotObj(QJsonObject obj, std::vector<RTObject *> &objects)
         RTVector n3(objData->normalList[o->normal_index[2]]->e[0],
              objData->normalList[o->normal_index[2]]->e[1],
              objData->normalList[o->normal_index[2]]->e[2]);
+
+        RTTriangle *triangle= new RTTriangle(p1,p2,p3);
         triangle->setNormal1(n1);
         triangle->setNormal2(n2);
         triangle->setNormal3(n3);

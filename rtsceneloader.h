@@ -11,6 +11,7 @@
 
 #include "rtobject.h"
 #include "rtpoint.h"
+#include "rtplane.h"
 #include "rttriangle.h"
 #include "rtsphere.h"
 #include "rtchecktexture.h"

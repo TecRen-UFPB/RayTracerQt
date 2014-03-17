@@ -89,7 +89,7 @@ public:
 
     virtual ~RTObject(){
 
-        delete brdf;
+//        delete brdf;
     }
 
     /**

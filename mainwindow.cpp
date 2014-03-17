@@ -4,9 +4,11 @@
 #include <QPixmap>
 #include <QFileDialog>
 #include <QDebug>
-#include<QTime>
-#include<iostream>
+#include <QTime>
+#include <QSet>
+#include <QMessageBox>
 
+#include "rtobject.h"
 #include "rtsphere.h"
 #include "rtplane.h"
 #include "rtchecktexture.h"
@@ -17,11 +19,17 @@
 #include "rttriangle.h"
 #include "rtsceneloader.h"
 
+#include <iostream>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->statusBar->addWidget(&statusLabel);
+
+    running = false;
 
     initRayTracer();
 }
@@ -29,6 +37,11 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+
+    if(running)
+    {
+        future.cancel();
+    }
 
     // destroy the buffer
     RTFilm::close();
@@ -68,10 +81,18 @@ void MainWindow::initRayTracer()
 
 void MainWindow::loadScene(QString filename)
 {
+    running = true;
+    future = QtConcurrent::run(this, &MainWindow::_loadScene, filename);
+}
+
+void MainWindow::_loadScene(QString filename)
+{
+    this->statusLabel.setText("Executando raytracing...");
+
     QTime myTimer;
     myTimer.start();
 
-    RTSceneLoader loader(filename); //"/media/Arquivos/g5/ufpb/Tecnicas.Avancadas.Em.Rendering/TrabalhoFinal/RayTracer/cenas_teste/cena_teste.rt");
+    RTSceneLoader loader(filename);
     loader.load(objects);
 
     this->cam = loader.getCamera();
@@ -86,15 +107,42 @@ void MainWindow::loadScene(QString filename)
 
     std::cout<<"Tempo de Rendering da Cena: "<<time_elapsed<<" segundos"<<std::endl;
 
+    this->statusLabel.setText(QString("Objetos: %1 Tempo total: %2 segundos").arg(objects.size()).arg(time_elapsed));
+
+    clearAll();
+
     // force update
-    slotOnBufferChange();
+    emit slotOnBufferChange();
+
+    running = false;
 }
 
 void MainWindow::on_actionAbrir_cena_triggered()
 {
+    if(running)
+    {
+        QMessageBox::warning(this, "Aviso", "Aguarde o término da operação!");
+        return;
+    }
+
     QString selfilter = tr("RT Files (*.rt)");
     QString fileName = QFileDialog::getOpenFileName(this,"Abrir cena", "",selfilter);
 
+    if(fileName.size()==0 || fileName.isEmpty())
+        return;
+
     loadScene(fileName);
 
+}
+
+void MainWindow::clearAll()
+{
+    QSet<RTBRDF *> brdfs;
+    for(int i=0;i<objects.size();i++)
+    {
+        brdfs.insert( objects.at(i)->getBrdf() );
+        delete objects.at(i);
+    }
+    qDeleteAll(brdfs);
+    objects.clear();
 }
