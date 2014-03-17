@@ -121,6 +121,30 @@
 				"color": {"r": 0, "g":255, "b":255}
 			}
 
+		},
+
+		{
+			"type" : "obj",
+
+			"filename" : "../RayTracer/cenas_teste/objs/monkey_head2.obj",
+
+			"scale" : [0.3, 0.3, 0.3],
+
+			"translation" : [0, 0, 0],
+
+			"brdf" : {
+				"type": "blinn-phong",
+				"ka":0.14, 
+				"kd": 0.8, 
+				"ks": 0.8, 
+				"kr": 0, 
+				"refractIndex": 0, 
+				"n": 100, 
+				"surface_type": "DIFFUSE",
+				"material": "SHINY", 
+				"color": {"r": 255, "g":184, "b":31}
+			}
+			
 		}
 
 	]

@@ -108,19 +108,17 @@
 
 			"normal" : [1,0,-0.5],
 
-			"brdf" :  {
-				"type" : "marble",
-				"ka" : 0.2, 
-				"kd" : 0.8, 
-				"ks" : 0.0,
-				"kr" : 0.0,
-				"refractIndex" : 0, 
-				"n" : 100, 
-				"surface_type" : "SPECULAR", 
-				"material" : "MARBLE", 
-				"color1" : { "r" : 0, "g" : 0, "b" : 255 },
-				"color2" : { "r" : 255, "g" : 0, "b" : 0 },
-				"scale" : 5500			
+			"brdf" : {
+				"type": "blinn-phong",
+				"ka":0.14, 
+				"kd": 1, 
+				"ks": 0,
+				"kr": 0.5,
+				"refractIndex": 1.55, 
+				"n": 100, 
+				"surface_type": "DIFFUSE",
+				"material": "SHINY", 
+				"color": {"r": 152, "g":255, "b":255}
 			}
 
 		},

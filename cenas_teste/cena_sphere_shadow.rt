@@ -118,9 +118,51 @@
 				"n": 100, 
 				"surface_type": "DIFFUSE",
 				"material": "SHINY", 
-				"color": {"r": 0, "g":255, "b":255}
+				"color": {"r": 152, "g":255, "b":255}
 			}
 
+		},
+
+		{
+			"type" : "sphere",
+
+			"center" : [25, 21,-50],
+
+			"radius" : 20,
+
+			"brdf" : {
+				"type": "blinn-phong",
+				"ka":0.14, 
+				"kd": 0.7, 
+				"ks": 0.5, 
+				"kr": 0.1, 
+				"refractIndex": 1.55, 
+				"n": 100, 
+				"surface_type": "DIFFUSE",
+				"material": "SHINY", 
+				"color": {"r": 0, "g":0, "b":255}
+			}
+		},
+
+		{
+			"type" : "sphere",
+
+			"center" : [-50, -21,-50],
+
+			"radius" : 10,
+
+			"brdf" : {
+				"type": "blinn-phong",
+				"ka":0.14, 
+				"kd": 0.7, 
+				"ks": 0.5, 
+				"kr": 0.1, 
+				"refractIndex": 1.55, 
+				"n": 100, 
+				"surface_type": "DIFFUSE",
+				"material": "SHINY", 
+				"color": {"r": 255, "g":0, "b":0}
+			}
 		}
 
 	]

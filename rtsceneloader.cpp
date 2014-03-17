@@ -182,8 +182,19 @@ void RTSceneLoader::doPlane(QJsonObject obj, std::vector<RTObject *> &objects)
 
 void RTSceneLoader::doDotObj(QJsonObject obj, std::vector<RTObject *> &objects)
 {
-    RTVector scale = this->arrayToVector(obj.value("scale").toArray());
-    RTVector translation = this->arrayToVector(obj.value("translation").toArray());
+    // default value
+    QJsonArray arr;
+    arr.push_back(QJsonValue(1.0));
+    arr.push_back(QJsonValue(1.0));
+    arr.push_back(QJsonValue(1.0));
+
+    RTVector scale = this->arrayToVector(obj.value("scale").toArray(arr));
+
+    arr.push_back(QJsonValue(0.0));
+    arr.push_back(QJsonValue(0.0));
+    arr.push_back(QJsonValue(0.0));
+    RTVector translation = this->arrayToVector(obj.value("translation").toArray(arr));
+
     RTVector rotation = this->arrayToVector(obj.value("rotation").toArray());
 
     objLoader *objData;

@@ -121,6 +121,48 @@
 				"color": {"r": 0, "g":255, "b":255}
 			}
 
+		},
+
+		{
+			"type" : "sphere",
+
+			"center" : [-5,0,5],
+
+			"radius" : 2,
+
+			"brdf" : {
+				"type": "blinn-phong",
+				"ka":0.14, 
+				"kd": 0.7, 
+				"ks": 1, 
+				"kr": 0.1, 
+				"refractIndex": 0.1, 
+				"n": 100, 
+				"surface_type": "REFRACTIVE",
+				"material": "SHINY", 
+				"color": {"r": 0, "g":255, "b":0}
+			}
+		},
+
+		{
+			"type" : "sphere",
+
+			"center" : [7,1,-5],
+
+			"radius" : 4,
+
+			"brdf" : {
+				"type": "blinn-phong",
+				"ka":0.14, 
+				"kd": 0.7, 
+				"ks": 0.5, 
+				"kr": 0.8, 
+				"refractIndex": 1.55, 
+				"n": 100, 
+				"surface_type": "REFLECTIVE",
+				"material": "SHINY", 
+				"color": {"r": 255, "g":193, "b":47}
+			}
 		}
 
 	]
