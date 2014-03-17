@@ -30,19 +30,17 @@
 
 			"normal" : [0,0,1],
 
-			"brdf" :  {
-				"type" : "check",
-				"ka" : 0.2, 
-				"kd" : 1, 
-				"ks" : 0.3,
-				"kr" : 0,
-				"refractIndex" : 0, 
-				"n" : 100, 
-				"surface_type" : "DIFFUSE", 
-				"material" : "CHECK", 
-				"color1" : { "r" : 0, "g" : 0, "b" : 255 },
-				"color2" : { "r" : 255, "g" : 0, "b" : 0 },
-				"size" : 2000			
+			"brdf" : {
+				"type": "blinn-phong",
+				"ka":0.14, 
+				"kd": 1, 
+				"ks": 0,
+				"kr": 0.5,
+				"refractIndex": 1.55, 
+				"n": 100, 
+				"surface_type": "DIFFUSE",
+				"material": "SHINY", 
+				"color": {"r": 0, "g":255, "b":255}
 			}
 
 		},
@@ -126,23 +124,25 @@
 		{
 			"type" : "obj",
 
-			"filename" : "../RayTracer/cenas_teste/objs/monkey_head2.obj",
+			"filename" : "../RayTracer/cenas_teste/objs/cube.obj",
 
-			"scale" : [0.3, 0.3, 0.3],
+			"scale" : [2, 2, 2],
 
 			"translation" : [0, 0, 0],
 
-			"brdf" : {
-				"type": "blinn-phong",
-				"ka":0.14, 
-				"kd": 0.8, 
-				"ks": 0.8, 
-				"kr": 0, 
-				"refractIndex": 0, 
-				"n": 100, 
-				"surface_type": "DIFFUSE",
-				"material": "SHINY", 
-				"color": {"r": 255, "g":184, "b":31}
+			"brdf" :  {
+				"type" : "check",
+				"ka" : 0.2, 
+				"kd" : 1, 
+				"ks" : 0.3,
+				"kr" : 0,
+				"refractIndex" : 0, 
+				"n" : 100, 
+				"surface_type" : "DIFFUSE", 
+				"material" : "CHECK", 
+				"color1" : { "r" : 0, "g" : 0, "b" : 255 },
+				"color2" : { "r" : 255, "g" : 0, "b" : 0 },
+				"size" : 0.5		
 			}
 			
 		}

@@ -121,6 +121,29 @@
 				"color": {"r": 0, "g":255, "b":255}
 			}
 
+		},
+
+		{
+			"type" : "sphere",
+
+			"center" : [0,0,5],
+
+			"radius" : 2,
+
+			"brdf" :  {
+				"type" : "marble",
+				"ka" : 0.14, 
+				"kd" : 0.7, 
+				"ks" : 1.0,
+				"kr" : 1.0,
+				"refractIndex" : 0, 
+				"n" : 100, 
+				"surface_type" : "SPECULAR", 
+				"material" : "MARBLE", 
+				"color1" : { "r" : 0, "g" : 0, "b" : 255 },
+				"color2" : { "r" : 255, "g" : 255, "b" : 255 },
+				"scale" : 50			
+			}
 		}
 
 	]
